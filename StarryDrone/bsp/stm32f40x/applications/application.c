@@ -79,7 +79,7 @@ void rt_init_thread_entry(void* parameter)
 						   attitude_loop,
 						   RT_NULL,
 						   &thread_attitude_stack[0],
-						   sizeof(thread_attitude_stack),5,1);
+						   sizeof(thread_attitude_stack),ATTITUDE_THREAD_PRIORITY,1);
 	if (res == RT_EOK)
 		rt_thread_startup(&thread_attitude_handle);
 	
@@ -88,31 +88,31 @@ void rt_init_thread_entry(void* parameter)
 						   mavlink_loop,
 						   RT_NULL,
 						   &thread_mavlink_stack[0],
-						   sizeof(thread_mavlink_stack),10,1);
+						   sizeof(thread_mavlink_stack),MAVLINK_THREAD_PRIORITY,1);
 	if (res == RT_EOK)
 		rt_thread_startup(&thread_mavlink_handle);
 	
 	TCA62724_blink_control(1);
-	while(1)
-	{
-		TCA62724_set_color(LED_RED);
-		time_waitMs(1000);
-		TCA62724_set_color(LED_GREEN);
-		time_waitMs(1000);
-		TCA62724_set_color(LED_BLUE);
-		time_waitMs(1000);
-		TCA62724_set_color(LED_YELLOW);
-		time_waitMs(1000);
-		TCA62724_set_color(LED_WHITE);
-		time_waitMs(1000);
-	}
+//	while(1)
+//	{
+//		TCA62724_set_color(LED_RED);
+//		time_waitMs(1000);
+//		TCA62724_set_color(LED_GREEN);
+//		time_waitMs(1000);
+//		TCA62724_set_color(LED_BLUE);
+//		time_waitMs(1000);
+//		TCA62724_set_color(LED_YELLOW);
+//		time_waitMs(1000);
+//		TCA62724_set_color(LED_WHITE);
+//		time_waitMs(1000);
+//	}
 }
 
 int rt_application_init()
 {
     tid0 = rt_thread_create("init",
         rt_init_thread_entry, RT_NULL,
-        2048, RT_THREAD_PRIORITY_MAX/3, 20);
+        2048, RT_THREAD_PRIORITY_MAX/2, 20);
 
     if (tid0 != RT_NULL)
         rt_thread_startup(tid0);

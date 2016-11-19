@@ -19,8 +19,7 @@
 
 #define RAW_TEMPERATURE_POS			0
 #define RAW_PRESSURE_POS			1
-#define COMPENSATE_TEMPERATURE_POS	2
-#define COMPENSATE_PRESSURE_POS		3
+#define COLLECT_DATA_POS			2
 
 /* control cmd */
 
@@ -40,6 +39,15 @@
 #define SENSOR_CONVERSION			0x30
 #define SENSOR_IS_CONV_FIN			0x31
 
+typedef enum
+{
+	S_CONV_1 = 0,
+	S_RAW_PRESS,
+	S_CONV_2,
+	S_RAW_TEMP,
+	S_COLLECT_REPORT
+}Baro_Machine_State;
+
 
 rt_err_t device_sensor_init(void);
 rt_err_t sensor_acc_raw_measure(int16_t acc[3]);
@@ -53,9 +61,9 @@ rt_err_t sensor_mag_get_calibrated_data(float mag[3]);
 rt_err_t sensor_gyr_get_calibrated_data(float gyr[3]);
 rt_err_t sensor_baro_trig_conversion(uint8_t addr);
 rt_bool_t sensor_baro_conversion_finish(void);
-rt_err_t sensor_baro_read_raw_temp(uint32_t* raw);
-rt_err_t sensor_baro_read_raw_press(uint32_t* raw);
-rt_err_t sensor_baro_read_temperature(int32_t* temp);
-rt_err_t sensor_baro_read_pressure(int32_t* pressure);
+//rt_err_t sensor_baro_read_raw_temp(uint32_t* raw);
+//rt_err_t sensor_baro_read_raw_press(uint32_t* raw);
+//rt_err_t sensor_baro_read_temperature(int32_t* temp);
+//rt_err_t sensor_baro_read_pressure(int32_t* pressure);
 
 #endif

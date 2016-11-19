@@ -131,7 +131,7 @@ int Matrix_RowSimplify(void)
 {
     int c = n;//返回值，表示(解的任意常量数+1)；
     //
-    int row,column,k,s,t;
+    int row,column,s,t;
     //
     for(row=0,column=0;row<m && column<n;row++,column++)
     {

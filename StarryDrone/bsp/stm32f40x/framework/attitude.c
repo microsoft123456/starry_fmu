@@ -154,6 +154,8 @@ void attitude_loop(void *parameter)
 	rt_uint32_t wait_set = EVENT_ACC_UPDATE | EVENT_MAG_UPDATE | EVENT_GYR_UPDATE;
 	float gyr[3] , acc[3] , mag[3];
 	
+	printf("attitude_loop\r\n");
+	
 	attitude_init();
 	filter_init();
 	

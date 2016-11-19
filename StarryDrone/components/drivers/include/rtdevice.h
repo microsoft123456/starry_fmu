@@ -378,6 +378,7 @@ rt_inline void rt_work_init(struct rt_work* work, void (*work_func)(struct rt_wo
 #include "drivers/audio.h"
 #endif
 
+#include "framework/global.h"
 #include "framework/led.h"
 #include "framework/delay.h"
 #include "framework/sensor.h"

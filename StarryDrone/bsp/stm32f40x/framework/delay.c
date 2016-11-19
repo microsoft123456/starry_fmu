@@ -12,19 +12,19 @@
 
 DELAY_TIME_Def _delay_t;
 
-//��ȡ��ǰʱ��, us
+// 获取当前时间，us。
 uint64_t time_nowUs(void)
 {
     return _delay_t.msPeriod * (uint64_t)1000 + (SysTick->LOAD - SysTick->VAL) / _delay_t.ticksPerUs;
 }
 
-//��ȡ��ǰʱ��, ms
+// 获取当前时间，ms。
 uint32_t time_nowMs(void)
 {
     return _delay_t.msPeriod + (SysTick->LOAD - SysTick->VAL) / _delay_t.ticksPerMs;
 }
 
-//��ʱus
+// 延时delay us，delay>=4时才准确。
 void time_waitUs(uint32_t delay)
 {
     uint64_t target = time_nowUs() + delay;
@@ -32,7 +32,7 @@ void time_waitUs(uint32_t delay)
 		;
 }
 
-//��ʱms
+// 延时delay ms。
 void time_waitMs(uint32_t delay)
 {
     time_waitUs(delay * 1000);

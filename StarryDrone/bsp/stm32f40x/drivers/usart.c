@@ -76,11 +76,15 @@ static rt_err_t stm32_configure(struct rt_serial_device *serial, struct serial_c
     RT_ASSERT(cfg != RT_NULL);
 
     uart = (struct stm32_uart *)serial->parent.user_data;
-
-    if (cfg->baud_rate == BAUD_RATE_9600)
-        USART_InitStructure.USART_BaudRate = 9600;
-    else if (cfg->baud_rate == BAUD_RATE_115200)
-        USART_InitStructure.USART_BaudRate = 115200;
+	
+	if(cfg->baud_rate!=BAUD_RATE_2400 && cfg->baud_rate!=BAUD_RATE_4800 && cfg->baud_rate!=BAUD_RATE_9600
+		 && cfg->baud_rate!=BAUD_RATE_38400 && cfg->baud_rate!=BAUD_RATE_57600 && cfg->baud_rate!=BAUD_RATE_115200
+		&& cfg->baud_rate!=BAUD_RATE_230400 && cfg->baud_rate!=BAUD_RATE_460800 && cfg->baud_rate!=BAUD_RATE_921600)
+	{
+		USART_InitStructure.USART_BaudRate = 9600;	//default value
+	}else{
+		USART_InitStructure.USART_BaudRate = cfg->baud_rate;
+	}
 
     if (cfg->data_bits == DATA_BITS_8)
         USART_InitStructure.USART_WordLength = USART_WordLength_8b;

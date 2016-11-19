@@ -3,7 +3,7 @@
  *
  * Change Logs:
  * Date           Author       Notes
- * 2016-06-30     zoujiachi    first version.
+ * 2016-09-30     zoujiachi    first version.
  */
  
 #include <rthw.h>
@@ -38,7 +38,21 @@ uint32_t _raw_temperature , _raw_pressure;
 int32_t _dT;
 
 MS5611_PROM_Def _prom;
-MS5611_REPORT_Def report;
+//MS5611_REPORT_Def report;
+
+static void Msb2Lsb(uint8_t* data , uint8_t bytes)
+{
+	uint8_t temp;
+	
+	if(!bytes)
+		return;
+	
+	for(uint8_t i = 0 ; i<bytes/2 ; i++){
+		temp = data[i];
+		data[i] = data[bytes-1-i];
+		data[bytes-1-i] = temp;
+	}
+}
 
 rt_err_t ms5611_write_cmd(rt_uint8_t cmd)
 {
@@ -59,6 +73,8 @@ rt_err_t ms5611_read_adc(uint32_t* buff)
 	send_val = ADDR_ADC;
 	
 	res = rt_spi_send_then_recv((struct rt_spi_device *)spi_device , (void*)&send_val , 1 , (void*)buff, 3);
+	//big-endian to little-endian
+	Msb2Lsb((uint8_t*)buff , 3);
 	
 	return res;
 }
@@ -71,11 +87,13 @@ rt_err_t ms5611_read_prom_reg(rt_uint8_t cmd , uint16_t* buff)
 	send_val = DIR_READ | cmd;
 	
 	res = rt_spi_send_then_recv((struct rt_spi_device *)spi_device , (void*)&send_val , 1 , (void*)buff, 2);
+	//big-endian to little-endian
+	Msb2Lsb((uint8_t*)buff , 2);
 
 	return res;
 }
 
-//TODO: crc calculate incorrect
+//TODO check uncorrect
 rt_bool_t crc_check(uint16_t *n_prom)
 {
 	int16_t cnt;
@@ -118,15 +136,56 @@ rt_bool_t crc_check(uint16_t *n_prom)
 	return (0x000F & crc_read) == (n_rem ^ 0x00);
 }
 
-
 rt_err_t ms5611_load_prom(void)
 {
 	for(uint8_t i = 0 ; i<8 ; i++)
 	{
-		ms5611_read_prom_reg(ADDR_PROM_SETUP+i*2 , ((uint16_t*)&_prom)+i);
+		ms5611_read_prom_reg(ADDR_PROM_SETUP+(i<<1) , ((uint16_t*)&_prom)+i);
 	}
 	
 	return crc_check((uint16_t*)&_prom) ? RT_EOK : RT_ERROR;
+}
+
+rt_err_t baro_collect_data(void *args)
+{
+	MS5611_REPORT_Def* report = (MS5611_REPORT_Def*)args;
+	
+	report->raw_pressure = _raw_pressure;
+	report->raw_temperature = _raw_temperature;
+	
+	_dT = _raw_temperature - ((int32_t)_prom.c5<<8);
+	int32_t _temp = 2000 + (int32_t)(((int64_t)_dT * _prom.c6) >> 23);
+	report->temperature = _temp / 100.0f;
+	
+	int64_t OFF = ((int64_t)_prom.c2 << 16) + (((int64_t)_prom.c4 * _dT) >> 7);
+	int64_t SENS = ((int64_t)_prom.c1 << 15) + (((int64_t)_prom.c3 * _dT) >> 8);
+	int32_t _pressure = (((_raw_pressure * SENS) >> 21) - OFF) >> 15;
+	report->pressure = _pressure / 100.0f;
+	
+	/* tropospheric properties (0-11km) for standard atmosphere */
+	const double T1 = 15.0 + 273.15;	/* temperature at base height in Kelvin */
+	const double a  = -6.5 / 1000;	/* temperature gradient in degrees per metre */
+	const double g  = 9.80665;	/* gravity constant in m/s/s */
+	const double R  = 287.05;	/* ideal gas constant in J/kg/K */
+	
+	/* current pressure at MSL in kPa */
+	double p1 = 101325 / 1000.0;
+
+	/* measured pressure in kPa */
+	double p = _pressure / 1000.0;
+
+	/*
+	 * Solve:
+	 *
+	 *     /        -(aR / g)     \
+	 *    | (p / p1)          . T1 | - T1
+	 *     \                      /
+	 * h = -------------------------------  + h1
+	 *                   a
+	 */
+	report->altitude = (((exp((-(a * R) / g) * log((p / p1)))) * T1) - T1) / a;
+
+	return RT_EOK;
 }
 
 rt_err_t baro_init(rt_device_t dev)
@@ -153,78 +212,18 @@ rt_size_t baro_read(rt_device_t dev, rt_off_t pos, void *buffer, rt_size_t size)
 	
 	if(pos == RAW_TEMPERATURE_POS)	//read temperature raw data
 	{
-		res = ms5611_read_adc(buffer);
-		_raw_temperature = *(uint32_t*)buffer;
+		res = ms5611_read_adc(&_raw_temperature);
 	}
 	else if(pos == RAW_PRESSURE_POS)	//read pressure raw data
 	{
-		res = ms5611_read_adc(buffer);
-		_raw_pressure = *(uint32_t*)buffer;
+		res = ms5611_read_adc(&_raw_pressure);
 	}
-	else if(pos == COMPENSATE_TEMPERATURE_POS)	//temperature conpensate data
+	else if(pos == COLLECT_DATA_POS)
 	{
-		_dT = _raw_temperature - ((int32_t)_prom.c5<<8);
-		int32_t TEMP = 2000 + (int32_t)(((int64_t)_dT * _prom.c6) >> 23);
-		
-		*(int32_t*)buffer = TEMP;	//if TEMP=2007,means temperature=20.07℃
-		
-		res = RT_EOK;
-	}
-	else if(pos == COMPENSATE_PRESSURE_POS)	//pressure conpensate data
-	{
-		int64_t OFF = ((int64_t)_prom.c2 << 16) + (((int64_t)_prom.c4 * _dT) >> 7);
-		int64_t SENS = ((int64_t)_prom.c1 << 15) + (((int64_t)_prom.c3 * _dT) >> 8);
-		int32_t P = (((_raw_pressure * SENS) >> 21) - OFF) >> 15;
-		
-		*(int32_t*)buffer = P;		//if P=100009,means pressure=1000.09 mbar
-		
-		res = RT_EOK;
+		res = baro_collect_data(buffer);
 	}
 	
 	return (res == RT_EOK) ? size : 0;
-}
-
-rt_err_t baro_collect_data(void *args)
-{
-	uint32_t buffer;
-	
-	ms5611_read_adc(&buffer);
-	report.raw_temperature = buffer;
-	
-	ms5611_read_adc(&buffer);
-	report.raw_pressure = buffer;
-	
-	_dT = _raw_temperature - ((int32_t)_prom.c5<<8);
-	int32_t _temp = 2000 + (int32_t)(((int64_t)_dT * _prom.c6) >> 23);
-	report.temperature = _temp / 100.0f;
-	
-	int64_t OFF = ((int64_t)_prom.c2 << 16) + (((int64_t)_prom.c4 * _dT) >> 7);
-	int64_t SENS = ((int64_t)_prom.c1 << 15) + (((int64_t)_prom.c3 * _dT) >> 8);
-	int32_t _pressure = (((_raw_pressure * SENS) >> 21) - OFF) >> 15;
-	report.pressure = _pressure / 100.0f;
-	
-	/* tropospheric properties (0-11km) for standard atmosphere */
-	const double T1 = 15.0 + 273.15;	/* temperature at base height in Kelvin */
-	const double a  = -6.5 / 1000;	/* temperature gradient in degrees per metre */
-	const double g  = 9.80665;	/* gravity constant in m/s/s */
-	const double R  = 287.05;	/* ideal gas constant in J/kg/K */
-	
-	/* current pressure at MSL in kPa */
-	double p1 = 101325 / 1000.0;
-
-	/* measured pressure in kPa */
-	double p = _pressure / 1000.0;
-
-	/*
-	 * Solve:
-	 *
-	 *     /        -(aR / g)     \
-	 *    | (p / p1)          . T1 | - T1
-	 *     \                      /
-	 * h = -------------------------------  + h1
-	 *                   a
-	 */
-	report.altitude = (((exp((-(a * R) / g) * log((p / p1)))) * T1) - T1) / a;
 }
 
 rt_err_t baro_control(rt_device_t dev, rt_uint8_t cmd, void *args)
