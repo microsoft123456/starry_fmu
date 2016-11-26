@@ -390,6 +390,7 @@ rt_inline void rt_work_init(struct rt_work* work, void (*work_func)(struct rt_wo
 #include "framework/mix.h"
 #include "framework/param.h"
 #include "framework/calibration.h"
+#include "framework/Sensor_Manager.h"
 #include "drivers/l3gd20h_sensor.h"
 #include "drivers/lsm303d_sensor.h"
 #include "drivers/ms5611_sensor.h"

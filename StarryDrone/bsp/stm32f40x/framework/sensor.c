@@ -299,20 +299,20 @@ rt_err_t device_sensor_init(void)
 	
 	//sensor_get_device_id(GYR_DEVICE_NAME);
 	
-	while(1)
-	{
-		//example code to read barometer data
-		rt_err_t err;
-		if(sensor_baro_get_state() == S_COLLECT_REPORT){
-			err = sensor_process_baro_state_machine();
-			//get report;
-			if(err == RT_EOK)
-				printf("%.2f %.2f %.2f\r\n" , report_baro.altitude , report_baro.temperature , report_baro.pressure);
-		}else{
-			err = sensor_process_baro_state_machine();
-		}
-		time_waitMs(200);
-	}
+//	while(1)
+//	{
+//		//example code to read barometer data
+//		rt_err_t err;
+//		if(sensor_baro_get_state() == S_COLLECT_REPORT){
+//			err = sensor_process_baro_state_machine();
+//			//get report;
+//			if(err == RT_EOK)
+//				printf("%.2f %.2f %.2f\r\n" , report_baro.altitude , report_baro.temperature , report_baro.pressure);
+//		}else{
+//			err = sensor_process_baro_state_machine();
+//		}
+//		time_waitMs(200);
+//	}
 	
 //	while(1)
 //	{

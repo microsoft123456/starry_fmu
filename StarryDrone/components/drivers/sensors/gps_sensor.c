@@ -18,6 +18,8 @@
 #define MIN(x,y) (x < y ? x : y)
 
 static rt_device_t serial_device;
+static struct rt_device gps_device;
+
 ubx_decode_state_t _decode_state;
 uint16_t _rx_payload_length;
 uint16_t _rx_payload_index;
@@ -250,11 +252,11 @@ payload_rx_done(void)
 			_rate_count_vel++;
 			_rate_count_lat_lon++;
 			
-			printf("alt:%d lat:%d lon:%d %d-%d-%d %d:%d:%d\r\n" , _gps_position->alt, _gps_position->lat,_gps_position->lon,
-			timeinfo.tm_year,timeinfo.tm_mon,timeinfo.tm_mday,timeinfo.tm_hour,timeinfo.tm_min,timeinfo.tm_sec);
+			//printf("alt:%d lat:%d lon:%d %d-%d-%d %d:%d:%d\r\n" , _gps_position->alt, _gps_position->lat,_gps_position->lon,
+			//timeinfo.tm_year,timeinfo.tm_mon,timeinfo.tm_mday,timeinfo.tm_hour,timeinfo.tm_min,timeinfo.tm_sec);
 
-//			_got_posllh = RT_TRUE;
-//			_got_velned = RT_TRUE;
+			_got_posllh = RT_TRUE;
+			_got_velned = RT_TRUE;
 
 			ret = 1;	
 		}break;
@@ -272,7 +274,7 @@ payload_rx_done(void)
 			_gps_position->timestamp_position = time_nowUs();
 
 			_rate_count_lat_lon++;
-			//_got_posllh = true;
+			_got_posllh = RT_TRUE;
 			
 			//printf("alt:%d lat:%d lon:%d\r\n" , _gps_position->alt, _gps_position->lat,_gps_position->lon);
 
@@ -982,33 +984,96 @@ static rt_err_t gps_serial_rx_ind(rt_device_t dev, rt_size_t size)
     return RT_EOK;
 }
 
-rt_err_t rt_gps_init(char* serial_device_name , struct vehicle_gps_position_s *gps_position, struct satellite_info_s *satellite_info)
+rt_err_t gps_init(rt_device_t dev)
 {	
-	rt_err_t res = RT_EOK;
-	
-	serial_device = rt_device_find(serial_device_name);
-	
 	_configured = RT_FALSE;
 	_use_nav_pvt = RT_FALSE;
 	_ack_state = UBX_ACK_IDLE;
 	_ack_waiting_msg = 0;
+	_got_posllh = RT_FALSE;
+	_got_velned = RT_FALSE;
 	
-	if(serial_device == RT_NULL)
-    {
-        rt_kprintf("serial device %s not found!\r\n", serial_device);
-        return RT_EEMPTY;
-    }
 	rt_device_set_rx_indicate(serial_device, gps_serial_rx_ind);
 	rt_device_open(serial_device, RT_DEVICE_OFLAG_RDWR | RT_DEVICE_FLAG_INT_RX);
-	
-	_gps_position = gps_position;
-	_satellite_info = satellite_info;
 	
 	//time_waitMs(500);
 	for(uint8_t i = 0 ; i<CONFIGURE_RETRY_MAX ; i++){
 		if(_configure_by_ubx() == 0)
 			break;
 	}
+	
+	return RT_EOK;
+}
+
+rt_size_t gps_read(rt_device_t dev, rt_off_t pos, void *buffer, rt_size_t size)
+{
+	rt_err_t res;
+	
+	if(pos == RD_ONLY_POSLLH)	
+	{
+		if(_got_posllh == RT_FALSE)
+			return RT_EEMPTY;	
+	}
+	else if(pos == RD_ONLY_VELNED)	
+	{
+		if(_got_velned == RT_FALSE)
+			return RT_EEMPTY;
+	}
+	else if(pos == RD_COMPLETED_REPORT)
+	{
+		if(_got_posllh == RT_FALSE || _got_velned == RT_FALSE)
+			return RT_EEMPTY;
+	}
+	
+	if(buffer == NULL)
+		return RT_ERROR;
+	
+	*(struct vehicle_gps_position_s*)buffer = *_gps_position;
+	
+	return RT_EOK;
+}
+
+rt_err_t rt_gps_init(char* serial_device_name , struct vehicle_gps_position_s *gps_position, struct satellite_info_s *satellite_info)
+{	
+	rt_err_t res = RT_EOK;;
+	
+	/* set device type */
+    gps_device.type    = RT_Device_Class_Char;
+    gps_device.init    = gps_init;
+    gps_device.open    = RT_NULL;
+    gps_device.close   = RT_NULL;
+    gps_device.read    = gps_read;
+    gps_device.write   = RT_NULL;
+    gps_device.control = RT_NULL;
+    
+    /* register to device manager */
+    res |= rt_device_register(&gps_device , GPS_DEVICE_NAME, RT_DEVICE_FLAG_RDWR);
+	
+	serial_device = rt_device_find(serial_device_name);
+	
+	if(serial_device == RT_NULL)
+    {
+        rt_kprintf("serial device %s not found!\r\n", serial_device);
+        return RT_EEMPTY;
+    }
+	
+	_gps_position = gps_position;
+	_satellite_info = satellite_info;
+		
+//	_configured = RT_FALSE;
+//	_use_nav_pvt = RT_FALSE;
+//	_ack_state = UBX_ACK_IDLE;
+//	_ack_waiting_msg = 0;
+//	_gps_position = gps_position;
+//	_satellite_info = satellite_info;
+//	rt_device_set_rx_indicate(serial_device, gps_serial_rx_ind);
+//	rt_device_open(serial_device, RT_DEVICE_OFLAG_RDWR | RT_DEVICE_FLAG_INT_RX);
+//	
+//	//time_waitMs(500);
+//	for(uint8_t i = 0 ; i<CONFIGURE_RETRY_MAX ; i++){
+//		if(_configure_by_ubx() == 0)
+//			break;
+//	}
 	
 	return res;
 }

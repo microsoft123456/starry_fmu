@@ -14,10 +14,10 @@
 
 typedef struct 
 {
-    volatile uint32_t msPeriod;		//ÕûÖÜÆÚµÄÊ±¼ä , ms
-    uint32_t ticksPerUs;  			//Ã¿usµÄtickÊı 168M/1e6=168
-    uint32_t ticksPerMs;  			//Ã¿msµÄtickÊı 168M/1e3=168000
-    uint32_t msPerPeriod; 			//Ã¿ÖÜÆÚµÄmsÊı
+    volatile uint32_t msPeriod;		//æ•´å‘¨æœŸçš„æ—¶é—´ , ms
+    uint32_t ticksPerUs;  			//æ¯usçš„tickæ•° 168M/1e6=168
+    uint32_t ticksPerMs;  			//æ¯msçš„tickæ•° 168M/1e3=168000
+    uint32_t msPerPeriod; 			//æ¯å‘¨æœŸçš„msæ•°
 }DELAY_TIME_Def;
 
 void device_delay_init(void);

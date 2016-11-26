@@ -468,6 +468,11 @@
               <FileType>1</FileType>
               <FilePath>.\framework\mavlink_protocol.c</FilePath>
             </File>
+            <File>
+              <FileName>Sensor_Manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\framework\Sensor_Manager.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

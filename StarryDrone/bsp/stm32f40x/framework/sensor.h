@@ -16,6 +16,7 @@
 #define ACC_MAG_DEVICE_NAME		"acc_mag"
 #define GYR_DEVICE_NAME			"gyr"
 #define BARO_DEVICE_NAME		"baro"
+#define GPS_DEVICE_NAME			"gps"
 
 #define RAW_TEMPERATURE_POS			0
 #define RAW_PRESSURE_POS			1
