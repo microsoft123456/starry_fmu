@@ -1009,24 +1009,31 @@ rt_size_t gps_read(rt_device_t dev, rt_off_t pos, void *buffer, rt_size_t size)
 {
 	rt_err_t res;
 	
+	if(buffer == NULL)
+		return RT_ERROR;
+	
 	if(pos == RD_ONLY_POSLLH)	
 	{
 		if(_got_posllh == RT_FALSE)
-			return RT_EEMPTY;	
+			return RT_EEMPTY;
+
+		_got_posllh = RT_FALSE;
 	}
 	else if(pos == RD_ONLY_VELNED)	
 	{
 		if(_got_velned == RT_FALSE)
 			return RT_EEMPTY;
+		
+		_got_velned = RT_FALSE;
 	}
 	else if(pos == RD_COMPLETED_REPORT)
 	{
 		if(_got_posllh == RT_FALSE || _got_velned == RT_FALSE)
 			return RT_EEMPTY;
+		
+		_got_posllh = RT_FALSE;
+		_got_velned = RT_FALSE;
 	}
-	
-	if(buffer == NULL)
-		return RT_ERROR;
 	
 	*(struct vehicle_gps_position_s*)buffer = *_gps_position;
 	
