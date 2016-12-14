@@ -14,7 +14,7 @@
 #define ADDR_CMD_CONVERT_D1			0x48	/* write to this address to start pressure conversion */
 #define ADDR_CMD_CONVERT_D2			0x58	/* write to this address to start temperature conversion */
 
-static rt_device_t acc_mag_device_t , gyr_device_t , baro_device_t;
+static rt_device_t acc_mag_device_t , gyr_device_t , baro_device_t, gps_device_t;
 struct vehicle_gps_position_s gps_position;
 struct satellite_info_s satellite_info;
 
@@ -197,7 +197,7 @@ rt_err_t sensor_process_baro_state_machine(void)
 		}break;
 		case S_RAW_PRESS:
 		{
-			if(!_baro_is_conv_finish()){
+			if(!_baro_is_conv_finish()){	//need 10ms to conversion
 				err = RT_EBUSY;
 			}else{
 				err = _baro_read_raw_press();
@@ -217,7 +217,7 @@ rt_err_t sensor_process_baro_state_machine(void)
 		}break;
 		case S_RAW_TEMP:
 		{
-			if(!_baro_is_conv_finish()){
+			if(!_baro_is_conv_finish()){	//need 10ms to conversion
 				err = RT_EBUSY;
 			}else{
 				err = _baro_read_raw_temp();
@@ -263,6 +263,7 @@ rt_err_t device_sensor_init(void)
 	
 	if(acc_mag_device_t == RT_NULL)
 	{
+		printf("can't find acc_mag device\r\n");
 		return RT_EEMPTY;
 	}
 	
@@ -275,6 +276,7 @@ rt_err_t device_sensor_init(void)
 	
 	if(gyr_device_t == RT_NULL)
 	{
+		printf("can't find gyr device\r\n");
 		return RT_EEMPTY;
 	}
 	
@@ -289,6 +291,7 @@ rt_err_t device_sensor_init(void)
 	
 	if(baro_device_t == RT_NULL)
 	{
+		printf("can't find baro device\r\n");
 		return RT_EEMPTY;
 	}
 	
@@ -296,6 +299,13 @@ rt_err_t device_sensor_init(void)
 	
 	/* init gps device */
 	rt_gps_init("uart4" , &gps_position , &satellite_info);
+	gps_device_t = rt_device_find(GPS_DEVICE_NAME);
+	if(gps_device_t == RT_NULL)
+	{
+		printf("can't find gps device\r\n");
+		return RT_EEMPTY;
+	}
+	rt_device_open(gps_device_t , RT_DEVICE_OFLAG_RDWR);
 	
 	//sensor_get_device_id(GYR_DEVICE_NAME);
 	
@@ -306,51 +316,30 @@ rt_err_t device_sensor_init(void)
 //		if(sensor_baro_get_state() == S_COLLECT_REPORT){
 //			err = sensor_process_baro_state_machine();
 //			//get report;
-//			if(err == RT_EOK)
-//				printf("%.2f %.2f %.2f\r\n" , report_baro.altitude , report_baro.temperature , report_baro.pressure);
+//			if(err == RT_EOK){
+//				struct vehicle_gps_position_s position;
+//				rt_device_read(gps_device_t, RD_ONLY_VELNED, (void*)&position, 1);
+//				printf("alt:%.2f temp:%.2f press:%.2f\r\n", report_baro.altitude, report_baro.temperature, report_baro.pressure);
+//				time_waitMs(200);
+//			}
 //		}else{
 //			err = sensor_process_baro_state_machine();
 //		}
-//		time_waitMs(200);
-//	}
-	
-//	while(1)
-//	{
-//		rt_device_read(baro_device_t, COLLECT_DATA_POS, (void*)NULL, 32);
-//		time_waitMs(500);
-//	}
-	
-//	while(1)
-//	{
-//		float acc[3], mag[3];
-//		float gyr[3];
-//		int16_t raw[3];
-//		
-//		//sensor_acc_measure(acc);
-//		//sensor_mag_measure(mag);
-//		
-//		//sensor_acc_raw_measure(raw);
-//		sensor_gyr_get_calibrated_data(gyr);
-//		
-//		printf("gyr %.2f %.2f %.2f\r\n" , gyr[0],gyr[1],gyr[2]);
-//		//printf("raw acc:%d %d %d\r\n" , raw[0],raw[1],raw[2]);
-//		//printf("acc: %.2f %.2f %.2f mag: %.2f %.2f %.2f\r\n" , acc[0], acc[1], acc[2], mag[0], mag[1], mag[2]);
-//		time_waitMs(100);
 //	}
 
-//	while(1)
-//	{
-//		int16_t acc[3], mag[3] , gyr1[3];
-//		float gyr2[3];
-//		
-//		sensor_acc_raw_measure(acc);
-//		sensor_mag_raw_measure(mag);
-//		
-////		sensor_gyr_raw_measure(gyr1);
-////		sensor_gyr_rad_measure(gyr2);
-//		printf("acc: %d %d %d mag: %d %d %d\r\n" , acc[0], acc[1], acc[2], mag[0], mag[1], mag[2]);
-//		time_waitMs(100);
-//	}
+	while(1)
+	{
+		//example code to read gps data
+		if( rt_device_read(gps_device_t, RD_COMPLETED_REPORT, NULL, 1) == RT_EOK){
+			printf("lat:%d lon:%d alt:%d vd:%.2f ve:%.2f vn:%.2f\r\n", gps_position.lat, gps_position.lon, gps_position.alt, 
+				gps_position.vel_d_m_s,gps_position.vel_e_m_s, gps_position.vel_n_m_s);
+		}
+		if( rt_device_read(gps_device_t, RD_SVINFO, NULL, 1) == RT_EOK){
+			printf("satellite cnt:%d\r\n", satellite_info.count);
+		}
+		
+		time_waitMs(500);
+	}
 	
 	return res;
 }

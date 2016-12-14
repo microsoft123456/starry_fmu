@@ -39,6 +39,7 @@ uint8_t _rate_count_lat_lon;
 uint8_t _rate_count_vel;
 rt_bool_t _got_posllh;
 rt_bool_t _got_velned;
+rt_bool_t _got_svinfo;
 
 void _decode_init(void)
 {
@@ -107,8 +108,8 @@ payload_rx_add_nav_svinfo(const uint8_t b)
 		if (_rx_payload_index == sizeof(ubx_payload_rx_nav_svinfo_part1_t)) {
 			// Part 1 complete: decode Part 1 buffer
 			_satellite_info->count = MIN(_buf.payload_rx_nav_svinfo_part1.numCh, SAT_INFO_MAX_SATELLITES);
-			printf("SVINFO len %u  numCh %u\r\n", (unsigned)_rx_payload_length,
-					 (unsigned)_buf.payload_rx_nav_svinfo_part1.numCh);
+//			printf("SVINFO len %u  numCh %u\r\n", (unsigned)_rx_payload_length,
+//					 (unsigned)_buf.payload_rx_nav_svinfo_part1.numCh);
 		}
 
 		if (_rx_payload_index < sizeof(ubx_payload_rx_nav_svinfo_part1_t) + _satellite_info->count * sizeof(
@@ -127,14 +128,15 @@ payload_rx_add_nav_svinfo(const uint8_t b)
 				_satellite_info->elevation[sat_index]	= (uint8_t)(_buf.payload_rx_nav_svinfo_part2.elev);
 				_satellite_info->azimuth[sat_index]	= (uint8_t)((float)_buf.payload_rx_nav_svinfo_part2.azim * 255.0f / 360.0f);
 				_satellite_info->svid[sat_index]	= (uint8_t)(_buf.payload_rx_nav_svinfo_part2.svid);
-				printf("SVINFO #%02u  used %u  snr %3u  elevation %3u  azimuth %3u  svid %3u\r\n",
-						 (unsigned)sat_index + 1,
-						 (unsigned)_satellite_info->used[sat_index],
-						 (unsigned)_satellite_info->snr[sat_index],
-						 (unsigned)_satellite_info->elevation[sat_index],
-						 (unsigned)_satellite_info->azimuth[sat_index],
-						 (unsigned)_satellite_info->svid[sat_index]
-						);
+//				printf("SVINFO #%02u  used %u  snr %3u  elevation %3u  azimuth %3u  svid %3u\r\n",
+//						 (unsigned)sat_index + 1,
+//						 (unsigned)_satellite_info->used[sat_index],
+//						 (unsigned)_satellite_info->snr[sat_index],
+//						 (unsigned)_satellite_info->elevation[sat_index],
+//						 (unsigned)_satellite_info->azimuth[sat_index],
+//						 (unsigned)_satellite_info->svid[sat_index]
+//						);
+				
 			}
 		}
 	}
@@ -199,7 +201,7 @@ payload_rx_done(void)
 		{
 			struct tm timeinfo;
 			
-			printf("Rx NAV-PVT\r\n");
+			//printf("Rx NAV-PVT\r\n");
 			
 			if ((_buf.payload_rx_nav_pvt.flags & UBX_RX_NAV_PVT_FLAGS_GNSSFIXOK) == 1) {
 				_gps_position->fix_type		 = _buf.payload_rx_nav_pvt.fixType;
@@ -262,7 +264,7 @@ payload_rx_done(void)
 		}break;
 		case UBX_MSG_NAV_POSLLH:
 		{
-			printf("Rx NAV-POSLLH\r\n");
+			//printf("Rx NAV-POSLLH\r\n");
 			
 			_gps_position->lat	= _buf.payload_rx_nav_posllh.lat;
 			_gps_position->lon	= _buf.payload_rx_nav_posllh.lon;
@@ -282,7 +284,7 @@ payload_rx_done(void)
 		}break;
 		case UBX_MSG_NAV_SOL:
 		{
-			printf("Rx NAV-SOL\r\n");
+			//printf("Rx NAV-SOL\r\n");
 			
 			_gps_position->fix_type		= _buf.payload_rx_nav_sol.gpsFix;
 			_gps_position->s_variance_m_s	= (float)_buf.payload_rx_nav_sol.sAcc * 1e-2f;	// from cm to m
@@ -292,7 +294,7 @@ payload_rx_done(void)
 		}break;
 		case UBX_MSG_NAV_DOP:
 		{
-			printf("Rx NAV-DOP\r\n");
+			//printf("Rx NAV-DOP\r\n");
 			
 			_gps_position->hdop		= _buf.payload_rx_nav_dop.hDOP * 0.01f;	// from cm to m
 			_gps_position->vdop		= _buf.payload_rx_nav_dop.vDOP * 0.01f;	// from cm to m
@@ -303,7 +305,7 @@ payload_rx_done(void)
 		}break;
 		case UBX_MSG_NAV_TIMEUTC:
 		{
-			printf("Rx NAV-TIMEUTC\r\n");
+			//printf("Rx NAV-TIMEUTC\r\n");
 			
 			if (_buf.payload_rx_nav_timeutc.valid & UBX_RX_NAV_TIMEUTC_VALID_VALIDUTC) {
 				// convert to unix timestamp
@@ -325,15 +327,17 @@ payload_rx_done(void)
 		}break;
 		case UBX_MSG_NAV_SVINFO:
 		{
-			printf("Rx NAV-SVINFO\r\n");
+			//printf("Rx NAV-SVINFO\r\n");
 			// _satellite_info already populated by payload_rx_add_svinfo(), just add a timestamp
 			_satellite_info->timestamp = time_nowUs();
+			
+			_got_svinfo = RT_TRUE;
 
 			ret = 2;
 		}break;
 		case UBX_MSG_NAV_VELNED:
 		{
-			printf("Rx NAV-VELNED\r\n");
+			//printf("Rx NAV-VELNED\r\n");
 			
 			_gps_position->vel_m_s		= (float)_buf.payload_rx_nav_velned.speed * 1e-2f;
 			_gps_position->vel_n_m_s	= (float)_buf.payload_rx_nav_velned.velN * 1e-2f; /* NED NORTH velocity */
@@ -347,16 +351,18 @@ payload_rx_done(void)
 
 			_rate_count_vel++;
 			_got_velned = RT_TRUE;
+			
+			//printf("nV:%.2f eV:%.2f dV:%.2f" , _gps_position->vel_n_m_s,_gps_position->vel_e_m_s,_gps_position->vel_d_m_s);
 
 			ret = 1;
 		}break;
 		case UBX_MSG_MON_VER:
 		{
-			printf("Rx MON-VER\r\n");
+			//printf("Rx MON-VER\r\n");
 		}break;
 		case UBX_MSG_MON_HW:
 		{
-			printf("Rx MON-HW\r\n");
+			//printf("Rx MON-HW\r\n");
 			
 			switch (_rx_payload_length) {
 				case sizeof(ubx_payload_rx_mon_hw_ubx6_t):	/* u-blox 6 msg format */
@@ -380,7 +386,7 @@ payload_rx_done(void)
 		}break;
 		case UBX_MSG_ACK_ACK:
 		{
-			printf("Rx ACK-ACK\r\n");
+			//printf("Rx ACK-ACK\r\n");
 			
 			if ((_ack_state == UBX_ACK_WAITING) && (_buf.payload_rx_ack_ack.msg == _ack_waiting_msg)) {
 				_ack_state = UBX_ACK_GOT_ACK;
@@ -390,7 +396,7 @@ payload_rx_done(void)
 		}break;
 		case UBX_MSG_ACK_NAK:
 		{
-			printf("Rx ACK-NAK\r\n");
+			//printf("Rx ACK-NAK\r\n");
 			
 			if ((_ack_state == UBX_ACK_WAITING) && (_buf.payload_rx_ack_ack.msg == _ack_waiting_msg)) {
 				_ack_state = UBX_ACK_GOT_NAK;
@@ -793,7 +799,7 @@ void _configure_message_rate(const uint16_t msg, const uint8_t rate)
 
 int _configure_by_ubx(void)
 {
-	uint32_t baudrates[] = {9600, 38400, 19200, 57600, 115200};
+	uint32_t baudrates[] = {9600, 19200, 38400, 57600, 115200};
 	uint32_t baudrate;
 	uint8_t i;
 	
@@ -801,7 +807,6 @@ int _configure_by_ubx(void)
 	
 	for(i = 0 ; i<sizeof(baudrates) / sizeof(baudrates[0]) ; i++){
 		baudrate = baudrates[i];
-		printf("try bd:%d\r\n" , baudrate);
 		_set_baudrate(serial_device, baudrate);
 		/* flush input and wait for at least 20 ms silence */
 		_decode_init();
@@ -850,8 +855,6 @@ int _configure_by_ubx(void)
 	if (i >= sizeof(baudrates) / sizeof(baudrates[0])) {
 		printf("connection and/or baudrate detection failed\r\n");
 		return 1;	// connection and/or baudrate detection failed
-//		_set_baudrate(serial_device, UBX_TX_CFG_PRT_BAUDRATE);
-//		baudrate = UBX_TX_CFG_PRT_BAUDRATE;
 	}
 	
 	/* Send a CFG-RATE message to define update rate */
@@ -892,7 +895,6 @@ int _configure_by_ubx(void)
 		_use_nav_pvt = RT_TRUE;
 	}
 	
-	printf("%susing NAV-PVT\r\n", _use_nav_pvt ? "" : "not ");
 	
 	if (!_use_nav_pvt) {
 		_configure_message_rate(UBX_MSG_NAV_TIMEUTC, 5);
@@ -927,7 +929,6 @@ int _configure_by_ubx(void)
 	}
 
 	_configure_message_rate(UBX_MSG_NAV_SVINFO, (_satellite_info != NULL) ? 5 : 0);
-	//_configure_message_rate(UBX_MSG_NAV_SVINFO, 1);
 
 	if (_wait_for_ack(UBX_MSG_CFG_MSG, UBX_CONFIG_TIMEOUT) < 0) {
 		return 1;
@@ -947,7 +948,7 @@ int _configure_by_ubx(void)
 	return 0;
 }
 
-//该函数会在uart中断处理函数rt_hw_serial_isr中被回调
+//this function will be callback on rt_hw_serial_isr()
 static rt_err_t gps_serial_rx_ind(rt_device_t dev, rt_size_t size)
 {
 	uint8_t i;
@@ -992,37 +993,45 @@ rt_err_t gps_init(rt_device_t dev)
 	_ack_waiting_msg = 0;
 	_got_posllh = RT_FALSE;
 	_got_velned = RT_FALSE;
+	_got_svinfo = RT_FALSE;
 	
 	rt_device_set_rx_indicate(serial_device, gps_serial_rx_ind);
 	rt_device_open(serial_device, RT_DEVICE_OFLAG_RDWR | RT_DEVICE_FLAG_INT_RX);
 	
-	//time_waitMs(500);
 	for(uint8_t i = 0 ; i<CONFIGURE_RETRY_MAX ; i++){
 		if(_configure_by_ubx() == 0)
-			break;
+			return RT_EOK;
 	}
 	
-	return RT_EOK;
+	return RT_ERROR;
+	
+//	if(_configure_by_ubx() == 0)
+//		return RT_EOK;
+//	else
+//		return RT_ERROR;
 }
 
 rt_size_t gps_read(rt_device_t dev, rt_off_t pos, void *buffer, rt_size_t size)
 {
 	rt_err_t res;
 	
-	if(buffer == NULL)
-		return RT_ERROR;
-	
 	if(pos == RD_ONLY_POSLLH)	
 	{
 		if(_got_posllh == RT_FALSE)
 			return RT_EEMPTY;
 
+		if(buffer != NULL)
+			*(struct vehicle_gps_position_s*)buffer = *_gps_position;
+		
 		_got_posllh = RT_FALSE;
 	}
 	else if(pos == RD_ONLY_VELNED)	
 	{
 		if(_got_velned == RT_FALSE)
 			return RT_EEMPTY;
+		
+		if(buffer != NULL)
+			*(struct vehicle_gps_position_s*)buffer = *_gps_position;
 		
 		_got_velned = RT_FALSE;
 	}
@@ -1031,11 +1040,27 @@ rt_size_t gps_read(rt_device_t dev, rt_off_t pos, void *buffer, rt_size_t size)
 		if(_got_posllh == RT_FALSE || _got_velned == RT_FALSE)
 			return RT_EEMPTY;
 		
+		if(buffer != NULL)
+			*(struct vehicle_gps_position_s*)buffer = *_gps_position;
+		
 		_got_posllh = RT_FALSE;
 		_got_velned = RT_FALSE;
 	}
+	else if(pos == RD_SVINFO)
+	{
+		if(_got_svinfo == RT_FALSE)
+			return RT_EEMPTY;
+		
+		if(buffer != NULL)
+			*(struct satellite_info_s*)buffer = *_satellite_info;
+		
+		_got_svinfo = RT_FALSE;
+	}
+	else
+	{
+		return RT_ERROR;
+	}
 	
-	*(struct vehicle_gps_position_s*)buffer = *_gps_position;
 	
 	return RT_EOK;
 }
@@ -1066,21 +1091,6 @@ rt_err_t rt_gps_init(char* serial_device_name , struct vehicle_gps_position_s *g
 	
 	_gps_position = gps_position;
 	_satellite_info = satellite_info;
-		
-//	_configured = RT_FALSE;
-//	_use_nav_pvt = RT_FALSE;
-//	_ack_state = UBX_ACK_IDLE;
-//	_ack_waiting_msg = 0;
-//	_gps_position = gps_position;
-//	_satellite_info = satellite_info;
-//	rt_device_set_rx_indicate(serial_device, gps_serial_rx_ind);
-//	rt_device_open(serial_device, RT_DEVICE_OFLAG_RDWR | RT_DEVICE_FLAG_INT_RX);
-//	
-//	//time_waitMs(500);
-//	for(uint8_t i = 0 ; i<CONFIGURE_RETRY_MAX ; i++){
-//		if(_configure_by_ubx() == 0)
-//			break;
-//	}
 	
 	return res;
 }

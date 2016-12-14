@@ -77,17 +77,19 @@ static rt_err_t stm32_configure(struct rt_serial_device *serial, struct serial_c
 
     uart = (struct stm32_uart *)serial->parent.user_data;
 	
-	if(cfg->baud_rate!=BAUD_RATE_2400 && cfg->baud_rate!=BAUD_RATE_4800 && cfg->baud_rate!=BAUD_RATE_9600
+	if(cfg->baud_rate!=BAUD_RATE_2400 && cfg->baud_rate!=BAUD_RATE_4800 && cfg->baud_rate!=BAUD_RATE_9600 && cfg->baud_rate!=BAUD_RATE_19200
 		 && cfg->baud_rate!=BAUD_RATE_38400 && cfg->baud_rate!=BAUD_RATE_57600 && cfg->baud_rate!=BAUD_RATE_115200
 		&& cfg->baud_rate!=BAUD_RATE_230400 && cfg->baud_rate!=BAUD_RATE_460800 && cfg->baud_rate!=BAUD_RATE_921600)
 	{
-		USART_InitStructure.USART_BaudRate = 9600;	//default value
+		USART_InitStructure.USART_BaudRate = serial->config.baud_rate;	//dont change baudrate
 	}else{
 		USART_InitStructure.USART_BaudRate = cfg->baud_rate;
 	}
 
     if (cfg->data_bits == DATA_BITS_8)
         USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+	else if(cfg->data_bits == DATA_BITS_9)
+		USART_InitStructure.USART_WordLength = USART_WordLength_9b;
 
     if (cfg->stop_bits == STOP_BITS_1)
         USART_InitStructure.USART_StopBits = USART_StopBits_1;

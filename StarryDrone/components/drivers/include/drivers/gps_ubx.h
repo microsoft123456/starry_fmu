@@ -520,8 +520,8 @@ typedef enum {
 #define SAT_INFO_MAX_SATELLITES  20
 
 struct satellite_info_s {
-	uint64_t timestamp;				/**< Timestamp of satellite info */
-	uint8_t count;					/**< Number of satellites in satellite info */
+	uint64_t timestamp;							/**< Timestamp of satellite info */
+	uint8_t count;								/**< Number of satellites in satellite info */
 	uint8_t svid[SAT_INFO_MAX_SATELLITES]; 		/**< Space vehicle ID [1..255], see scheme below  */
 	uint8_t used[SAT_INFO_MAX_SATELLITES];		/**< 0: Satellite not used, 1: used for navigation */
 	uint8_t elevation[SAT_INFO_MAX_SATELLITES];	/**< Elevation (0: right on top of receiver, 90: on the horizon) of satellite */

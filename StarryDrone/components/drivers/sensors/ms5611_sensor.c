@@ -93,7 +93,6 @@ rt_err_t ms5611_read_prom_reg(rt_uint8_t cmd , uint16_t* buff)
 	return res;
 }
 
-//TODO check uncorrect
 rt_bool_t crc_check(uint16_t *n_prom)
 {
 	int16_t cnt;
@@ -163,13 +162,13 @@ rt_err_t baro_collect_data(void *args)
 	report->pressure = _pressure / 100.0f;
 	
 	/* tropospheric properties (0-11km) for standard atmosphere */
-	const double T1 = 15.0 + 273.15;	/* temperature at base height in Kelvin */
+	const double T1 = 15.0 + 273.15;	/* temperature at base height in Kelvin, [K] = [°C] + 273.15 */
 	const double a  = -6.5 / 1000;	/* temperature gradient in degrees per metre */
 	const double g  = 9.80665;	/* gravity constant in m/s/s */
 	const double R  = 287.05;	/* ideal gas constant in J/kg/K */
 	
 	/* current pressure at MSL in kPa */
-	double p1 = 101325 / 1000.0;
+	double p1 = 101325.0 / 1000.0;
 
 	/* measured pressure in kPa */
 	double p = _pressure / 1000.0;
@@ -203,7 +202,7 @@ rt_err_t baro_init(rt_device_t dev)
 	
 	_raw_temperature = _raw_pressure = 0;
 	
-	return 0;
+	return res;
 }
 
 rt_size_t baro_read(rt_device_t dev, rt_off_t pos, void *buffer, rt_size_t size)

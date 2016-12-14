@@ -42,7 +42,7 @@ uint16_t EventCnt = 0;
 Interval IntervalBuff[MAX_INTERVAL_NUM];
 Sensor_Report sensor_report;
 
-static rt_device_t acc_mag_device_t , gyr_device_t , baro_device_t;
+static rt_device_t acc_mag_device_t , gyr_device_t , baro_device_t, gps_device;
 static struct vehicle_gps_position_s gps_position;
 static struct satellite_info_s satellite_info;
 static Baro_Machine_State baro_state;
