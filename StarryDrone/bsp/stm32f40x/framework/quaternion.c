@@ -11,13 +11,6 @@
 #include <rtthread.h>
 #include <math.h>
 
-void quaternion_normalize(quaternion * q);
-void quaternion_mult(quaternion * result,const quaternion * left,const quaternion * right);
-void quaternion_rotateVector(const quaternion * rotation,const float from[3],float to[3]);
-void quaternion_fromTwoVectorRotation(quaternion * result,const float from[3],const float to[3]);
-void quaternion_fromFourVectorRotation(quaternion * result,const float from1[3],
-    const float to1[3],const float from2[3],const float to2[3]);
-
 void quaternion_normalize(quaternion * q)
 {
     float norm_r = math_rsqrt(q->w*q->w + q->x*q->x + q->y*q->y + q->z*q->z);
@@ -27,43 +20,65 @@ void quaternion_normalize(quaternion * q)
     q->z *= norm_r;
 }
 
-// 四元数相乘
-// left   : 被乘数，输入。
-// right  : 乘数，输入。
-// result : 积，输出。
-void quaternion_mult(quaternion * result,const quaternion * left,const quaternion * right)
+void quaternion_add(quaternion * result,const quaternion left,const quaternion right)
 {
-    result->w = left->w * right->w - left->x * right->x - left->y * right->y - left->z * right->z;
-    result->x = left->x * right->w + left->w * right->x + left->y * right->z - left->z * right->y;
-    result->y = left->y * right->w + left->w * right->y + left->z * right->x - left->x * right->z;
-    result->z = left->z * right->w + left->w * right->z + left->x * right->y - left->y * right->x;
+	result->w = left.w + right.w;
+	result->x = left.x + right.x;
+	result->y = left.y + right.y;
+	result->z = left.z + right.z;
 }
 
-// 用四元数来旋转向量。
-void quaternion_rotateVector(const quaternion * rotation,const float from[3],float to[3])
+void quaternion_mult(quaternion * result,const quaternion left,const quaternion right)
 {
-    float x2  = rotation->x * 2;
-    float y2  = rotation->y * 2;
-    float z2  = rotation->z * 2;
-    float wx2 = rotation->w * x2;
-    float wy2 = rotation->w * y2;
-    float wz2 = rotation->w * z2;
-    float xx2 = rotation->x * x2;
-    float yy2 = rotation->y * y2;
-    float zz2 = rotation->z * z2;
-    float xy2 = rotation->x * y2;
-    float yz2 = rotation->y * z2;
-    float xz2 = rotation->z * x2;
+    result->w = left.w * right.w - left.x * right.x - left.y * right.y - left.z * right.z;
+    result->x = left.x * right.w + left.w * right.x + left.y * right.z - left.z * right.y;
+    result->y = left.y * right.w + left.w * right.y + left.z * right.x - left.x * right.z;
+    result->z = left.z * right.w + left.w * right.z + left.x * right.y - left.y * right.x;
+}
+
+//左乘四元数矩阵
+void quaternion_rotateVector(const quaternion rotation,const float from[3],float to[3])
+{
+    float x2  = rotation.x * 2;
+    float y2  = rotation.y * 2;
+    float z2  = rotation.z * 2;
+    float wx2 = rotation.w * x2;
+    float wy2 = rotation.w * y2;
+    float wz2 = rotation.w * z2;
+    float xx2 = rotation.x * x2;
+    float yy2 = rotation.y * y2;
+    float zz2 = rotation.z * z2;
+    float xy2 = rotation.x * y2;
+    float yz2 = rotation.y * z2;
+    float xz2 = rotation.z * x2;
     //
     to[0] = from[0]*(1 - yy2 - zz2) + from[1]*(xy2 - wz2)     + from[2]*(xz2 + wy2);
     to[1] = from[0]*(xy2 + wz2)     + from[1]*(1 - xx2 - zz2) + from[2]*(yz2 - wx2);
     to[2] = from[0]*(xz2 - wy2)     + from[1]*(yz2 + wx2)     + from[2]*(1 - xx2 - yy2);
 }
 
-//
-// 两向量旋转→四元数旋转。
-// 输入：from、to两向量，长度都必须大于0。
-// 输出：从from方向转到to方向的旋转。
+//右乘四元数矩阵
+void quaternion_inv_rotateVector(const quaternion rotation,const float from[3],float to[3])
+{
+	float x2  = rotation.x * 2;
+    float y2  = rotation.y * 2;
+    float z2  = rotation.z * 2;
+    float wx2 = rotation.w * x2;
+    float wy2 = rotation.w * y2;
+    float wz2 = rotation.w * z2;
+    float xx2 = rotation.x * x2;
+    float yy2 = rotation.y * y2;
+    float zz2 = rotation.z * z2;
+    float xy2 = rotation.x * y2;
+    float yz2 = rotation.y * z2;
+    float xz2 = rotation.z * x2;
+	//
+	to[0] = from[0]*(1 - yy2 - zz2) + from[1]*(xy2 + wz2)     + from[2]*(xz2 - wy2);
+	to[1] = from[0]*(xy2 - wz2)     + from[1]*(1 - xx2 - zz2) + from[2]*(yz2 + wx2);
+    to[2] = from[0]*(xz2 + wy2)     + from[1]*(yz2 - wx2)     + from[2]*(1 - xx2 - yy2);
+}
+
+// calculate quaternion rotate from vector1 to vector2
 void quaternion_fromTwoVectorRotation(quaternion * result,const float from[3],const float to[3])
 {
     float from_norm = fabsf(from[0]*from[0] + from[1]*from[1] + from[2]*from[2]);
@@ -90,34 +105,31 @@ void quaternion_fromTwoVectorRotation(quaternion * result,const float from[3],co
     result->z = cross_z * sin_half_theta_div_cross_norm;
 }
 
-/*
- * 四向量旋转。
- * {from1,from2,to1,to2}都是单位向量。
- * 生成从{from1,from2}到{to1,to2}最接近的旋转。 */
-void quaternion_fromFourVectorRotation(quaternion * result,const float from1[3],
-    const float to1[3],const float from2[3],const float to2[3])
+//euler[3]: roll pitch yaw
+void quaternion_toEuler(const quaternion q, float euler[3])
 {
-    /*
-     * 变换基底。 */
-    float mid_from[3],mid_to[3],cross_from[3],cross_to[3];
-    math_vector_cross(cross_from,from1,from2);
-    math_vector_cross(cross_to,to1,to2);
-    for(int i=0;i<3;i++)
-    {
-        mid_from[i] = from1[i] + from2[i];
-        mid_to[i] = to1[i] + to2[i];
-    }
-    /*
-     * 先把mid转到重合。 */
-    quaternion rotation_1;
-    quaternion_fromTwoVectorRotation(&rotation_1,mid_from,mid_to);
-    /*
-     * 然后再把cross转到重合。 */
-    quaternion rotation_2;
-    float cross_from_1[3];
-    quaternion_rotateVector(&rotation_1,cross_from,cross_from_1);
-    quaternion_fromTwoVectorRotation(&rotation_2,cross_from_1,cross_to);
-    /*
-     * 最后结合两次旋转。 */
-    quaternion_mult(result,&rotation_2,&rotation_1);
+	double ysqr = q.y * q.y;
+
+	// roll (x-axis rotation)
+	double t0 = +2.0f * (q.w * q.x + q.y * q.z);
+	double t1 = +1.0f - 2.0f * (q.x * q.x + ysqr);
+	euler[0] = atan2(t0, t1);
+
+	// pitch (y-axis rotation)
+	double t2 = +2.0f * (q.w * q.y - q.z * q.x);
+	t2 = t2 > 1.0f ? 1.0f : t2;
+	t2 = t2 < -1.0f ? -1.0f : t2;
+	euler[1] = asin(t2);
+
+	// yaw (z-axis rotation)
+	double t3 = +2.0f * (q.w * q.z + q.x *q.y);
+	double t4 = +1.0f - 2.0f * (ysqr + q.z * q.z);  
+	euler[2] = atan2(t3, t4);
+}
+
+void quaternion_invert(quaternion *q)
+{
+	q->x = -q->x;
+	q->y = -q->y;
+	q->z = -q->z;
 }

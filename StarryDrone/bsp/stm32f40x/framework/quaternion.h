@@ -23,11 +23,12 @@ typedef  struct
 
 static inline void quaternion_loadIdentity(quaternion * q);
 void quaternion_normalize(quaternion * q);
-void quaternion_mult(quaternion * result,const quaternion * left,const quaternion * right);
-void quaternion_rotateVector(const quaternion * rotation,const float from[3],float to[3]);
+void quaternion_mult(quaternion * result,const quaternion left,const quaternion right);
+void quaternion_add(quaternion * result,const quaternion left,const quaternion right);
+void quaternion_rotateVector(const quaternion rotation,const float from[3],float to[3]);
+void quaternion_inv_rotateVector(const quaternion rotation,const float from[3],float to[3]);
 void quaternion_fromTwoVectorRotation(quaternion * result,const float from[3],const float to[3]);
-void quaternion_fromFourVectorRotation(quaternion * result,const float from1[3],
-const float to1[3],const float from2[3],const float to2[3]);
+void quaternion_toEuler(const quaternion q, float euler[3]);
 
 static inline void quaternion_load_init_attitude(quaternion * q)
 {

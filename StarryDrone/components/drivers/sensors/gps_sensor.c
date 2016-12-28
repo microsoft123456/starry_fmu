@@ -1067,7 +1067,7 @@ rt_size_t gps_read(rt_device_t dev, rt_off_t pos, void *buffer, rt_size_t size)
 
 rt_err_t rt_gps_init(char* serial_device_name , struct vehicle_gps_position_s *gps_position, struct satellite_info_s *satellite_info)
 {	
-	rt_err_t res = RT_EOK;;
+	rt_err_t res = RT_EOK;
 	
 	/* set device type */
     gps_device.type    = RT_Device_Class_Char;

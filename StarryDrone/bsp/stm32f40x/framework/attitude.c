@@ -19,6 +19,11 @@
 #define ACC_UPDATE_INTERVAL		3
 #define MAG_UPDATE_INTERVAL		10
 
+//for debug, change to 50 ms
+//#define GYR_UPDATE_INTERVAL		100
+//#define ACC_UPDATE_INTERVAL		100
+//#define MAG_UPDATE_INTERVAL		100
+
 static quaternion drone_attitude;
 
 static struct rt_timer timer_acc;
@@ -29,13 +34,13 @@ struct rt_event event_sensor;
 
 rt_err_t attitude_init(void)
 {
-	//给当前姿态赋初值
+	//initialize attitude
 	quaternion_load_init_attitude(&drone_attitude);
 
 	return RT_EOK;
 }
 
-// 获取姿态，只读。
+// get the current attitude
 const quaternion * attitude_getAttitude(void)
 {
     return &drone_attitude;
@@ -73,47 +78,6 @@ void attitude_mixGyrAccMag(void)
     float time_interval_s = time_interval_us * (1.0f/1e6f); /*将积分间隔单位转换为s*/
     //
     mix_gyrAccMag_crossMethod(&drone_attitude,gyrfilter_current(),accfilter_getCurrent(),magfilter_getCurrent(),time_interval_s);
-}
-
-void attitude_mixGyrAcc(void)
-{
-    //
-    // 计算积分间隔，判断是否合理。
-    static uint64_t time_pre_us = 0;
-    uint64_t time_now_us = time_nowUs();
-    int32_t time_interval_us = time_now_us - time_pre_us;   /*积分间隔，单位为us*/
-    time_pre_us = time_now_us;
-    if(time_interval_us > 1000*1000) // 超过1秒就判为异常，丢弃。
-        return;
-    float time_interval_s = time_interval_us * (1.0f/1e6f); /*将积分间隔单位转换为s*/
-    //
-    mix_gyrAcc_crossMethod(&drone_attitude,gyrfilter_current(),accfilter_getCurrent(),time_interval_s);
-}
-
-void attitude_mixMag(void)
-{
-    //
-    // 计算积分间隔，判断是否合理。
-    static uint64_t time_pre_us = 0;
-    uint64_t time_now_us = time_nowUs();
-    int32_t time_interval_us = time_now_us - time_pre_us;   /*积分间隔，单位为us*/
-    time_pre_us = time_now_us;
-    if(time_interval_us > 1000*1000) // 超过1秒就判为异常，丢弃。
-        return;
-    float time_interval_s = time_interval_us * (1.0f/1e6f); /*将积分间隔单位转换为s*/
-}
-
-//Add by Elor 
-//陀螺仪积分
-void attitude_intergralGyr(float gyr[3])
-{
-    static uint64_t time_pre_us = 0;
-    uint64_t time_now_us = time_nowUs();
-    int32_t time_interval_us = time_now_us - time_pre_us;   /*积分间隔，单位为us*/
-    time_pre_us = time_now_us;
-    float time_interval_s = time_interval_us * (1.0f/1e6f); /*将积分间隔单位转换为s*/
-    
-    mix_gyr(&drone_attitude,gyr,time_interval_s);
 }
 
 int32_t acc_gyr_dataIsReady(void)

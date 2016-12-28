@@ -10,6 +10,7 @@
 #include <rtdevice.h>
 #include <rtthread.h>
 #include <string.h>
+#include <math.h>
 
 #define ADDR_CMD_CONVERT_D1			0x48	/* write to this address to start pressure conversion */
 #define ADDR_CMD_CONVERT_D2			0x58	/* write to this address to start temperature conversion */
@@ -309,6 +310,9 @@ rt_err_t device_sensor_init(void)
 	
 	//sensor_get_device_id(GYR_DEVICE_NAME);
 	
+	if(rt_rc_init("uart6") == RT_EOK)
+		printf("rc init ok\r\n");
+	
 //	while(1)
 //	{
 //		//example code to read barometer data
@@ -327,19 +331,19 @@ rt_err_t device_sensor_init(void)
 //		}
 //	}
 
-	while(1)
-	{
-		//example code to read gps data
-		if( rt_device_read(gps_device_t, RD_COMPLETED_REPORT, NULL, 1) == RT_EOK){
-			printf("lat:%d lon:%d alt:%d vd:%.2f ve:%.2f vn:%.2f\r\n", gps_position.lat, gps_position.lon, gps_position.alt, 
-				gps_position.vel_d_m_s,gps_position.vel_e_m_s, gps_position.vel_n_m_s);
-		}
-		if( rt_device_read(gps_device_t, RD_SVINFO, NULL, 1) == RT_EOK){
-			printf("satellite cnt:%d\r\n", satellite_info.count);
-		}
-		
-		time_waitMs(500);
-	}
+//	while(1)
+//	{
+//		//example code to read gps data
+//		if( rt_device_read(gps_device_t, RD_COMPLETED_REPORT, NULL, 1) == RT_EOK){
+//			printf("lat:%d lon:%d alt:%d vd:%.2f ve:%.2f vn:%.2f\r\n", gps_position.lat, gps_position.lon, gps_position.alt, 
+//				gps_position.vel_d_m_s,gps_position.vel_e_m_s, gps_position.vel_n_m_s);
+//		}
+//		if( rt_device_read(gps_device_t, RD_SVINFO, NULL, 1) == RT_EOK){
+//			printf("satellite cnt:%d\r\n", satellite_info.count);
+//		}
+//		
+//		time_waitMs(500);
+//	}
 	
 	return res;
 }

@@ -21,4 +21,12 @@ uint16_t math_crc16(uint16_t crc,const void * data,uint16_t len);
 void math_itoa(int32_t val,char * str);
 const char * math_afromi(int32_t val);
 
+void Vector3_Set(float vector[3], float x, float y, float z);
+void Vector3_Normalize(float result[3], const float vector[3]);
+void Vector3_CrossProduct(float result[3], const float vector1[3], const float vector2[3]);
+float Vector3_DotProduct(const float vector1[3], const float vector2[3]);
+float Vector3_Length(const float vector[3]);
+void Vector2_Normalize(float result[2], float vector[2]);
+float Vector2_DotProduct(const float vector1[2], const float vector2[2]);
+
 #endif

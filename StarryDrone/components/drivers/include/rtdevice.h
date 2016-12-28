@@ -395,6 +395,7 @@ rt_inline void rt_work_init(struct rt_work* work, void (*work_func)(struct rt_wo
 #include "drivers/lsm303d_sensor.h"
 #include "drivers/ms5611_sensor.h"
 #include "drivers/gps_sensor.h"
+#include "drivers/rc_receiver.h"
 #include <stdio.h>
 
 #ifdef __cplusplus

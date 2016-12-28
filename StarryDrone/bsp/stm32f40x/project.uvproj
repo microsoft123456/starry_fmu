@@ -568,6 +568,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\components\drivers\sensors\gps_sensor.c</FilePath>
             </File>
+            <File>
+              <FileName>rc_receiver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\components\drivers\rc_receiver\rc_receiver.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

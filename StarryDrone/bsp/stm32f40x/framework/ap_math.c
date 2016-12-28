@@ -128,3 +128,47 @@ const char * math_afromi(int32_t val)
     //
     return buffer;
 }
+
+void Vector3_Set(float vector[3], float x, float y, float z)
+{
+	vector[0] = x;
+	vector[1] = y;
+	vector[2] = z;
+}
+
+void Vector3_Normalize(float result[3], const float vector[3])
+{
+	float rsqrt = math_rsqrt(vector[0]*vector[0]+vector[1]*vector[1]+vector[2]*vector[2]);
+    result[0] = vector[0] * rsqrt;
+    result[1] = vector[1] * rsqrt;
+	result[2] = vector[2] * rsqrt;
+}
+
+void Vector3_CrossProduct(float result[3], const float vector1[3], const float vector2[3])
+{
+	result[0] = vector1[1]*vector2[2] - vector1[2]*vector2[1];
+	result[1] = vector1[2]*vector2[0] - vector1[0]*vector2[2];
+	result[2] = vector1[0]*vector2[1] - vector1[1]*vector2[0];
+}
+
+float Vector3_DotProduct(const float vector1[3], const float vector2[3])
+{
+	return vector1[0]*vector2[0] + vector1[1]*vector2[1] + vector1[2]*vector2[2];
+}
+
+float Vector3_Length(const float vector[3])
+{
+	return sqrt(vector[0]*vector[0]+vector[1]*vector[1]+vector[2]*vector[2]);
+}
+
+void Vector2_Normalize(float result[2], float vector[2])
+{
+	float rsqrt = math_rsqrt(vector[0]*vector[0]+vector[1]*vector[1]);
+	result[0] = vector[0] * rsqrt;
+    result[1] = vector[1] * rsqrt;
+}
+
+float Vector2_DotProduct(const float vector1[2], const float vector2[2])
+{
+	return vector1[0]*vector2[0] + vector1[1]*vector2[1];
+}

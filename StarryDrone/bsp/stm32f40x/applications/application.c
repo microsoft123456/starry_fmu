@@ -93,6 +93,7 @@ void rt_init_thread_entry(void* parameter)
 		rt_thread_startup(&thread_mavlink_handle);
 	
 	TCA62724_blink_control(1);
+	
 //	while(1)
 //	{
 //		TCA62724_set_color(LED_RED);

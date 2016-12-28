@@ -122,12 +122,12 @@ void mavlink_loop(void *parameter)
 		{
 			if(recv_set & EVENT_MAV_1HZ_UPDATE)
 			{
-				//mavlink_send_msg_heartbeat(MAV_STATE_STANDBY);
+				mavlink_send_msg_heartbeat(MAV_STATE_STANDBY);
 			}
 			
 			if(recv_set & EVENT_MAV_3HZ_UPDATE)
 			{
-				//mavlink_send_msg_attitude_quaternion(MAV_STATE_STANDBY);
+				mavlink_send_msg_attitude_quaternion(MAV_STATE_STANDBY);
 			}
 		}
 		else
