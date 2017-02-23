@@ -395,6 +395,14 @@ FINSH_FUNCTION_EXPORT_ALIAS(cmd_free, __cmd_free, Show the memory usage in the s
 
 #endif
 
+int cmd_uploader(int argc, char** argv)
+{
+	px4io_upload();
+	
+	return 1;
+}
+FINSH_FUNCTION_EXPORT_ALIAS(cmd_uploader, __cmd_uploader, Upload bin file to px4io.);
+
 //Add by Elor,2016.7.5
 int cmd_calibrate(int argc, char** argv)
 {

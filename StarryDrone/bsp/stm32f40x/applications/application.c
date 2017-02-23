@@ -42,6 +42,9 @@ struct rt_thread thread_attitude_handle;
 static char thread_mavlink_stack[1024];
 struct rt_thread thread_mavlink_handle;
 
+static char thread_px4io_stack[1024];
+struct rt_thread thread_px4io_handle;
+
 void rt_init_thread_entry(void* parameter)
 {
 	rt_err_t res;
@@ -91,6 +94,15 @@ void rt_init_thread_entry(void* parameter)
 						   sizeof(thread_mavlink_stack),MAVLINK_THREAD_PRIORITY,1);
 	if (res == RT_EOK)
 		rt_thread_startup(&thread_mavlink_handle);
+	
+	res = rt_thread_init(&thread_px4io_handle,
+						   "px4io",
+						   px4io_loop,
+						   RT_NULL,
+						   &thread_px4io_stack[0],
+						   sizeof(thread_px4io_stack),MAVLINK_THREAD_PRIORITY,1);
+	if (res == RT_EOK)
+		rt_thread_startup(&thread_px4io_handle);
 	
 	TCA62724_blink_control(1);
 	

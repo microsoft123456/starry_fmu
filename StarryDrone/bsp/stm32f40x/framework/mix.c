@@ -73,7 +73,8 @@ void mix_gyrAccMag_crossMethod(quaternion * q,const float gyr[3],const float acc
 	di[1] += acc_cross[1];
 	di[2] += mag_cross[2];
 	delta[0] =  gyr[0] + acc_cross[0]*FACTOR_P + di[0]*FACTOR_I;
-    delta[1] =  gyr[1] + acc_cross[1]*FACTOR_P + di[1]*FACTOR_I;
+    //delta[1] =  gyr[1] + acc_cross[1]*FACTOR_P + di[1]*FACTOR_I;
+	delta[1] = -gyr[1] + acc_cross[1]*FACTOR_P + di[1]*FACTOR_I;
 	delta[2] = -gyr[2] + mag_cross[2]*FACTOR_P + di[2]*FACTOR_I;
 	
 	//first order runge-kutta to create quaternion

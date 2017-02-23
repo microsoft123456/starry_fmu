@@ -12,3 +12,4 @@
 
 rt_err_t device_mavlink_init(void);
 void mavlink_loop(void *parameter);
+uint8_t mavlink_send_msg_rc_channels_raw(uint32_t channel[8]);

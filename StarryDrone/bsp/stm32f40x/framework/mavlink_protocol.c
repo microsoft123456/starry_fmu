@@ -19,6 +19,7 @@
 
 uint8_t mav_tx_buff[1024];
 mavlink_system_t mavlink_system;
+uint8_t mav_disenable = 1;
 
 static struct rt_timer timer_1HZ;
 static struct rt_timer timer_3HZ;
@@ -51,13 +52,16 @@ uint8_t mavlink_send_msg_heartbeat(uint8_t system_status)
 	mavlink_message_t msg;
 	uint16_t len;
 	
+	if(mav_disenable)
+		return 0;
+	
 	mavlink_msg_heartbeat_pack(mavlink_system.sysid, mavlink_system.compid, &msg,
 						       MAV_TYPE_QUADROTOR, MAV_AUTOPILOT_GENERIC, 0xFE, 0, system_status);
 	
 	len = mavlink_msg_to_send_buffer(mav_tx_buff, &msg);
 	mavlink_msg_transfer(0, mav_tx_buff, len);
 	
-	return 0;
+	return 1;
 }
 
 uint8_t mavlink_send_msg_attitude_quaternion(uint8_t system_status)
@@ -65,6 +69,9 @@ uint8_t mavlink_send_msg_attitude_quaternion(uint8_t system_status)
 	mavlink_message_t msg;
 	uint16_t len;
 	const quaternion* attitude;
+	
+	if(mav_disenable)
+		return 0;
 	
 	attitude = attitude_getAttitude();
 	
@@ -74,7 +81,26 @@ uint8_t mavlink_send_msg_attitude_quaternion(uint8_t system_status)
 	len = mavlink_msg_to_send_buffer(mav_tx_buff, &msg);
 	mavlink_msg_transfer(0, mav_tx_buff, len);
 	
-	return 0;
+	return 1;
+}
+
+uint8_t mavlink_send_msg_rc_channels_raw(uint32_t channel[8])
+{
+	mavlink_message_t msg;
+	uint16_t len;
+	
+	if(mav_disenable)
+		return 0;
+	
+	mavlink_msg_rc_channels_raw_pack(mavlink_system.sysid, mavlink_system.compid, &msg,
+						       time_nowMs(), 1, (uint16_t)1000*channel[0], (uint16_t)1000*channel[1], 
+								(uint16_t)1000*channel[2], (uint16_t)1000*channel[3], (uint16_t)1000*channel[4], (uint16_t)1000*channel[5], 
+								(uint16_t)1000*channel[6], (uint16_t)1000*channel[7], 70);
+	
+	len = mavlink_msg_to_send_buffer(mav_tx_buff, &msg);
+	mavlink_msg_transfer(0, mav_tx_buff, len);
+	
+	return 1;
 }
 
 static void timer_mavlink_1HZ_update(void* parameter)
@@ -132,7 +158,7 @@ void mavlink_loop(void *parameter)
 		}
 		else
 		{
-			//some err occur
+			//some err happen
 			rt_kprintf("mavlink loop, err:%d\r\n" , res);
 		}
 	}

@@ -45,7 +45,6 @@ void NVIC_Configuration(void)
     NVIC_SetVectorTable(NVIC_VectTab_RAM, 0x0);
 #else  /* VECT_TAB_FLASH  */
     /* Set the Vector Table base location at 0x08000000 */
-    //NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x0);
 	/* app start from 0x8004000,so need configure vectortab offset to 0x4000 */
 	NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x4000);
 #endif

@@ -45,7 +45,7 @@ rt_err_t rt_rc_init(char* serial_device_name)
 	
 	if(serial_device == RT_NULL)
     {
-        rt_kprintf("serial device %s not found!\r\n", serial_device);
+        rt_kprintf("serial device %s not found!\r\n", serial_device_name);
         return RT_EEMPTY;
     }
 	
