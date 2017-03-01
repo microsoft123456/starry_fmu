@@ -395,11 +395,13 @@ rt_inline void rt_work_init(struct rt_work* work, void (*work_func)(struct rt_wo
 #include "framework/px4io_manager.h"
 #include "framework/px4io_protocol.h"
 #include "framework/ringbuffer.h"
+#include "framework/control.h"
 #include "drivers/l3gd20h_sensor.h"
 #include "drivers/lsm303d_sensor.h"
 #include "drivers/ms5611_sensor.h"
 #include "drivers/gps_sensor.h"
 #include "drivers/rc_receiver.h"
+#include "drivers/motor.h"
 #include <stdio.h>
 
 #ifdef __cplusplus

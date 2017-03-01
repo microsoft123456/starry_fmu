@@ -10,14 +10,15 @@
 #include <rtdevice.h>
 #include <rtthread.h>
 
-#define PX4IO_DEBUG
+//#define PX4IO_DEBUG
+
 static rt_device_t debug_dev;
 struct rt_semaphore px4io_dbg_rx_sem;
 struct rt_semaphore px4io_rx_pack_sem;
 static rt_device_t serial_dev;
 static ringbuffer* rb;
 
-uint8_t ppm_send_freq = 10;	/* send frequemcy of ppm signal, HZ */
+uint8_t ppm_send_freq = 20;	/* sending frequemcy of ppm signal, HZ */
 
 static rt_err_t send_char(uint8_t c)
 {
@@ -93,38 +94,18 @@ uint8_t send_package(uint8_t cmd, uint8_t* data, uint16_t len)
 
 rt_err_t set_ppm_freq(uint8_t freq)
 {
-	Package_Def pack;
-	SendPackage_Def send_pack;
 	rt_err_t ret;
 	
-	if(!make_package(&freq , CMD_CONFIG_CHANNEL , 1 , &pack)){
-		return RT_ERROR;
-	}
-	
-	package2sendpack(pack , &send_pack);
-	ret = send(send_pack.send_buff , send_pack.buff_size);
-	
-	free_pack(&pack);
-	free_sendpack(&send_pack);
+	ret = send_package(CMD_CONFIG_CHANNEL, &freq, 1) ? RT_EOK : RT_ERROR;
 	
 	return ret;
 }
 
 rt_err_t request_reboot(void)
 {
-	Package_Def pack;
-	SendPackage_Def send_pack;
 	rt_err_t ret;
 	
-	if(!make_package(NULL , CMD_REBOOT , 0 , &pack)){
-		return RT_ERROR;
-	}
-	
-	package2sendpack(pack , &send_pack);
-	ret = send(send_pack.send_buff , send_pack.buff_size);
-	
-	free_pack(&pack);
-	free_sendpack(&send_pack);
+	ret = send_package(CMD_REBOOT, NULL, 0) ? RT_EOK : RT_ERROR;
 	
 	return ret;
 }
@@ -171,7 +152,7 @@ void px4io_loop(void *parameter)
 	
 	while(1){
 #ifdef PX4IO_DEBUG
-		if (rt_sem_take(&px4io_dbg_rx_sem, 20) == RT_EOK){
+		if (rt_sem_take(&px4io_dbg_rx_sem, 1) == RT_EOK){
 			uint8_t ch;
 			while(rt_device_read(debug_dev , 0 , &ch , 1)){
 				fputc((int)ch, NULL);

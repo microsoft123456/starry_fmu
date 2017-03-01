@@ -10,20 +10,19 @@
 #include "stm32f4xx.h"
 #include "pwm.h"
 
-#define TIM1_FREQUENCY	3000000
-#define PWM_ARR(freq) 	(TIM1_FREQUENCY/freq) // CCR reload value, Timer frequency = 3M/60K = 50 Hz
-#define PWM_CCR_MIN(freq) 	(PWM_ARR(freq)*0.05) 		// high pulse 1ms
-#define PWM_CCR_MAX(freq) 	(PWM_ARR(freq)*0.1)  		// high pulse 2ms
+#define TIM1_FREQUENCY	3000000						// Timer frequency: 3M
+#define PWM_DEFAULT_FREQUENCY	50					// pwm default frequqncy: 50Hz
+#define PWM_ARR(freq) 	(TIM1_FREQUENCY/freq) 		// CCR reload value, Timer frequency = 3M/60K = 50 Hz
 
-rt_base_t pwm_freq;
-float TIM1_duty_cycle[4] = {0.05, 0.05, 0.05, 0.05};
+static rt_base_t pwm_freq;
+static float TIM_duty_cycle[4] = {0.05, 0.05, 0.05, 0.05};
 
 void pwm_gpio_init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
 	/* TIM1 clock enable */
-	RCC_APB1PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
 
 	/* GPIOE clock enable */
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
@@ -31,7 +30,7 @@ void pwm_gpio_init(void)
 	/* GPIOE Configuration: TIM1 CH1 (PE9), TIM1 CH2 (PE11), TIM1 CH3 (PE13) and TIM1 CH4 (PE14) */
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_11 | GPIO_Pin_13 | GPIO_Pin_14;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
 	GPIO_Init(GPIOE, &GPIO_InitStructure); 
@@ -66,8 +65,12 @@ void pwm_timer_init(void)
 
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_Pulse = PWM_CCR_MIN(pwm_freq);	//initial output minimal pulse
+	TIM_OCInitStructure.TIM_Pulse = 0;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+	TIM_OCInitStructure.TIM_OutputNState = TIM_OutputNState_Disable;
+	TIM_OCInitStructure.TIM_OCNPolarity = TIM_OCNPolarity_High;
+	TIM_OCInitStructure.TIM_OCIdleState = TIM_OCIdleState_Set;
+	TIM_OCInitStructure.TIM_OCNIdleState = TIM_OCIdleState_Reset;
 
 	TIM_OC1Init(TIM1, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM1, TIM_OCPreload_Enable);
@@ -87,47 +90,65 @@ void pwm_timer_init(void)
 	TIM_CtrlPWMOutputs(TIM1, ENABLE);
 }
 
-void pwm_configure(struct rt_device *device, rt_base_t frequency)
+void stm32_pwm_configure(struct rt_device *device, rt_base_t frequency)
 {
 	pwm_freq = frequency;
 	pwm_timer_init();
 }
 
-void pwm_write(struct rt_device *device, TIM_Channel chanel, float duty_cyc)
+void stm32_pwm_write(struct rt_device *device, uint8_t chanel, float* duty_cyc)
 {
-	TIM_OCInitTypeDef  TIM_OCInitStructure;
-	
-	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
-	TIM_OCInitStructure.TIM_Pulse = PWM_ARR(pwm_freq)*duty_cyc;
-	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-	if(chanel == tim_ch1){
-		TIM_OC1Init(TIM1, &TIM_OCInitStructure);
-		TIM_OC1PreloadConfig(TIM1, TIM_OCPreload_Enable);
-	}else if(chanel == tim_ch2){
-		TIM_OC2Init(TIM1, &TIM_OCInitStructure);
-		TIM_OC2PreloadConfig(TIM1, TIM_OCPreload_Enable);
-	}else if(chanel == tim_ch3){
-		TIM_OC3Init(TIM1, &TIM_OCInitStructure);
-		TIM_OC3PreloadConfig(TIM1, TIM_OCPreload_Enable);
-	}else if(chanel == tim_ch4){
-		TIM_OC4Init(TIM1, &TIM_OCInitStructure);
-		TIM_OC4PreloadConfig(TIM1, TIM_OCPreload_Enable);
+	if(chanel & motor_ch1){
+		TIM_SetCompare1(TIM1, PWM_ARR(pwm_freq)*duty_cyc[0]);
+		TIM_duty_cycle[0] = duty_cyc[0];
 	}
-	
-	TIM1_duty_cycle[chanel] = duty_cyc;
+	if(chanel & motor_ch2){
+		TIM_SetCompare2(TIM1, PWM_ARR(pwm_freq)*duty_cyc[1]);
+		TIM_duty_cycle[1] = duty_cyc[1];
+	}
+	if(chanel & motor_ch3){
+		TIM_SetCompare3(TIM1, PWM_ARR(pwm_freq)*duty_cyc[2]);
+		TIM_duty_cycle[2] = duty_cyc[2];
+	}
+	if(chanel & motor_ch4){
+		TIM_SetCompare4(TIM1, PWM_ARR(pwm_freq)*duty_cyc[3]);
+		TIM_duty_cycle[3] = duty_cyc[3];
+	}
 }
 
-float pwm_read(struct rt_device *device, TIM_Channel chanel)
+int stm32_pwm_read(struct rt_device *device, uint8_t chanel, float* buffer)
 {
-	return TIM1_duty_cycle[chanel];
+	if(chanel & motor_ch1){
+		buffer[0] = TIM_duty_cycle[0];
+	}
+	if(chanel & motor_ch2){
+		buffer[1] = TIM_duty_cycle[1];
+	}
+	if(chanel & motor_ch3){
+		buffer[2] = TIM_duty_cycle[2];
+	}
+	if(chanel & motor_ch4){
+		buffer[3] = TIM_duty_cycle[3];
+	}
+	
+	return 0;
 }
+
+const static struct rt_pwm_ops _stm32_pwm_ops =
+{
+    stm32_pwm_configure,
+    stm32_pwm_write,
+    stm32_pwm_read,
+};
 
 int stm32_pwm_init(void)
 {
-	//pwm_freq = 50;	//init to 50Hz
-	//pwm_gpio_init();
-	//pwm_timer_init();
+	pwm_freq = PWM_DEFAULT_FREQUENCY;
+	
+	pwm_gpio_init();
+	pwm_timer_init();
+	
+	rt_device_motor_register("motor", &_stm32_pwm_ops, RT_NULL);
 	
 	return 0;
 }

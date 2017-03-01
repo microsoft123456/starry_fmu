@@ -493,6 +493,11 @@
               <FileType>1</FileType>
               <FilePath>.\framework\px4io_protocol.c</FilePath>
             </File>
+            <File>
+              <FileName>control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\framework\control.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -674,6 +679,11 @@
               <FileName>rc_receiver.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\components\drivers\rc_receiver\rc_receiver.c</FilePath>
+            </File>
+            <File>
+              <FileName>motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\components\drivers\motor\motor.c</FilePath>
             </File>
           </Files>
         </Group>
