@@ -1070,6 +1070,7 @@ rt_device_t rt_console_set_device(const char *name)
 
     /* find new console device */
     new = rt_device_find(name);
+
     if (new != RT_NULL)
     {
         if (_console_device != RT_NULL)

@@ -15,16 +15,16 @@
 extern rt_device_t _console_device;
 
 //redefine fputc(),for printf() function to call
-int fputc(int ch, FILE * file)
-{
-    rt_uint16_t old_flag = _console_device->open_flag;
+//int fputc(int ch, FILE * file)
+//{
+//    rt_uint16_t old_flag = _console_device->open_flag;
 
-	_console_device->open_flag |= RT_DEVICE_FLAG_STREAM;
-	rt_device_write(_console_device, 0, (void*)&ch, 1);
-	_console_device->open_flag = old_flag;
+//	_console_device->open_flag |= RT_DEVICE_FLAG_STREAM;
+//	rt_device_write(_console_device, 0, (void*)&ch, 1);
+//	_console_device->open_flag = old_flag;
 
-	return ch; 
-}
+//	return ch; 
+//}
 #endif
 
 

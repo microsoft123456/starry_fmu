@@ -53,15 +53,18 @@ extern char __ICFEDIT_region_RAM_end__;
 void rt_hw_board_init(void);
 void stm32_hw_spi_init(void);
 
-#if STM32_CONSOLE_USART == 0
-#define CONSOLE_DEVICE "no"
-#elif STM32_CONSOLE_USART == 1
-#define CONSOLE_DEVICE "uart1"
-#elif STM32_CONSOLE_USART == 2
-#define CONSOLE_DEVICE "uart2"
-#elif STM32_CONSOLE_USART == 3
+//#if STM32_CONSOLE_USART == 0
+//#define CONSOLE_DEVICE "no"
+//#elif STM32_CONSOLE_USART == 1
+//#define CONSOLE_DEVICE "uart1"
+//#elif STM32_CONSOLE_USART == 2
+//#define CONSOLE_DEVICE "uart2"
+//#elif STM32_CONSOLE_USART == 3
+//#define CONSOLE_DEVICE "uart3"
+//#endif
+
+//#define CONSOLE_DEVICE	"usb"
 #define CONSOLE_DEVICE "uart3"
-#endif
 
 #define FINSH_DEVICE_NAME   CONSOLE_DEVICE
 

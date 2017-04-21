@@ -21,6 +21,8 @@ uint8_t mav_tx_buff[1024];
 mavlink_system_t mavlink_system;
 uint8_t mav_disenable = 1;
 
+static char *TAG = "MAV";
+
 static struct rt_timer timer_1HZ;
 static struct rt_timer timer_3HZ;
 
@@ -119,7 +121,15 @@ void mavlink_loop(void *parameter)
 	rt_uint32_t recv_set = 0;
 	rt_uint32_t wait_set = EVENT_MAV_1HZ_UPDATE | EVENT_MAV_3HZ_UPDATE;
 	
-	printf("mavlink_loop\r\n");
+//	log_device = rt_device_find("usb");
+//	if(log_device == NULL)
+//		printf("err not find usb device\n");
+//	else
+//		printf("find usb device\n");
+//	if(log_device)
+//		rt_device_open(log_device , RT_DEVICE_OFLAG_RDWR);
+	
+	Log.w(TAG, "mavlink_loop\r\n");
 	/* create event */
 	res = rt_event_init(&event_mavlink, "mavlink_event", RT_IPC_FLAG_FIFO);
 	
@@ -148,7 +158,7 @@ void mavlink_loop(void *parameter)
 		{
 			if(recv_set & EVENT_MAV_1HZ_UPDATE)
 			{
-				mavlink_send_msg_heartbeat(MAV_STATE_STANDBY);
+				mavlink_send_msg_heartbeat(MAV_STATE_STANDBY);	
 			}
 			
 			if(recv_set & EVENT_MAV_3HZ_UPDATE)
@@ -159,7 +169,7 @@ void mavlink_loop(void *parameter)
 		else
 		{
 			//some err happen
-			rt_kprintf("mavlink loop, err:%d\r\n" , res);
+			Log.e(TAG, "mavlink loop, err:%d\r\n" , res);
 		}
 	}
 }

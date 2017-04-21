@@ -163,7 +163,7 @@ static rt_err_t get_sync(unsigned timeout)
 	}
 
 	if ((c[0] != PROTO_INSYNC) || (c[1] != PROTO_OK)) {
-		printf("bad sync 0x%02x,0x%02x\r\n", c[0], c[1]);
+		//printf("bad sync 0x%02x,0x%02x\r\n", c[0], c[1]);
 		return RT_ERROR;
 	}
 
@@ -340,7 +340,6 @@ static rt_err_t reboot()
 //this function will be callback on rt_hw_serial_isr()
 static rt_err_t uploader_serial_rx_ind(rt_device_t dev, rt_size_t size)
 {
-	uint8_t i;
 	rt_size_t bytes;
 	uint8_t ch[RT_SERIAL_RB_BUFSZ];
 	
@@ -396,7 +395,7 @@ void px4io_upload(void)
 				}
 			}
 			
-			size_t f_size = atoi(file_size);
+			size_t f_size = atoi((char*)file_size);
 			printf("file size is %d, upload now? Y/N\r\n", f_size);
 			rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER);
 			rt_device_read(shell->device, 0, &c, 1);

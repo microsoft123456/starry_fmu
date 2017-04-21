@@ -378,6 +378,12 @@ rt_inline void rt_work_init(struct rt_work* work, void (*work_func)(struct rt_wo
 #include "drivers/audio.h"
 #endif
 
+#include "drivers/l3gd20h_sensor.h"
+#include "drivers/lsm303d_sensor.h"
+#include "drivers/ms5611_sensor.h"
+#include "drivers/gps_sensor.h"
+#include "drivers/rc_receiver.h"
+#include "drivers/motor.h"
 #include "framework/global.h"
 #include "framework/led.h"
 #include "framework/delay.h"
@@ -390,18 +396,16 @@ rt_inline void rt_work_init(struct rt_work* work, void (*work_func)(struct rt_wo
 #include "framework/mix.h"
 #include "framework/param.h"
 #include "framework/calibration.h"
-#include "framework/Sensor_Manager.h"
+//#include "framework/Sensor_Manager.h"
 #include "framework/px4io_uploader.h"
 #include "framework/px4io_manager.h"
 #include "framework/px4io_protocol.h"
 #include "framework/ringbuffer.h"
 #include "framework/control.h"
-#include "drivers/l3gd20h_sensor.h"
-#include "drivers/lsm303d_sensor.h"
-#include "drivers/ms5611_sensor.h"
-#include "drivers/gps_sensor.h"
-#include "drivers/rc_receiver.h"
-#include "drivers/motor.h"
+#include "framework/pid.h"
+#include "framework/cdcacm.h"
+#include "framework/log.h"
+#include "framework/kalman.h"
 #include <stdio.h>
 
 #ifdef __cplusplus

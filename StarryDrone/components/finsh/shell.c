@@ -109,7 +109,7 @@ void finsh_set_device(const char *device_name)
         rt_kprintf("finsh: can not find device: %s\n", device_name);
         return;
     }
-
+	rt_kprintf("finsh_set_device:%s\n", device_name);
     /* check whether it's a same device */
     if (dev == shell->device) return;
     /* open this device and set the new device in finsh shell */
@@ -324,7 +324,6 @@ void finsh_thread_entry(void *parameter)
     {
         /* wait receive */
         if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) continue;
-
         /* read one character from device */
         while (rt_device_read(shell->device, 0, &ch, 1) == 1)
         {
@@ -670,6 +669,8 @@ int finsh_system_init(void)
                             &finsh_thread_stack[0], sizeof(finsh_thread_stack),
                             FINSH_THREAD_PRIORITY, 10);
 
+	rt_kprintf("finsh init:%d\n", result);
+							
     if (result == RT_EOK)
         rt_thread_startup(&finsh_thread);
     return 0;

@@ -51,20 +51,28 @@ typedef enum
 
 
 rt_err_t device_sensor_init(void);
+
+/* acc API */
 rt_err_t sensor_acc_raw_measure(int16_t acc[3]);
-rt_err_t sensor_mag_raw_measure(int16_t mag[3]);
-rt_err_t sensor_gyr_raw_measure(int16_t gyr[3]);
 rt_err_t sensor_acc_measure(float acc[3]);
-rt_err_t sensor_mag_measure(float mag[3]);
-rt_err_t sensor_gyr_measure(float gyr[3]);
 rt_err_t sensor_acc_get_calibrated_data(float acc[3]);
+
+/* mag API */
+rt_err_t sensor_mag_raw_measure(int16_t mag[3]);
+rt_err_t sensor_mag_measure(float mag[3]);
 rt_err_t sensor_mag_get_calibrated_data(float mag[3]);
+
+/* gyr API */
+rt_err_t sensor_gyr_raw_measure(int16_t gyr[3]);
+rt_err_t sensor_gyr_measure(float gyr[3]);
 rt_err_t sensor_gyr_get_calibrated_data(float gyr[3]);
-rt_err_t sensor_baro_trig_conversion(uint8_t addr);
-rt_bool_t sensor_baro_conversion_finish(void);
-//rt_err_t sensor_baro_read_raw_temp(uint32_t* raw);
-//rt_err_t sensor_baro_read_raw_press(uint32_t* raw);
-//rt_err_t sensor_baro_read_temperature(int32_t* temp);
-//rt_err_t sensor_baro_read_pressure(int32_t* pressure);
+
+/* barometer API */
+Baro_Machine_State sensor_baro_get_state(void);
+MS5611_REPORT_Def* sensor_baro_get_report(void);
+rt_err_t sensor_process_baro_state_machine(void);
+
+/* gps API */
+struct vehicle_gps_position_s get_gps_position(void);
 
 #endif

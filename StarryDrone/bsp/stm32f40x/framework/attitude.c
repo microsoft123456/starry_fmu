@@ -24,6 +24,8 @@
 //#define ACC_UPDATE_INTERVAL		100
 //#define MAG_UPDATE_INTERVAL		100
 
+static char *TAG = "Att";
+
 static quaternion drone_attitude;
 
 static struct rt_timer timer_acc;
@@ -118,7 +120,7 @@ void attitude_loop(void *parameter)
 	rt_uint32_t wait_set = EVENT_ACC_UPDATE | EVENT_MAG_UPDATE | EVENT_GYR_UPDATE;
 	float gyr[3] , acc[3] , mag[3];
 	
-	printf("attitude_loop\r\n");
+	Log.w(TAG, "attitude_loop\r\n");
 	
 	attitude_init();
 	filter_init();
@@ -184,8 +186,14 @@ void attitude_loop(void *parameter)
 		else
 		{
 			//some err occur
-			rt_kprintf("attitude loop, err:%d\r\n" , res);
+			Log.e(TAG, "attitude loop, err:%d\r\n" , res);
 		}
+		
+//		static struct vehicle_gps_position_s gps_position;
+//		gps_position = get_gps_position();
+//		printf("gpspos:%d %d %d gpsv:%f %f %f\r\n", gps_position.lat, gps_position.lon, gps_position.alt, 
+//				gps_position.vel_d_m_s,gps_position.vel_e_m_s, gps_position.vel_n_m_s);
+//		time_waitMs(500);
 		
 //		static uint32_t target = 0;
 //		uint32_t now = time_nowMs();

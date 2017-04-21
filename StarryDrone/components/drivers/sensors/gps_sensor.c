@@ -951,7 +951,6 @@ int _configure_by_ubx(void)
 //this function will be callback on rt_hw_serial_isr()
 static rt_err_t gps_serial_rx_ind(rt_device_t dev, rt_size_t size)
 {
-	uint8_t i;
 	rt_size_t bytes;
 	uint8_t ch[RT_SERIAL_RB_BUFSZ];
 	
@@ -1013,8 +1012,6 @@ rt_err_t gps_init(rt_device_t dev)
 
 rt_size_t gps_read(rt_device_t dev, rt_off_t pos, void *buffer, rt_size_t size)
 {
-	rt_err_t res;
-	
 	if(pos == RD_ONLY_POSLLH)	
 	{
 		if(_got_posllh == RT_FALSE)

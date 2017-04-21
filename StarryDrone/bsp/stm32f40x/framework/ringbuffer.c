@@ -31,6 +31,23 @@ ringbuffer* ringbuffer_create(uint16_t size)
 	return rb;
 }
 
+ringbuffer* ringbuffer_static_create(uint8_t* buffer, uint16_t size)
+{
+	ringbuffer* rb = malloc(sizeof(ringbuffer));
+	if(rb == NULL){
+		printf("ringbuffer_static_create fail\r\n");
+		return NULL;
+	}
+	
+	rb->buff = buffer;
+	
+	rb->size = size;
+	rb->head = 0;
+	rb->tail = 0;
+	
+	return rb;
+}
+
 void ringbuffer_delete(ringbuffer* rb)
 {
 	free(rb->buff);
@@ -45,6 +62,8 @@ uint16_t ringbuffer_getlen(ringbuffer* rb)
 		len = rb->head - rb->tail;
 	else
 		len = rb->head + (rb->size - rb->tail);
+	
+	return len;
 }
 
 uint8_t ringbuffer_putc(ringbuffer* rb, uint8_t c)
@@ -64,13 +83,26 @@ uint8_t ringbuffer_getc(ringbuffer* rb)
 {
 	uint8_t c;
 	
-	if(!ringbuffer_getlen(rb))
-		return 0;
+//	if(!ringbuffer_getlen(rb))
+//		return 0;
 	
 	c = rb->buff[rb->tail];
 	rb->tail = (rb->tail+1)%rb->size;
 	
 	return c;
+}
+
+uint16_t ringbuffer_get(ringbuffer* rb, uint8_t* buffer, uint16_t len)
+{
+	if( ringbuffer_getlen(rb) < len )
+		return 0;
+	
+	for(uint16_t i = 0 ; i < len ; i++){
+		buffer[i] = rb->buff[rb->tail];
+		rb->tail = (rb->tail+1)%rb->size;	
+	}
+
+	return len;
 }
 
 void ringbuffer_flush(ringbuffer* rb)

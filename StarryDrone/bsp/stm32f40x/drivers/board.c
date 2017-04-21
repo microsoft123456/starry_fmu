@@ -256,7 +256,10 @@ void rt_hw_board_init()
     /* Configure the SysTick */
     SysTick_Configuration();
 
-    stm32_hw_usart_init();
+	stm32_hw_usart_init();
+	usb_cdc_init();
+	log_init(LOG_INTERFACE_SERIAL);
+	
     stm32_hw_pin_init();
 	stm32_hw_spi_init();
 	stm32_pwm_init();

@@ -10,6 +10,7 @@
 #ifndef __GLOBAL_H__
 #define __GLOBAL_H__
 
+#define POS_THREAD_PRIORITY			3
 #define ATTITUDE_THREAD_PRIORITY	5
 #define UBX_THREAD_PRIORITY			6
 #define PX4IO_THREAD_PRIORITY		7

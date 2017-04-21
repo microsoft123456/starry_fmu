@@ -37,10 +37,10 @@ void mix_init(void)
 
 void Runge_Kutta_1st(quaternion* attitude, quaternion q, float g[3], float deltaT)
 {
-	attitude->w += 0.5*deltaT*( -g[0] * q.x - g[1] * q.y - g[2] * q.z);
-	attitude->x += 0.5*deltaT*(  g[0] * q.w - g[1] * q.z + g[2] * q.y);
-	attitude->y += 0.5*deltaT*(  g[0] * q.z + g[1] * q.w - g[2] * q.x);
-	attitude->z += 0.5*deltaT*( -g[0] * q.y + g[1] * q.x + g[2] * q.w);
+	attitude->w += (float)0.5*deltaT*( -g[0] * q.x - g[1] * q.y - g[2] * q.z);
+	attitude->x += (float)0.5*deltaT*(  g[0] * q.w - g[1] * q.z + g[2] * q.y);
+	attitude->y += (float)0.5*deltaT*(  g[0] * q.z + g[1] * q.w - g[2] * q.x);
+	attitude->z += (float)0.5*deltaT*( -g[0] * q.y + g[1] * q.x + g[2] * q.w);
 }
 
 void mix_gyrAccMag_crossMethod(quaternion * q,const float gyr[3],const float acc[3],const float mag[3],float T)

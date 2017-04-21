@@ -12,11 +12,11 @@
 
 //#define PX4IO_DEBUG
 
-static rt_device_t debug_dev;
+//static rt_device_t debug_dev;
 struct rt_semaphore px4io_dbg_rx_sem;
 struct rt_semaphore px4io_rx_pack_sem;
 static rt_device_t serial_dev;
-static ringbuffer* rb;
+//static ringbuffer* rb;
 
 uint8_t ppm_send_freq = 20;	/* sending frequemcy of ppm signal, HZ */
 

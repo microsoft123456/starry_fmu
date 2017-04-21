@@ -48,6 +48,9 @@ struct rt_thread thread_px4io_handle;
 static char thread_control_stack[1024];
 struct rt_thread thread_control_handle;
 
+static char thread_pos_stack[1024];
+struct rt_thread thread_pos_handle;
+
 void rt_init_thread_entry(void* parameter)
 {
 	rt_err_t res;
@@ -116,7 +119,41 @@ void rt_init_thread_entry(void* parameter)
 	if (res == RT_EOK)
 		rt_thread_startup(&thread_mavlink_handle);
 	
+//	res = rt_thread_init(&thread_pos_handle,
+//						   "pos_est",
+//						   position_loop,
+//						   RT_NULL,
+//						   &thread_pos_stack[0],
+//						   sizeof(thread_pos_stack),POS_THREAD_PRIORITY,1);
+//	if (res == RT_EOK)
+//		rt_thread_startup(&thread_pos_handle);
+	
 	TCA62724_blink_control(1);
+
+//  u8 strbuff[50] = "DLC love XLC\n";
+//  /* Main loop */
+//  while (1)
+//  {
+//    /* wait data reception */
+//    while (VCP_CheckDataReceived()==0);
+//    
+//    /* receive one character */
+//    VCP_ReceiveData(&USB_OTG_dev,Rxbuffer, receive_count);
+//    
+//    /*Check to see if we have data yet */
+//    if (receive_count  != 0)
+//    {  
+//      /* wait data sent */
+//      while (VCP_CheckDataSent()==1); 
+//      
+//      /* send myTxBuffer */
+//      VCP_SendData(&USB_OTG_dev, Rxbuffer, receive_count);
+//	  //VCP_SendData(&USB_OTG_dev, strbuff, strlen(strbuff));
+//      
+//      /*INIT received byte count*/
+//      receive_count =0;
+//    }
+//  }
 	
 //	while(1)
 //	{

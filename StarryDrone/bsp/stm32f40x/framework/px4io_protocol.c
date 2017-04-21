@@ -316,14 +316,14 @@ void handle_package(const Package_Def package)
 			mavlink_send_msg_rc_channels_raw((uint32_t*)package.usr_data);
 			
 			//for test
-			float throttle[4];
-			rc_raw2throttle((uint32_t*)package.usr_data, throttle, 4);
-			set_throttle_base(throttle, 4);
+//			float throttle[4];
+//			rc_raw2throttle((uint32_t*)package.usr_data, throttle, 4);
+//			set_throttle_base(throttle, 4);
 			
 		}break;
 		case ACK_CONFIG_CHANNEL:
 		{
-			printf("ack config channel\n");
+			//printf("ack config channel\n");
 		}break;
 		default :
 			printf("unknow package\n");
