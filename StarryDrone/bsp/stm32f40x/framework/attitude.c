@@ -43,9 +43,9 @@ rt_err_t attitude_init(void)
 }
 
 // get the current attitude
-const quaternion * attitude_getAttitude(void)
+quaternion attitude_getAttitude(void)
 {
-    return &drone_attitude;
+    return drone_attitude;
 }
 
 // acc : unit:m/s²。
@@ -199,11 +199,11 @@ void attitude_loop(void *parameter)
 //		uint32_t now = time_nowMs();
 //		if(target <= now)
 //		{
-//			float angle= atan2((double)mag[1], (double)mag[0])*180/3.1415926+180;
-//			//printf("mag:%.2f  %.2f  %.2f | angle:%f\r\n" , mag[0] , mag[1] , mag[2] , angle);
-//			//printf("acc %.2f %.2f %.2f\r\n" , acc[0],acc[1],acc[2]);
+//			//float angle= atan2((double)mag[1], (double)mag[0])*180/3.1415926+180;
+//			printf("mag:%.2f  %.2f  %.2f\r\n" , mag[0] , mag[1] , mag[2]);
+//			printf("acc %.2f %.2f %.2f\r\n" , acc[0],acc[1],acc[2]);
 //			printf("gyr: %.2f %.2f %.2f\r\n" , gyr[0],gyr[1],gyr[2]);
-//			target = now + 100;
+//			target = now + 300;
 //			//printf("w:%.2f x:%.2f y:%.2f z:%.2f\r\n" , drone_attitude.w,drone_attitude.x,drone_attitude.y,drone_attitude.z);
 //		}
 	}

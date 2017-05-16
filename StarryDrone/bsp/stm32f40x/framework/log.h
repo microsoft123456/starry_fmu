@@ -23,6 +23,7 @@ typedef struct
 {
 	void (*e)(char* tag, const char *fmt, ...);
 	void (*w)(char* tag, const char *fmt, ...);
+	void (*eachtime)(uint32_t *time_stamp, uint32_t time_ms, const char *fmt, ...);
 }LOG_Typedef;
 
 extern LOG_Typedef Log;

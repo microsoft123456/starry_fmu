@@ -24,23 +24,23 @@ rt_err_t load_default_param(PARAM_Def* param_t)
 		/* convert dps to rad */
         param_t->gyr_gain[i] = (PI/180.0f);
     }
-	param_t->gyr_offset[0] = 1.994650;
-    param_t->gyr_offset[1] = -2.291100;
-    param_t->gyr_offset[2] = -4.424001;
+	param_t->gyr_offset[0] = 3.034150;
+    param_t->gyr_offset[1] = -3.866451;
+    param_t->gyr_offset[2] = 8.129102;
 
-    param_t->acc_offset[0] = -0.003735;
-    param_t->acc_offset[1] = -0.101300;
-    param_t->acc_offset[2] = -0.727170;
-    param_t->acc_gain[0]   = 0.986756;
-    param_t->acc_gain[1]   = 1.010848;
-    param_t->acc_gain[2]   = 1.020336;
+    param_t->acc_offset[0] = -0.104535;
+    param_t->acc_offset[1] =  0.093192;
+    param_t->acc_offset[2] =  0.989793;
+    param_t->acc_gain[0]   = 0.983597;
+    param_t->acc_gain[1]   = 1.013857;
+    param_t->acc_gain[2]   = 1.017444;
 
-	param_t->mag_offset[0] = -0.084931;
-    param_t->mag_offset[1] = -0.064398;
-    param_t->mag_offset[2] = -0.036911;
-    param_t->mag_gain[0]   = 2.003295;
-    param_t->mag_gain[1]   = 1.944974;
-    param_t->mag_gain[2]   = 2.363494;
+	param_t->mag_offset[0] = -0.166930;
+    param_t->mag_offset[1] =  0.132972;
+    param_t->mag_offset[2] = -0.172305;
+    param_t->mag_gain[0]   = 1.445864;
+    param_t->mag_gain[1]   = 1.396659;
+    param_t->mag_gain[2]   = 1.405098;
 	
 	param_t->initial_attitude.w = 1;
     param_t->initial_attitude.x = 0;

@@ -14,7 +14,7 @@
 #include <rtdevice.h>
 
 rt_err_t attitude_init(void);
-const quaternion * attitude_getAttitude(void);
+quaternion attitude_getAttitude(void);
 void attitude_inputAcc(const float acc[3]);
 void attitude_inputGyr(const float gyr[3]);
 void attitude_inputMag(const float mag[3]);

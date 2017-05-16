@@ -56,10 +56,28 @@ void log_warning(char* tag, const char *fmt, ...)
 	log_output(log_buf, length);
 }
 
+void log_eachtime(uint32_t *time_stamp, uint32_t time_ms, const char *fmt, ...)
+{
+	uint32_t now = time_nowMs();
+	if(now - *time_stamp > time_ms){
+		*time_stamp = now;
+		
+		va_list args;
+		int length;
+		
+		va_start(args, fmt);
+		length = vsprintf(log_buf, fmt, args);
+		va_end(args);
+		
+		log_output(log_buf, length);
+	}
+}
+
 uint8_t log_init(LOG_INTERFACE_Typedef log_if)
 {	
 	Log.e = log_error;
 	Log.w = log_warning;
+	Log.eachtime = log_eachtime;
 	
 	if(log_if == LOG_INTERFACE_SERIAL)
 		log_device = rt_device_find("uart3");

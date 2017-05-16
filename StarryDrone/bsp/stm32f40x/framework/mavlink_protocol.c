@@ -17,8 +17,10 @@
 #define EVENT_MAV_1HZ_UPDATE		(1<<0)
 #define EVENT_MAV_3HZ_UPDATE		(1<<1)
 
+static rt_device_t usb_device;
 uint8_t mav_tx_buff[1024];
 mavlink_system_t mavlink_system;
+/* disable mavlink sending */
 uint8_t mav_disenable = 1;
 
 static char *TAG = "MAV";
@@ -32,11 +34,15 @@ extern rt_device_t _console_device;
 
 uint8_t mavlink_msg_transfer(uint8_t chan, uint8_t* msg_buff, uint16_t len)
 {
-	rt_uint16_t old_flag = _console_device->open_flag;
-	
-	_console_device->open_flag |= RT_DEVICE_FLAG_STREAM;
-	rt_device_write(_console_device, 0, msg_buff, len);
-	_console_device->open_flag = old_flag;
+	if(usb_device){
+		rt_device_write(usb_device, 0, (void*)msg_buff, len);
+	}else{
+		rt_uint16_t old_flag = _console_device->open_flag;
+
+		_console_device->open_flag |= RT_DEVICE_FLAG_STREAM;
+		rt_device_write(_console_device, 0, msg_buff, len);
+		_console_device->open_flag = old_flag;
+	}
 	
 	return 0;
 }
@@ -70,7 +76,7 @@ uint8_t mavlink_send_msg_attitude_quaternion(uint8_t system_status)
 {
 	mavlink_message_t msg;
 	uint16_t len;
-	const quaternion* attitude;
+	quaternion attitude;
 	
 	if(mav_disenable)
 		return 0;
@@ -78,7 +84,7 @@ uint8_t mavlink_send_msg_attitude_quaternion(uint8_t system_status)
 	attitude = attitude_getAttitude();
 	
 	mavlink_msg_attitude_quaternion_pack(mavlink_system.sysid, mavlink_system.compid, &msg,
-						       0, attitude->w, attitude->x, attitude->y, attitude->z,0,0,0);
+						       0, attitude.w, attitude.x, attitude.y, attitude.z,0,0,0);
 	
 	len = mavlink_msg_to_send_buffer(mav_tx_buff, &msg);
 	mavlink_msg_transfer(0, mav_tx_buff, len);
@@ -121,17 +127,15 @@ void mavlink_loop(void *parameter)
 	rt_uint32_t recv_set = 0;
 	rt_uint32_t wait_set = EVENT_MAV_1HZ_UPDATE | EVENT_MAV_3HZ_UPDATE;
 	
-//	log_device = rt_device_find("usb");
-//	if(log_device == NULL)
-//		printf("err not find usb device\n");
-//	else
-//		printf("find usb device\n");
-//	if(log_device)
-//		rt_device_open(log_device , RT_DEVICE_OFLAG_RDWR);
-	
 	Log.w(TAG, "mavlink_loop\r\n");
 	/* create event */
 	res = rt_event_init(&event_mavlink, "mavlink_event", RT_IPC_FLAG_FIFO);
+	
+	usb_device = rt_device_find("usb");
+	if(usb_device == NULL)
+		Log.e(TAG, "err not find usb device\n");
+	else
+		rt_device_open(usb_device , RT_DEVICE_OFLAG_RDWR);
 	
 	/* register timer event */
 	rt_timer_init(&timer_1HZ, "timer_1HZ",

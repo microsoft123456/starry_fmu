@@ -75,4 +75,7 @@ rt_err_t sensor_process_baro_state_machine(void);
 /* gps API */
 struct vehicle_gps_position_s get_gps_position(void);
 
+/* common api */
+void sensorAxis2NedAxis(float from[3], float to[3]);
+
 #endif

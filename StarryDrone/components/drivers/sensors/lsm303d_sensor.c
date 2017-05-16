@@ -407,9 +407,7 @@ rt_err_t lsm303d_mag_read_raw(int16_t mag[3])
 	res |= read_reg(ADDR_OUT_Z_H_M , &r_val_h);
 	mag[2] = (int16_t)((r_val_h<<8) | r_val_l);
 	
-	//
-//	mag[1] = -mag[1];
-//	mag[2] = -mag[2];
+	//The axis of mag is already the NED axis, do not need to rotate
 	
 	return res;
 }
@@ -445,12 +443,10 @@ rt_err_t lsm303d_acc_read_raw(int16_t acc[3])
 	res |= read_reg(ADDR_OUT_Z_H_A , &r_val_h);
 	acc[2] = (int16_t)((r_val_h<<8) | r_val_l);
 	
-	//change the axes to be compatable with board axes
-//	acc[0] = -acc[0];
-//	acc[1] = -acc[1];
-//	acc[2] = -acc[2];
-	
+	//change the axes to be compatable with board axes(NED axis)
 	acc[0] = -acc[0];
+	acc[1] = -acc[1];
+	acc[2] = -acc[2];
 	
 	return res;
 }

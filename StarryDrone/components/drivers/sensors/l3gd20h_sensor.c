@@ -170,10 +170,9 @@ rt_err_t l3gd20h_gyr_read_raw(int16_t gyr[3])
 	res |= l3g_read_reg(ADDR_OUT_Z_H , &r_val_h);
 	gyr[2] = (int16_t)((r_val_h<<8) | r_val_l);
 	
-	//rotate the axes to be compatable with boars axes
+	//rotate the axes to be compatable with boars axes(NED axis)
 	gyr[0] = -gyr[0];
-	//gyr[1] = -gyr[1];
-	gyr[2] = -gyr[2];
+	gyr[1] = -gyr[1];
 	
 	return res;
 }

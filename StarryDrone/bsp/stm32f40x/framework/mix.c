@@ -12,7 +12,7 @@
 #include <rtthread.h>
 #include <math.h>
 
-const static float MIX_MAG_Y = 0.743144f;/*cos(42)*/
+const static float MIX_MAG_X = 0.743144f;/*cos(42)*/
 const static float MIX_MAG_Z = 0.669130f;/*sin42*/
 
 static char* TAG = "MIX";
@@ -21,18 +21,19 @@ static float accU[3], magU[3];
 static float acc_const[3] = {0.0f, 0.0f, 1.0f};
 static float acc_constV[3];
 static float acc_cross[3];
-static float mag_const[3] = {0.0f, MIX_MAG_Y, MIX_MAG_Z};
+static float mag_const[3] = {MIX_MAG_X, 0.0f, MIX_MAG_Z};
 static float mag_constV[3];
 static float mag_cross[3];
 static float delta[3];
 static float FACTOR_P = 0.6;
 static float FACTOR_I = 0.001;
+//static float FACTOR_I = 0;
 
 void mix_init(void)
 {
 	Vector3_Set(di, 0.0f, 0.0f, 0.0f);
 	Vector3_Set(acc_const, 0.0f, 0.0f, 1.0f);
-	Vector3_Set(mag_const, 0.0f, MIX_MAG_Y, MIX_MAG_Z);
+	Vector3_Set(mag_const, MIX_MAG_X, 0.0f, MIX_MAG_Z);
 }
 
 void Runge_Kutta_1st(quaternion* attitude, quaternion q, float g[3], float deltaT)
@@ -54,14 +55,7 @@ void mix_gyrAccMag_crossMethod(quaternion * q,const float gyr[3],const float acc
     float z_q_2 = z_q * 2;
 
 	Vector3_Normalize(accU, acc);
-	//change sensor axis to NED(Notrh East Down) axis.
-	accU[1] = -accU[1];
-	accU[2] = -accU[2];
-
 	Vector3_Normalize(magU, mag);
-	//change sensor axis to NED(Notrh East Down) axis.
-	magU[2] = -magU[2];
-	
 	
 	quaternion_inv_rotateVector(*q, acc_const, acc_constV);
 	Vector3_CrossProduct(acc_cross, accU, acc_constV);
@@ -69,14 +63,37 @@ void mix_gyrAccMag_crossMethod(quaternion * q,const float gyr[3],const float acc
 	quaternion_inv_rotateVector(*q, mag_const, mag_constV);
 	Vector3_CrossProduct(mag_cross, magU, mag_constV);
 	
-	di[0] += acc_cross[0];
-	di[1] += acc_cross[1];
-	di[2] += mag_cross[2];
-	delta[0] =  gyr[0] + acc_cross[0]*FACTOR_P + di[0]*FACTOR_I;
-    //delta[1] =  gyr[1] + acc_cross[1]*FACTOR_P + di[1]*FACTOR_I;
-	delta[1] = -gyr[1] + acc_cross[1]*FACTOR_P + di[1]*FACTOR_I;
-	delta[2] = -gyr[2] + mag_cross[2]*FACTOR_P + di[2]*FACTOR_I;
+	/* we only need mag value to correct the yaw, so we project the x,y,z axis from
+		vehicle to NED axis. By mutiplying mag_cross[2] with this axis in z, we can
+		get more accurate value for yaw correction */	
+	static float ez[3] = {0,0,1};
+	static float vz[3];
+	float err[3];
+	/* rotate z axis from earth(NED) axis to vehicle axis */
+	quaternion_rotateVector(*q, ez, vz);
+
+//	err[0] = acc_cross[0]+mag_cross[2]*fabs(ex[2]);
+//	err[1] = acc_cross[1]+mag_cross[2]*fabs(ey[2]);
+//	err[2] = acc_cross[2]+mag_cross[2]*fabs(ez[2]);
+	err[0] = acc_cross[0]+mag_cross[2]*vz[0];
+	err[1] = acc_cross[1]+mag_cross[2]*vz[1];
+	err[2] = acc_cross[2]+mag_cross[2]*vz[2];
 	
+	//TODO: need constrainst the max value of di
+	di[0] += err[0];
+	if(di[0] >= 1000)
+		di[0] = 1000;
+	di[1] += err[1];
+	if(di[1] >= 1000)
+		di[1] = 1000;
+	di[2] += err[2];
+	if(di[2] >= 1000)
+		di[2] = 1000;
+
+	delta[0] = gyr[0] + err[0]*FACTOR_P + di[0]*FACTOR_I;
+	delta[1] = gyr[1] + err[1]*FACTOR_P + di[1]*FACTOR_I;
+	delta[2] = gyr[2] + err[2]*FACTOR_P + di[2]*FACTOR_I;
+
 	//first order runge-kutta to create quaternion
 	Runge_Kutta_1st(q, *q, delta, T);
 	quaternion_normalize(q);

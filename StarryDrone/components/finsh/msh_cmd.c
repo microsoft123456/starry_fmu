@@ -31,7 +31,9 @@
 #include <rtthread.h>
 #include <finsh.h>
 #include <shell.h>
-#include "framework/calibration.h"
+//#include "framework/calibration.h"
+#include <rtdevice.h>
+#include <string.h>
 
 #include "msh.h"
 
@@ -395,15 +397,7 @@ FINSH_FUNCTION_EXPORT_ALIAS(cmd_free, __cmd_free, Show the memory usage in the s
 
 #endif
 
-int cmd_uploader(int argc, char** argv)
-{
-	px4io_upload();
-	
-	return 1;
-}
-FINSH_FUNCTION_EXPORT_ALIAS(cmd_uploader, __cmd_uploader, Upload bin file to px4io.);
-
-//Add by Elor,2016.7.5
+/************************ Add by J Zou ************************/
 int cmd_calibrate(int argc, char** argv)
 {
 	struct finsh_shell* shell = finsh_get_shell();
@@ -518,6 +512,19 @@ int cmd_calibrate(int argc, char** argv)
 		
 		/* calculate result */
 		calibrate_process(MAG_STANDARD_VALUE);
+
+//		Reset_Cali();
+//		
+//		for(int i = 0 ; i < 9 ; i++){
+//			rt_kprintf("%d point [Y/N]\r\n", i+1);
+//			if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
+//			rt_device_read(shell->device, 0, &ch, 1);
+//			if(ch != 'Y' && ch != 'y')
+//				return 1;
+//			cali_input_mag_data(1);
+//		}
+//		
+//		Calc_Process();
 	}
 	else if(strcmp(argv[1] , "gyr") == 0)
 	{
@@ -532,5 +539,30 @@ int cmd_calibrate(int argc, char** argv)
 	
 	return 0;
 }
-FINSH_FUNCTION_EXPORT_ALIAS(cmd_calibrate, __cmd_calibrate, Calibrate the acc and mag sensor.);
+FINSH_FUNCTION_EXPORT_ALIAS(cmd_calibrate, __cmd_calibrate, calibrate the acc and mag sensor.);
 
+int cmd_uploader(int argc, char** argv)
+{
+	px4io_upload();
+	
+	return 1;
+}
+FINSH_FUNCTION_EXPORT_ALIAS(cmd_uploader, __cmd_uploader, upload bin file to px4io.);
+
+int cmd_sethome(int argc, char** argv)
+{
+	if(argc > 1){
+		if(strcmp(argv[1], "curpos") == 0)
+			set_home_with_current_pos();
+		else if(argc == 4){
+			unsigned int lon, lat;
+			float alt;
+			lon = atoi(argv[1]);
+			lat = atoi(argv[2]);
+			alt = atof(argv[3]);
+			printf("set home: %d %d %.2f\n", lon, lat, alt);
+			set_home(lon, lat, alt);
+		}
+	}
+}
+FINSH_FUNCTION_EXPORT_ALIAS(cmd_sethome, __cmd_sethome, set home with current position.);

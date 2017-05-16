@@ -260,6 +260,14 @@ struct vehicle_gps_position_s get_gps_position(void)
 	return gps_position;
 }
 
+/* sensor axis is diffirent with attitude(NED) axis */
+void sensorAxis2NedAxis(float from[3], float to[3])
+{
+	to[0] = from[0];
+	to[1] = -from[1];
+	to[2] = -from[2];
+}
+
 /**************************	INIT FUNC **************************/
 rt_err_t device_sensor_init(void)
 {
