@@ -119,14 +119,14 @@ void rt_init_thread_entry(void* parameter)
 	if (res == RT_EOK)
 		rt_thread_startup(&thread_mavlink_handle);
 	
-	res = rt_thread_init(&thread_pos_handle,
-						   "pos_est",
-						   position_loop,
-						   RT_NULL,
-						   &thread_pos_stack[0],
-						   sizeof(thread_pos_stack),POS_THREAD_PRIORITY,1);
-	if (res == RT_EOK)
-		rt_thread_startup(&thread_pos_handle);
+//	res = rt_thread_init(&thread_pos_handle,
+//						   "pos_est",
+//						   position_loop,
+//						   RT_NULL,
+//						   &thread_pos_stack[0],
+//						   sizeof(thread_pos_stack),POS_THREAD_PRIORITY,1);
+//	if (res == RT_EOK)
+//		rt_thread_startup(&thread_pos_handle);
 	
 	TCA62724_blink_control(1);
 	

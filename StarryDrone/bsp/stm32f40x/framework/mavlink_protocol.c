@@ -17,11 +17,11 @@
 #define EVENT_MAV_1HZ_UPDATE		(1<<0)
 #define EVENT_MAV_3HZ_UPDATE		(1<<1)
 
-static rt_device_t usb_device;
+static rt_device_t usb_device = NULL;
 uint8_t mav_tx_buff[1024];
 mavlink_system_t mavlink_system;
 /* disable mavlink sending */
-uint8_t mav_disenable = 1;
+uint8_t mav_disenable = 0;
 
 static char *TAG = "MAV";
 
@@ -131,11 +131,11 @@ void mavlink_loop(void *parameter)
 	/* create event */
 	res = rt_event_init(&event_mavlink, "mavlink_event", RT_IPC_FLAG_FIFO);
 	
-	usb_device = rt_device_find("usb");
-	if(usb_device == NULL)
-		Log.e(TAG, "err not find usb device\n");
-	else
-		rt_device_open(usb_device , RT_DEVICE_OFLAG_RDWR);
+//	usb_device = rt_device_find("usb");
+//	if(usb_device == NULL)
+//		Log.e(TAG, "err not find usb device\n");
+//	else
+//		rt_device_open(usb_device , RT_DEVICE_OFLAG_RDWR);
 	
 	/* register timer event */
 	rt_timer_init(&timer_1HZ, "timer_1HZ",

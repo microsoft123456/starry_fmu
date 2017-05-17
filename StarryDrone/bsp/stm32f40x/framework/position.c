@@ -322,19 +322,19 @@ void position_loop(void *parameter)
 				result=kalman2_filter(&state_y, accE[1], pos_vel_y);
 				result=kalman2_filter(&state_z, accE[2]-9.8f, pos_vel_z);
 				
-					static uint32_t now;
-					static uint32_t prev = 0;
-					now = time_nowMs();
-					if(now - prev >= 300){
-						prev = now;
+//				static uint32_t now;
+//				static uint32_t prev = 0;
+//				now = time_nowMs();
+//				if(now - prev >= 300){
+//					prev = now;
 
-						printf("alt:%f v:%f\n" , state_z.x[0], state_z.x[1]);
-						//printf("s:%f v:%f acc:%f\n", pos_vel_z[0], pos_vel_z[1], acc[2]);
-						//printf("acc %.2f %.2f %.2f accE: %.2f %.2f %.2f\n", acc[0], acc[1], acc[2], accE[0],accE[1], accE[2]);
-						//printf("accE %.2f %.2f %.2f alt:%f v:%f\n", accE[0],accE[1], accE[2], state_z.x[0], state_z.x[1]);
-//						Log.w(TAG, "x: %.2f %.2f y: %.2f %.2f z:%.2f %.2f\n", state_x.x[0], state_x.x[1], state_y.x[0], state_y.x[1]
-//						, state_z.x[0], state_z.x[1]);
-					}
+//					printf("alt:%f v:%f\n" , state_z.x[0], state_z.x[1]);
+//					//printf("s:%f v:%f acc:%f\n", pos_vel_z[0], pos_vel_z[1], acc[2]);
+//					//printf("acc %.2f %.2f %.2f accE: %.2f %.2f %.2f\n", acc[0], acc[1], acc[2], accE[0],accE[1], accE[2]);
+//					//printf("accE %.2f %.2f %.2f alt:%f v:%f\n", accE[0],accE[1], accE[2], state_z.x[0], state_z.x[1]);
+////						Log.w(TAG, "x: %.2f %.2f y: %.2f %.2f z:%.2f %.2f\n", state_x.x[0], state_x.x[1], state_y.x[0], state_y.x[1]
+////						, state_z.x[0], state_z.x[1]);
+//				}
 			}
 		}else{
 			//some err occurs
