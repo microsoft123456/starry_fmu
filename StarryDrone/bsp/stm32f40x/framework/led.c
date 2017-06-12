@@ -26,6 +26,8 @@
 rt_device_t _pin_device;
 rt_device_t _i2c_device;
 
+static char* TAG = "LED";
+
 uint8_t color_index[][4] = 
 {
 	{LED_RED 	, 0x00 , 0x00 , BRIGHT},
@@ -119,10 +121,12 @@ int device_led_init(void)
 	
 	if(_pin_device != RT_NULL)
 	{
+		rt_device_open(_pin_device , RT_DEVICE_OFLAG_RDWR);
         _pin_device->control(_pin_device , 0 , &mode);
     }
 	else
 	{
+		Log.e(TAG, "can not find pin device\n");
 		return 1;
 	}
 	
@@ -136,6 +140,7 @@ int device_led_init(void)
     }
 	else
 	{
+		Log.e(TAG, "can not find i2c2 device\n");
 		return 1;
 	}
 	

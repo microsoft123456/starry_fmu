@@ -28,19 +28,19 @@ rt_err_t load_default_param(PARAM_Def* param_t)
     param_t->gyr_offset[1] = -3.866451;
     param_t->gyr_offset[2] = 8.129102;
 
-    param_t->acc_offset[0] = -0.104535;
-    param_t->acc_offset[1] =  0.093192;
-    param_t->acc_offset[2] =  0.989793;
-    param_t->acc_gain[0]   = 0.983597;
-    param_t->acc_gain[1]   = 1.013857;
-    param_t->acc_gain[2]   = 1.017444;
+    param_t->acc_offset[0] =  0.091815;
+    param_t->acc_offset[1] = -0.141828;
+    param_t->acc_offset[2] = -0.856508;
+    param_t->acc_gain[0]   = 0.979023;
+    param_t->acc_gain[1]   = 1.012386;
+    param_t->acc_gain[2]   = 1.014212;
 
-	param_t->mag_offset[0] = -0.166930;
-    param_t->mag_offset[1] =  0.132972;
-    param_t->mag_offset[2] = -0.172305;
-    param_t->mag_gain[0]   = 1.445864;
-    param_t->mag_gain[1]   = 1.396659;
-    param_t->mag_gain[2]   = 1.405098;
+	param_t->mag_offset[0] = -0.048217;
+    param_t->mag_offset[1] = -0.060532;
+    param_t->mag_offset[2] = -0.114581;
+    param_t->mag_gain[0]   = 1.810744;
+    param_t->mag_gain[1]   = 2.899281;
+    param_t->mag_gain[2]   = 2.479019;
 	
 	param_t->initial_attitude.w = 1;
     param_t->initial_attitude.x = 0;

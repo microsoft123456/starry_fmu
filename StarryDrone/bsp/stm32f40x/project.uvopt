@@ -287,10 +287,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>40</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>106</TopLine>
-      <CurrentLine>115</CurrentLine>
+      <TopLine>127</TopLine>
+      <CurrentLine>1</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>applications/application.c</PathWithFileName>
       <FilenameWithoutPath>application.c</FilenameWithoutPath>
@@ -303,7 +303,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>22</ColumnNumber>
+      <ColumnNumber>15</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
@@ -327,10 +327,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>34</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>268</TopLine>
-      <CurrentLine>269</CurrentLine>
+      <TopLine>765</TopLine>
+      <CurrentLine>766</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\calibration.c</PathWithFileName>
       <FilenameWithoutPath>calibration.c</FilenameWithoutPath>
@@ -345,8 +345,8 @@
       <Focus>0</Focus>
       <ColumnNumber>16</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>19</TopLine>
-      <CurrentLine>36</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\delay.c</PathWithFileName>
       <FilenameWithoutPath>delay.c</FilenameWithoutPath>
@@ -359,7 +359,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>1</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
@@ -375,10 +375,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>5</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>257</TopLine>
-      <CurrentLine>258</CurrentLine>
+      <TopLine>351</TopLine>
+      <CurrentLine>355</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\sensor.c</PathWithFileName>
       <FilenameWithoutPath>sensor.c</FilenameWithoutPath>
@@ -391,10 +391,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>8</ColumnNumber>
+      <ColumnNumber>20</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>179</TopLine>
-      <CurrentLine>192</CurrentLine>
+      <TopLine>165</TopLine>
+      <CurrentLine>180</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\attitude.c</PathWithFileName>
       <FilenameWithoutPath>attitude.c</FilenameWithoutPath>
@@ -409,8 +409,8 @@
       <Focus>0</Focus>
       <ColumnNumber>21</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>82</TopLine>
-      <CurrentLine>87</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\quaternion.c</PathWithFileName>
       <FilenameWithoutPath>quaternion.c</FilenameWithoutPath>
@@ -425,8 +425,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>140</TopLine>
-      <CurrentLine>147</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\ap_math.c</PathWithFileName>
       <FilenameWithoutPath>ap_math.c</FilenameWithoutPath>
@@ -439,10 +439,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>72</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>68</TopLine>
-      <CurrentLine>57</CurrentLine>
+      <TopLine>80</TopLine>
+      <CurrentLine>21</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\mix.c</PathWithFileName>
       <FilenameWithoutPath>mix.c</FilenameWithoutPath>
@@ -457,8 +457,8 @@
       <Focus>0</Focus>
       <ColumnNumber>38</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>42</TopLine>
-      <CurrentLine>43</CurrentLine>
+      <TopLine>19</TopLine>
+      <CurrentLine>35</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\param.c</PathWithFileName>
       <FilenameWithoutPath>param.c</FilenameWithoutPath>
@@ -487,10 +487,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>25</ColumnNumber>
+      <ColumnNumber>37</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>18</TopLine>
-      <CurrentLine>24</CurrentLine>
+      <TopLine>121</TopLine>
+      <CurrentLine>20</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\mavlink_protocol.c</PathWithFileName>
       <FilenameWithoutPath>mavlink_protocol.c</FilenameWithoutPath>
@@ -519,10 +519,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>21</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>104</TopLine>
+      <CurrentLine>11</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\px4io_uploader.c</PathWithFileName>
       <FilenameWithoutPath>px4io_uploader.c</FilenameWithoutPath>
@@ -553,8 +553,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>135</TopLine>
+      <CurrentLine>166</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\px4io_manager.c</PathWithFileName>
       <FilenameWithoutPath>px4io_manager.c</FilenameWithoutPath>
@@ -567,10 +567,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>26</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>179</TopLine>
+      <CurrentLine>180</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\px4io_protocol.c</PathWithFileName>
       <FilenameWithoutPath>px4io_protocol.c</FilenameWithoutPath>
@@ -583,7 +583,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>14</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
@@ -599,7 +599,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>30</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
@@ -615,10 +615,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>1</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>43</TopLine>
-      <CurrentLine>52</CurrentLine>
+      <TopLine>102</TopLine>
+      <CurrentLine>120</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\kalman.c</PathWithFileName>
       <FilenameWithoutPath>kalman.c</FilenameWithoutPath>
@@ -631,7 +631,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>4</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
@@ -647,10 +647,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>16</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>59</TopLine>
-      <CurrentLine>75</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\log.c</PathWithFileName>
       <FilenameWithoutPath>log.c</FilenameWithoutPath>
@@ -663,10 +663,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>56</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>303</TopLine>
-      <CurrentLine>330</CurrentLine>
+      <TopLine>333</TopLine>
+      <CurrentLine>342</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\framework\position.c</PathWithFileName>
       <FilenameWithoutPath>position.c</FilenameWithoutPath>
@@ -735,7 +735,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>27</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
@@ -831,7 +831,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>4</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
@@ -895,10 +895,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>6</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>446</TopLine>
-      <CurrentLine>447</CurrentLine>
+      <TopLine>433</TopLine>
+      <CurrentLine>455</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\components\drivers\sensors\lsm303d_sensor.c</PathWithFileName>
       <FilenameWithoutPath>lsm303d_sensor.c</FilenameWithoutPath>
@@ -911,10 +911,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>24</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>173</TopLine>
-      <CurrentLine>174</CurrentLine>
+      <TopLine>184</TopLine>
+      <CurrentLine>18</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\components\drivers\sensors\l3gd20h_sensor.c</PathWithFileName>
       <FilenameWithoutPath>l3gd20h_sensor.c</FilenameWithoutPath>
@@ -1141,7 +1141,7 @@
 
   <Group>
     <GroupName>usb</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1373,7 +1373,7 @@
 
   <Group>
     <GroupName>finsh</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1383,7 +1383,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>24</ColumnNumber>
+      <ColumnNumber>9</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
@@ -1607,10 +1607,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>25</ColumnNumber>
+      <ColumnNumber>8</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>536</TopLine>
-      <CurrentLine>560</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\components\finsh\msh_cmd.c</PathWithFileName>
       <FilenameWithoutPath>msh_cmd.c</FilenameWithoutPath>
@@ -1711,7 +1711,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>22</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
@@ -1823,10 +1823,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>1</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>157</TopLine>
-      <CurrentLine>158</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>../../src/thread.c</PathWithFileName>
       <FilenameWithoutPath>thread.c</FilenameWithoutPath>
@@ -1839,7 +1839,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>32</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>

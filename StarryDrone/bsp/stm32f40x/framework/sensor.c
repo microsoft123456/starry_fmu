@@ -82,10 +82,17 @@ rt_err_t sensor_mag_get_calibrated_data(float mag[3])
 	
 	res = sensor_mag_measure(mag_f);
 	
-	for(uint8_t i ; i<3 ; i++)
+	for(uint8_t i=0 ; i<3 ; i++)
 	{
 		mag[i] = (mag_f[i] + param->mag_offset[i]) * param->mag_gain[i];
 	}
+	
+//	mag[0] = 0.905035*mag_f[0] - 0.078528*mag_f[1] - 0.023417*mag_f[2] - 0.025694;
+//	mag[1] = 0.938565*mag_f[1] + 0.019469*mag_f[2] - 0.059417;
+//	mag[2] = mag_f[2] - 0.089932;
+//	mag[0] = 1.024532*mag_f[0] + 0.181527*mag_f[1] - 0.010846*mag_f[2] - 0.067172;
+//	mag[1] = 1.284464*mag_f[1] - 0.236356*mag_f[2] + 0.026534;
+//	mag[2] = mag_f[2] + 0.069139;
 	
 	return res;
 }
@@ -268,6 +275,7 @@ void sensorAxis2NedAxis(float from[3], float to[3])
 	to[2] = -from[2];
 }
 
+rt_err_t lsm303d_mag_measure(float mag[3]);
 /**************************	INIT FUNC **************************/
 rt_err_t device_sensor_init(void)
 {
@@ -348,6 +356,20 @@ rt_err_t device_sensor_init(void)
 
 //	while(1)
 //	{
+//		int16_t mag[3], acc[3];
+//		float mag_cali[3], acc_cali[3];
+//		sensor_mag_raw_measure(mag);
+//		sensor_acc_raw_measure(acc);
+//		sensor_mag_get_calibrated_data(mag_cali);
+//		sensor_acc_get_calibrated_data(acc_cali);
+//		//lsm303d_mag_measure(mag_cali);
+//		//Log.w(TAG, "mag %d %d %d mag_c %f %f %f\n", mag[0], mag[1], mag[2], mag_cali[0], mag_cali[1], mag_cali[2]);
+//		Log.w(TAG, "acc %d %d %d acc_c %f %f %f\n", acc[0], acc[1], acc[2], acc_cali[0], acc_cali[1], acc_cali[2]);
+//		rt_thread_delay(300);
+//	}
+
+//	while(1)
+//	{
 //		//example code to read gps data
 //		if( rt_device_read(gps_device_t, RD_COMPLETED_REPORT, NULL, 1) == RT_EOK){
 ////			printf("lat:%d lon:%d alt:%d vd:%.2f ve:%.2f vn:%.2f\r\n", gps_position.lat, gps_position.lon, gps_position.alt, 
@@ -359,7 +381,7 @@ rt_err_t device_sensor_init(void)
 ////			printf("satellite cnt:%d\r\n", satellite_info.count);
 ////		}
 //		
-//		time_waitMs(500);
+//		time_waitMs(300);
 //	}
 	
 	return res;

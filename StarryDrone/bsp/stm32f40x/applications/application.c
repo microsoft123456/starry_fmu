@@ -119,30 +119,29 @@ void rt_init_thread_entry(void* parameter)
 	if (res == RT_EOK)
 		rt_thread_startup(&thread_mavlink_handle);
 	
-//	res = rt_thread_init(&thread_pos_handle,
-//						   "pos_est",
-//						   position_loop,
-//						   RT_NULL,
-//						   &thread_pos_stack[0],
-//						   sizeof(thread_pos_stack),POS_THREAD_PRIORITY,1);
-//	if (res == RT_EOK)
-//		rt_thread_startup(&thread_pos_handle);
+	res = rt_thread_init(&thread_pos_handle,
+						   "pos_est",
+						   position_loop,
+						   RT_NULL,
+						   &thread_pos_stack[0],
+						   sizeof(thread_pos_stack),POS_THREAD_PRIORITY,1);
+	if (res == RT_EOK)
+		rt_thread_startup(&thread_pos_handle);
 	
 	TCA62724_blink_control(1);
 	
+	
 //	while(1)
 //	{
-//		TCA62724_set_color(LED_RED);
-//		time_waitMs(1000);
+//		printf("main thread\n");
 //		TCA62724_set_color(LED_GREEN);
-//		time_waitMs(1000);
-//		TCA62724_set_color(LED_BLUE);
-//		time_waitMs(1000);
-//		TCA62724_set_color(LED_YELLOW);
-//		time_waitMs(1000);
-//		TCA62724_set_color(LED_WHITE);
-//		time_waitMs(1000);
+//		led_on();
+//		rt_thread_delay(1000);
+//		led_off();
+//		TCA62724_set_color(LED_RED);
+//		rt_thread_delay(1000);
 //	}
+
 }
 
 int rt_application_init()

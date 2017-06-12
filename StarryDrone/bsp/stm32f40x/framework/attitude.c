@@ -15,9 +15,13 @@
 #define EVENT_ACC_UPDATE		(1<<1)
 #define EVENT_MAG_UPDATE		(1<<2)
 
-#define GYR_UPDATE_INTERVAL		3
-#define ACC_UPDATE_INTERVAL		3
-#define MAG_UPDATE_INTERVAL		10
+//#define GYR_UPDATE_INTERVAL		3
+//#define ACC_UPDATE_INTERVAL		3
+//#define MAG_UPDATE_INTERVAL		10
+
+#define GYR_UPDATE_INTERVAL		10
+#define ACC_UPDATE_INTERVAL		10
+#define MAG_UPDATE_INTERVAL		30
 
 //for debug, change to 50 ms
 //#define GYR_UPDATE_INTERVAL		100
@@ -88,7 +92,7 @@ int32_t acc_gyr_dataIsReady(void)
     uint32_t now = time_nowMs();
     if(target <= now)
     {
-        target = now + 10;//每3ms获取一次mpu数据
+        target = now + 10;
         //
         return 1;
     }
@@ -117,7 +121,7 @@ void attitude_loop(void *parameter)
 {
 	rt_err_t res;
 	rt_uint32_t recv_set = 0;
-	rt_uint32_t wait_set = EVENT_ACC_UPDATE | EVENT_MAG_UPDATE | EVENT_GYR_UPDATE;
+	rt_uint32_t wait_set = EVENT_MAG_UPDATE | EVENT_GYR_UPDATE;
 	float gyr[3] , acc[3] , mag[3];
 	
 	Log.w(TAG, "attitude_loop\r\n");
@@ -134,32 +138,20 @@ void attitude_loop(void *parameter)
 					RT_NULL,
 					GYR_UPDATE_INTERVAL,
 					RT_TIMER_FLAG_PERIODIC | RT_TIMER_FLAG_SOFT_TIMER);
-	
-	rt_timer_init(&timer_acc, "timer_acc",
-					timer_acc_update,
-					RT_NULL,
-					ACC_UPDATE_INTERVAL,
-					RT_TIMER_FLAG_PERIODIC | RT_TIMER_FLAG_SOFT_TIMER);
+	rt_timer_start(&timer_gyr);
 	
 	rt_timer_init(&timer_mag, "timer_mag",
 					timer_mag_update,
 					RT_NULL,
 					MAG_UPDATE_INTERVAL,
 					RT_TIMER_FLAG_PERIODIC | RT_TIMER_FLAG_SOFT_TIMER);
-	
-	/* start timer */
-	rt_timer_start(&timer_gyr);
-	/*wait a specific time,letting each event triiger time has time gap*/
-	time_waitUs(GYR_UPDATE_INTERVAL*1000/2);
-	rt_timer_start(&timer_acc);
-	time_waitUs(1000);
 	rt_timer_start(&timer_mag);
 	
 	while(1)
 	{
 		/* wait event occur */
 		res = rt_event_recv(&event_sensor, wait_set, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, 
-								MAG_UPDATE_INTERVAL, &recv_set);
+								RT_WAITING_FOREVER, &recv_set);
 		
 		if(res == RT_EOK)
 		{
@@ -167,14 +159,10 @@ void attitude_loop(void *parameter)
 			{
 				if(sensor_gyr_get_calibrated_data(gyr) == RT_EOK)
 					attitude_inputGyr(gyr);
-				
-				attitude_mixGyrAccMag();
-			}
-			
-			if(recv_set & EVENT_ACC_UPDATE)
-			{
 				if(sensor_acc_get_calibrated_data(acc) == RT_EOK)
 					attitude_inputAcc(acc);
+				
+				attitude_mixGyrAccMag();
 			}
 			
 			if(recv_set & EVENT_MAG_UPDATE)

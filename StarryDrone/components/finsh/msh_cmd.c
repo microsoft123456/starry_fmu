@@ -397,7 +397,7 @@ FINSH_FUNCTION_EXPORT_ALIAS(cmd_free, __cmd_free, Show the memory usage in the s
 
 #endif
 
-/************************ Add by J Zou ************************/
+/************************ Added by J Zou ************************/
 int cmd_calibrate(int argc, char** argv)
 {
 	struct finsh_shell* shell = finsh_get_shell();
@@ -411,107 +411,109 @@ int cmd_calibrate(int argc, char** argv)
 	
 	if(strcmp(argv[1] , "acc") == 0)
 	{
-		rt_kprintf("Calibrate acc:\r\n");
-		
-		/* reset matrix */
-		ResetMatrix();
-		
-		rt_kprintf("forward [Y/N]\r\n");
-		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
-		rt_device_read(shell->device, 0, &ch, 1);
-		if(ch != 'Y' && ch != 'y')
-			return 1;
-		cali_input_acc_data(6);
-		
-		rt_kprintf("behind [Y/N]\r\n");
-		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
-		rt_device_read(shell->device, 0, &ch, 1);
-		if(ch != 'Y' && ch != 'y')
-			return 1;
-		cali_input_acc_data(6);
-		
-		rt_kprintf("left [Y/N]\r\n");
-		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
-		rt_device_read(shell->device, 0, &ch, 1);
-		if(ch != 'Y' && ch != 'y')
-			return 1;
-		cali_input_acc_data(6);
-		
-		rt_kprintf("right [Y/N]\r\n");
-		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
-		rt_device_read(shell->device, 0, &ch, 1);
-		if(ch != 'Y' && ch != 'y')
-			return 1;
-		cali_input_acc_data(6);
-		
-		rt_kprintf("up [Y/N]\r\n");
-		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
-		rt_device_read(shell->device, 0, &ch, 1);
-		if(ch != 'Y' && ch != 'y')
-			return 1;
-		cali_input_acc_data(6);
-		
-		rt_kprintf("down [Y/N]\r\n");
-		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
-		rt_device_read(shell->device, 0, &ch, 1);
-		if(ch != 'Y' && ch != 'y')
-			return 1;
-		cali_input_acc_data(6);
-		
-		/* calculate result */
-		calibrate_process(ACC_STANDARD_VALUE);
+//		rt_kprintf("Calibrate acc:\r\n");
+//		
+//		/* reset matrix */
+//		ResetMatrix();
+//		
+//		rt_kprintf("forward [Y/N]\r\n");
+//		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
+//		rt_device_read(shell->device, 0, &ch, 1);
+//		if(ch != 'Y' && ch != 'y')
+//			return 1;
+//		cali_input_acc_data(6);
+//		
+//		rt_kprintf("behind [Y/N]\r\n");
+//		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
+//		rt_device_read(shell->device, 0, &ch, 1);
+//		if(ch != 'Y' && ch != 'y')
+//			return 1;
+//		cali_input_acc_data(6);
+//		
+//		rt_kprintf("left [Y/N]\r\n");
+//		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
+//		rt_device_read(shell->device, 0, &ch, 1);
+//		if(ch != 'Y' && ch != 'y')
+//			return 1;
+//		cali_input_acc_data(6);
+//		
+//		rt_kprintf("right [Y/N]\r\n");
+//		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
+//		rt_device_read(shell->device, 0, &ch, 1);
+//		if(ch != 'Y' && ch != 'y')
+//			return 1;
+//		cali_input_acc_data(6);
+//		
+//		rt_kprintf("up [Y/N]\r\n");
+//		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
+//		rt_device_read(shell->device, 0, &ch, 1);
+//		if(ch != 'Y' && ch != 'y')
+//			return 1;
+//		cali_input_acc_data(6);
+//		
+//		rt_kprintf("down [Y/N]\r\n");
+//		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
+//		rt_device_read(shell->device, 0, &ch, 1);
+//		if(ch != 'Y' && ch != 'y')
+//			return 1;
+//		cali_input_acc_data(6);
+//		
+//		/* calculate result */
+//		calibrate_process(ACC_STANDARD_VALUE);
+
+		calibrate_acc_run(shell);
 	}
 	else if(strcmp(argv[1] , "mag") == 0)
 	{
-		rt_kprintf("Calibrate mag:\r\n");
-		
-		/* reset matrix */
-		ResetMatrix();
-		
-		rt_kprintf("forward [Y/N]\r\n");
-		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
-		rt_device_read(shell->device, 0, &ch, 1);
-		if(ch != 'Y' && ch != 'y')
-			return 1;
-		cali_input_mag_data(6);
-		
-		rt_kprintf("behind [Y/N]\r\n");
-		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
-		rt_device_read(shell->device, 0, &ch, 1);
-		if(ch != 'Y' && ch != 'y')
-			return 1;
-		cali_input_mag_data(6);
-		
-		rt_kprintf("left [Y/N]\r\n");
-		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
-		rt_device_read(shell->device, 0, &ch, 1);
-		if(ch != 'Y' && ch != 'y')
-			return 1;
-		cali_input_mag_data(6);
-		
-		rt_kprintf("right [Y/N]\r\n");
-		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
-		rt_device_read(shell->device, 0, &ch, 1);
-		if(ch != 'Y' && ch != 'y')
-			return 1;
-		cali_input_mag_data(6);
-		
-		rt_kprintf("up [Y/N]\r\n");
-		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
-		rt_device_read(shell->device, 0, &ch, 1);
-		if(ch != 'Y' && ch != 'y')
-			return 1;
-		cali_input_mag_data(6);
-		
-		rt_kprintf("down [Y/N]\r\n");
-		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
-		rt_device_read(shell->device, 0, &ch, 1);
-		if(ch != 'Y' && ch != 'y')
-			return 1;
-		cali_input_mag_data(6);
-		
-		/* calculate result */
-		calibrate_process(MAG_STANDARD_VALUE);
+//		rt_kprintf("Calibrate mag:\r\n");
+//		
+//		/* reset matrix */
+//		ResetMatrix();
+//		
+//		rt_kprintf("forward [Y/N]\r\n");
+//		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
+//		rt_device_read(shell->device, 0, &ch, 1);
+//		if(ch != 'Y' && ch != 'y')
+//			return 1;
+//		cali_input_mag_data(6);
+//		
+//		rt_kprintf("behind [Y/N]\r\n");
+//		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
+//		rt_device_read(shell->device, 0, &ch, 1);
+//		if(ch != 'Y' && ch != 'y')
+//			return 1;
+//		cali_input_mag_data(6);
+//		
+//		rt_kprintf("left [Y/N]\r\n");
+//		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
+//		rt_device_read(shell->device, 0, &ch, 1);
+//		if(ch != 'Y' && ch != 'y')
+//			return 1;
+//		cali_input_mag_data(6);
+//		
+//		rt_kprintf("right [Y/N]\r\n");
+//		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
+//		rt_device_read(shell->device, 0, &ch, 1);
+//		if(ch != 'Y' && ch != 'y')
+//			return 1;
+//		cali_input_mag_data(6);
+//		
+//		rt_kprintf("up [Y/N]\r\n");
+//		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
+//		rt_device_read(shell->device, 0, &ch, 1);
+//		if(ch != 'Y' && ch != 'y')
+//			return 1;
+//		cali_input_mag_data(6);
+//		
+//		rt_kprintf("down [Y/N]\r\n");
+//		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
+//		rt_device_read(shell->device, 0, &ch, 1);
+//		if(ch != 'Y' && ch != 'y')
+//			return 1;
+//		cali_input_mag_data(6);
+//		
+//		/* calculate result */
+//		calibrate_process(MAG_STANDARD_VALUE);
 
 //		Reset_Cali();
 //		
@@ -525,11 +527,14 @@ int cmd_calibrate(int argc, char** argv)
 //		}
 //		
 //		Calc_Process();
+
+		calibrate_mag_run(shell);
 	}
 	else if(strcmp(argv[1] , "gyr") == 0)
 	{
-		rt_kprintf("Calibrate gyr:\r\n");
-		calibrate_gyr(200);
+		calibrate_gyr_run(shell);
+//		rt_kprintf("Calibrate gyr:\r\n");
+//		calibrate_gyr(200);
 	}
 	else
 	{
@@ -539,7 +544,7 @@ int cmd_calibrate(int argc, char** argv)
 	
 	return 0;
 }
-FINSH_FUNCTION_EXPORT_ALIAS(cmd_calibrate, __cmd_calibrate, calibrate the acc and mag sensor.);
+FINSH_FUNCTION_EXPORT_ALIAS(cmd_calibrate, __cmd_cali, calibrate the acc and mag sensor.);
 
 int cmd_uploader(int argc, char** argv)
 {

@@ -131,11 +131,11 @@ void mavlink_loop(void *parameter)
 	/* create event */
 	res = rt_event_init(&event_mavlink, "mavlink_event", RT_IPC_FLAG_FIFO);
 	
-//	usb_device = rt_device_find("usb");
-//	if(usb_device == NULL)
-//		Log.e(TAG, "err not find usb device\n");
-//	else
-//		rt_device_open(usb_device , RT_DEVICE_OFLAG_RDWR);
+	usb_device = rt_device_find("usb");
+	if(usb_device == NULL)
+		Log.e(TAG, "err not find usb device\n");
+	else
+		rt_device_open(usb_device , RT_DEVICE_OFLAG_RDWR);
 	
 	/* register timer event */
 	rt_timer_init(&timer_1HZ, "timer_1HZ",
@@ -148,7 +148,7 @@ void mavlink_loop(void *parameter)
 	rt_timer_init(&timer_3HZ, "timer_3HZ",
 					timer_mavlink_3HZ_update,
 					RT_NULL,
-					20,
+					100,
 					RT_TIMER_FLAG_PERIODIC | RT_TIMER_FLAG_SOFT_TIMER);
 	rt_timer_start(&timer_3HZ);
 	

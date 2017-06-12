@@ -17,13 +17,15 @@
 #define EVENT_SET_HOME        (1<<0)
 
 #define POS_UPDATE_INTERVAL     100
+//#define POS_UPDATE_INTERVAL     20
 #define ACC_UPDATE_INTERVAL		15
 #define BARO_UPDATE_INTERVAL    15
 
 #define TO_DEGREE(a)	((float)a*1e-7)
+#define Deg2Rad(a)		(a*PI/180.0f)
 
 const float EARTH_RADIUS = 6371393;	/* average earth radius, meter */
-const float PI = 3.1415926535;
+const float PI = 3.1415926536;
 
 static struct rt_timer timer_pos;
 static struct rt_timer timer_baro;
@@ -38,9 +40,9 @@ static struct satellite_info_s satellite_info;
 static MS5611_REPORT_Def baro_report;
 
 static HOME_Pos home_pos;
-static kalman2_state state_x;
-static kalman2_state state_y;
-static kalman2_state state_z;
+kalman2_state state_x;
+kalman2_state state_y;
+kalman2_state state_z;
 static uint8_t home_flag = 0;
 static uint8_t init_flag = 0;
 static float dt = POS_UPDATE_INTERVAL * 0.001f;
@@ -73,38 +75,55 @@ uint8_t setInitialState(void)
 	if(!home_flag)
 		return 0;
 	
-	float cov_ax = 0.002633;
-	float cov_vx = 0.108990;
-	float cov_sx = 1364.084034;
-	float cov_ay = 0.529286;
+//	float cov_ax = 0.002633;
+//	//float cov_vx = 0.108990;
+//	float cov_vx = 0.1;
+//	//float cov_sx = 1364.084034;
+//	float cov_sx = 0.1;
+	//float cov_ax = 0.529286;
+	float cov_ax = 0;
+	float cov_vx = 0.097278;
+	//float cov_vx = 0;
+	//float cov_sy = 6171.600817;
+	float cov_sx = 10;
+	
+	//float cov_ay = 0.529286;
+	float cov_ay = 0;
 	float cov_vy = 0.097278;
-	float cov_sy = 6171.600817;
-	float cov_az = 0.019341;
+	//float cov_vy = 0;
+	//float cov_sy = 6171.600817;
+	float cov_sy = 10;
+	
+	//float cov_az = 0.019341;
+	//float cov_az = 0.019341;
+	float cov_az = 0;
 	float cov_vz = 0.046193;
+	//float cov_vz = 0;
 	float cov_sz = 0.033301;
+	//float cov_sz = 0;
 	
 	/* set initial state to home */
-	state_x.x[0] = (float)home_pos.lon;
+	state_x.x[0] = (float)home_pos.lat;
 	state_x.x[1] = 0.0f;
-	state_y.x[0] = (float)home_pos.lat;
+	state_y.x[0] = (float)home_pos.lon;
 	state_y.x[1] = 0.0f;
 	state_z.x[0] = (float)home_pos.alt;
 	state_z.x[1] = 0.0f;
 
-	/* Tx is the operator which transfer Delta(x) to Delta(lon) */
-	/* Tx = 180/(PI*r), r = R*cos(sita), sita = lat*PI/180, where R is the average radius of earth */
-	float sita = state_y.x[0]*1e-7*PI/180;
-	float r = EARTH_RADIUS*cos(sita);
-	float Tx = 180/(PI*r)*1e7;
+	/* Tx is the operator which transfer Delta(x)(meter) to Delta(lat)(1e7 degree) */
+	/* Tx = 180/(PI*R), where R is the average radius of earth */
+	float Tx = 180.0f/(PI*EARTH_RADIUS)*1e7;
 	/* Ax = [ 1  dt*Tx ] */
 	/*	    [ 0     1  ] */
 	state_x.A[0][0] = 1;
 	state_x.A[0][1] = dt*Tx;
 	state_x.A[1][0] = 0;
 	state_x.A[1][1] = 1;		
-	/* Ty is the operator which transfer Delta(y) to Delta(lat) */
-	/* Ty = 180/(PI*R), where R is the average radius of earth */
-	float Ty = 180/(PI*EARTH_RADIUS)*1e7;
+	/* Ty is the operator which transfer Delta(y)(meter) to Delta(lon)(1e7 degree) */
+	/* Ty = 180/(PI*r), r = R*cos(sita), sita = lat*PI/180, where R is the average radius of earth */
+	float sita = Deg2Rad(90.0f-state_x.x[0]*1e-7);
+	float r = EARTH_RADIUS*sin(sita);
+	float Ty = 180.0f/(PI*r)*1e7;
 	
 	printf("Tx:%f Ty:%f\n", Tx, Ty);
 	
@@ -136,13 +155,13 @@ uint8_t setInitialState(void)
 	state_x.H[1][0] = state_y.H[1][0] = state_z.H[1][0] = 0.0f;
 	state_x.H[1][1] = state_y.H[1][1] = state_z.H[1][1] = 1.0f;
 	/* Q = cov(a)^2 * B * B^T */
-	state_x.q[0][0] = cov_ax*cov_ax*dt*dt*dt*dt/4*Tx*Tx;
-	state_x.q[0][1] = cov_ax*cov_ax*dt*dt*dt/2*Tx;
-	state_x.q[1][0] = cov_ax*cov_ax*dt*dt*dt/2*Tx;
+	state_x.q[0][0] = Tx*Tx*cov_ax*cov_ax*dt*dt*dt*dt/4;
+	state_x.q[0][1] = Tx*cov_ax*cov_ax*dt*dt*dt/2;
+	state_x.q[1][0] = Tx*cov_ax*cov_ax*dt*dt*dt/2;
 	state_x.q[1][1] = cov_ax*cov_ax*dt*dt;
-	state_y.q[0][0] = cov_ay*cov_ay*dt*dt*dt*dt/4*Ty*Ty;
-	state_y.q[0][1] = cov_ay*cov_ay*dt*dt*dt/2*Ty;
-	state_y.q[1][0] = cov_ay*cov_ay*dt*dt*dt/2*Ty;
+	state_y.q[0][0] = Ty*Ty*cov_ay*cov_ay*dt*dt*dt*dt/4;
+	state_y.q[0][1] = Ty*cov_ay*cov_ay*dt*dt*dt/2;
+	state_y.q[1][0] = Ty*cov_ay*cov_ay*dt*dt*dt/2;
 	state_y.q[1][1] = cov_ay*cov_ay*dt*dt;
 	state_z.q[0][0] = cov_az*cov_az*dt*dt*dt*dt/4;
 	state_z.q[0][1] = cov_az*cov_az*dt*dt*dt/2;
@@ -300,35 +319,37 @@ void position_loop(void *parameter)
 				sensor_acc_get_calibrated_data(acc);			
 				
 				/* set observation value */
-				pos_vel_x[0] = TO_DEGREE(gps_position.lon); 
-				pos_vel_x[1] = gps_position.vel_e_m_s;
-				pos_vel_y[0] = TO_DEGREE(gps_position.lat);
-				pos_vel_y[1] = gps_position.vel_n_m_s;
+				pos_vel_x[0] = gps_position.lat;
+				pos_vel_x[1] = gps_position.vel_n_m_s;
+				pos_vel_y[0] = gps_position.lon; 
+				pos_vel_y[1] = gps_position.vel_e_m_s;
 				pos_vel_z[0] = baro_report.altitude;
 				pos_vel_z[1] = gps_position.vel_d_m_s;
 				
-				/* update Tx */
-				float sita = state_y.x[0]*1e-7*PI/180;
-				float r = EARTH_RADIUS*cos(sita);
-				float Tx = 180/(PI*r)*1e7;
-				/* update Ax, Bx */
-				state_x.A[0][1] = dt*Tx;
-				state_x.B[0] = dt*dt/2*Tx;
+				/* update Ty */
+				float sita = Deg2Rad(90.0f-state_x.x[0]*1e-7);
+				float r = EARTH_RADIUS*sin(sita);
+				float Ty = 180.0f/(PI*r)*1e7;
+				/* update Ay, By */
+				state_y.A[0][1] = dt*Ty;
+				state_y.B[0] = dt*dt/2*Ty;
 				
 				/* transfer acceleration from vehicle axis to earth axis */
 				quaternion_rotateVector(attitude_getAttitude(), acc, accE);
 				
 				result=kalman2_filter(&state_x, accE[0], pos_vel_x);
 				result=kalman2_filter(&state_y, accE[1], pos_vel_y);
-				result=kalman2_filter(&state_z, accE[2]-9.8f, pos_vel_z);
+				result=kalman2_filter(&state_z, accE[2]+9.8f, pos_vel_z);
 				
 //				static uint32_t now;
 //				static uint32_t prev = 0;
 //				now = time_nowMs();
 //				if(now - prev >= 300){
 //					prev = now;
-
-//					printf("alt:%f v:%f\n" , state_z.x[0], state_z.x[1]);
+//                
+//					//printf("alt:%f v:%f\n" , state_z.x[0], state_z.x[1]);
+//					//printf("acc %f %f %f\n", accE[0], accE[1], accE[2]);
+//					printf("pos %f %f %f v:%f %f %f acc:%f %f %f\n", state_x.x[0], state_y.x[0],state_z.x[0], state_x.x[1],state_y.x[1], state_z.x[1],accE[0], accE[1], accE[2]-9.8f);
 //					//printf("s:%f v:%f acc:%f\n", pos_vel_z[0], pos_vel_z[1], acc[2]);
 //					//printf("acc %.2f %.2f %.2f accE: %.2f %.2f %.2f\n", acc[0], acc[1], acc[2], accE[0],accE[1], accE[2]);
 //					//printf("accE %.2f %.2f %.2f alt:%f v:%f\n", accE[0],accE[1], accE[2], state_z.x[0], state_z.x[1]);

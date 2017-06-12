@@ -29,6 +29,8 @@ static float drone_global_position[6];
 
 //static MS5611_REPORT_Def baro_report;
 
+static char* TAG = "Kalman";
+
 rt_err_t position_init(void)
 {
  //Global position initialization
@@ -101,7 +103,7 @@ void kalman2_init(kalman2_state *state, float *init_x, float init_u, float* init
 }
 
 
-
+extern kalman2_state state_z;
 float* kalman2_filter(kalman2_state *state, float u, float *z_measure)
 {
     float temp0 = 0.0f;
@@ -111,9 +113,14 @@ float* kalman2_filter(kalman2_state *state, float u, float *z_measure)
 	/* Step2: Predicate */
     /* x(n|n-1) = A*x(n-1|n-1) + B*u */
     state->x[0] = state->A[0][0] * state->x[0] + state->A[0][1] * state->x[1]+
-									state->B[0] * state->u;
+									state->B[0] * u;
     state->x[1] = state->A[1][0] * state->x[0] + state->A[1][1] * state->x[1] + 
-									state->B[1] * state->u;
+									state->B[1] * u;
+	
+//	if(state == &state_z){
+//		Log.w(TAG, "u:%f A=[%f %f;%f %f] B=[%f %f] x=[%f %f]\n", u, state->A[0][0],state->A[0][1],
+//			state->A[1][0],state->A[1][1],state->B[0],state->B[1],state->x[0],state->x[1]);
+//	}
     /* p(n|n-1)=A^2*p(n-1|n-1)+q */
 //    state->p[0][0] = state->p[0][0] + state->A[0][1] * state->p[1][0] + 
 //    				state->A[0][1] * state->p[0][1] + 

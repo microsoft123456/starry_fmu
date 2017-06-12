@@ -17,7 +17,9 @@ const static float MIX_MAG_Z = 0.669130f;/*sin42*/
 
 static float di[3] = {0.0f, 0.0f, 0.0f};
 static float accU[3], magU[3];
-static float acc_const[3] = {0.0f, 0.0f, 1.0f};
+//static float acc_const[3] = {0.0f, 0.0f, 1.0f};
+/* the gravity is -1, because the acc measures the relative acceleration */
+static float acc_const[3] = {0.0f, 0.0f, -1.0f};
 static float acc_constV[3];
 static float acc_cross[3];
 static float mag_const[3] = {MIX_MAG_X, 0.0f, MIX_MAG_Z};
@@ -85,12 +87,18 @@ void mix_gyrAccMag_crossMethod(quaternion * q,const float gyr[3],const float acc
 	di[0] += err[0];
 	if(di[0] >= 100)
 		di[0] = 100;
+	if(di[0] <= -100)
+		di[0] = -100;
 	di[1] += err[1];
 	if(di[1] >= 100)
 		di[1] = 100;
+	if(di[1] <= -100)
+		di[1] = -100;
 	di[2] += err[2];
 	if(di[2] >= 100)
 		di[2] = 100;
+	if(di[2] <= -100)
+		di[2] = -100;
 
 	delta[0] = gyr[0] + err[0]*FACTOR_P + di[0]*FACTOR_I;
 	delta[1] = gyr[1] + err[1]*FACTOR_P + di[1]*FACTOR_I;
@@ -108,7 +116,15 @@ void mix_gyrAccMag_crossMethod(quaternion * q,const float gyr[3],const float acc
 ////		di[0], di[1], di[2]);
 ////		Log.w(TAG, "vz:%.2f %.2f %.2f ac:%.2f %.2f %.2f mc:%.2f\n", vz[0], vz[1], vz[2],
 ////		acc_cross[0], acc_cross[1], acc_cross[2], mag_cross[2]);
-//		Log.w(TAG, "vz:%.2f %.2f %.2f mag[2]:%f\n", vz[0], vz[1], vz[2], mag_cross[2]);
+//		//Log.w(TAG, "vz:%.2f %.2f %.2f mag[2]:%f\n", vz[0], vz[1], vz[2], mag_cross[2]);
+//		//Log.w(TAG, "di:%.2f %.2f %.2f err:%.2f %.2f %.2f mag[2]:%f\n", di[0], di[1], di[2], err[0],err[1],err[2],mag_cross[2]);
+//		//Log.w(TAG, "magU:%.2f %.2f %.2f magCons:%.2f %.2f %.2f\n", magU[0], magU[1], magU[2], mag_constV[0], mag_constV[1], mag_constV[2]);
+//		//Log.w(TAG, "mag: %.2f %.2f %.2f\n", mag[0], mag[1], mag[2]);
+//		
+//		float mag_c[3], acc_c[3];
+//		quaternion_rotateVector(*q, magU, mag_c);
+//		quaternion_rotateVector(*q, accU, acc_c);
+//		Log.w(TAG, "mag_c: %.2f %.2f %.2f acc_c: %.2f %.2f %.2f\n", mag_c[0], mag_c[1], mag_c[2],acc_c[0],acc_c[1],acc_c[2]);
 //	}
 
 	//first order runge-kutta to create quaternion
