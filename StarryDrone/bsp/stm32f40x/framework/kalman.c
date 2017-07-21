@@ -103,23 +103,24 @@ void kalman2_init(kalman2_state *state, float *init_x, float init_u, float* init
 }
 
 
+
+extern kalman2_state state_x;
+extern kalman2_state state_y;
 extern kalman2_state state_z;
 float* kalman2_filter(kalman2_state *state, float u, float *z_measure)
 {
-    float temp0 = 0.0f;
-    float temp1 = 0.0f;
-    float temp = 0.0f;
+//    float temp0 = 0.0f;
+//    float temp1 = 0.0f;
+//    float temp = 0.0f;
 
 	/* Step2: Predicate */
     /* x(n|n-1) = A*x(n-1|n-1) + B*u */
-    state->x[0] = state->A[0][0] * state->x[0] + state->A[0][1] * state->x[1]+
-									state->B[0] * u;
-    state->x[1] = state->A[1][0] * state->x[0] + state->A[1][1] * state->x[1] + 
-									state->B[1] * u;
+	float prev_x[2] = {state->x[0], state->x[1]};
+    state->x[0] = state->A[0][0]*prev_x[0] + state->A[0][1]*prev_x[1] + state->B[0]*u;
+    state->x[1] = state->A[1][0]*prev_x[0] + state->A[1][1]*prev_x[1] + state->B[1]*u;
 	
-//	if(state == &state_z){
-//		Log.w(TAG, "u:%f A=[%f %f;%f %f] B=[%f %f] x=[%f %f]\n", u, state->A[0][0],state->A[0][1],
-//			state->A[1][0],state->A[1][1],state->B[0],state->B[1],state->x[0],state->x[1]);
+//	if(state == &state_x){
+//		Log.w(TAG, "stage0 x[0]:%f\n", state->x[0]);
 //	}
     /* p(n|n-1)=A^2*p(n-1|n-1)+q */
 //    state->p[0][0] = state->p[0][0] + state->A[0][1] * state->p[1][0] + 
@@ -128,19 +129,23 @@ float* kalman2_filter(kalman2_state *state, float u, float *z_measure)
 //    state->p[0][1] = state->A[0][0] * state->p[0][1] + state->A[1][1] * state->p[1][1];
 //    state->p[1][0] = state->A[0][1] * state->p[0][1] + state->A[1][1] * state->p[1][0];
 //    state->p[1][1] = state->p[1][1] + state->q[1];
-	state->p[0][0] = state->A[0][0]*(state->A[0][0]*state->p[0][0] + state->A[0][1]*state->p[1][0])
+	
+	float prev_p[2][2];
+	prev_p[0][0] = state->A[0][0]*(state->A[0][0]*state->p[0][0] + state->A[0][1]*state->p[1][0])
 						+ state->A[0][1]*(state->A[0][0]*state->p[0][1] + state->A[0][1]*state->p[1][1])
 						+ state->q[0][0];
-	state->p[0][1] = state->A[1][0]*(state->A[0][0]*state->p[0][0] + state->A[0][1]*state->p[1][0])
+	prev_p[0][1] = state->A[1][0]*(state->A[0][0]*state->p[0][0] + state->A[0][1]*state->p[1][0])
 						+ state->A[1][1]*(state->A[0][0]*state->p[0][1] + state->A[0][1]*state->p[1][1])
 						+ state->q[0][1];
-	state->p[1][0] = state->A[0][0]*(state->A[1][0]*state->p[0][0] + state->A[1][1]*state->p[1][0])
+	prev_p[1][0] = state->A[0][0]*(state->A[1][0]*state->p[0][0] + state->A[1][1]*state->p[1][0])
 						+ state->A[0][1]*(state->A[1][0]*state->p[0][1] + state->A[1][1]*state->p[1][1])
 						+ state->q[1][0];
-	state->p[1][1] = state->A[1][0]*(state->A[1][0]*state->p[0][0] + state->A[1][1]*state->p[1][0])
-						+ state->A[1][1]*(state->A[1][0]*state->p[1][0] + state->A[1][1]*state->p[1][1])
+	prev_p[1][1] = state->A[1][0]*(state->A[1][0]*state->p[0][0] + state->A[1][1]*state->p[1][0])
+						+ state->A[1][1]*(state->A[1][0]*state->p[0][1] + state->A[1][1]*state->p[1][1])
 						+ state->q[1][1];
-
+//	if(state == &state_x){
+//		Log.w(TAG, "stage1 p:%f %f %f %f\n", state->p[0][0], state->p[0][1], state->p[1][0], state->p[1][1]);
+//	}
     /* Step2: Measurement */
     /* gain = p * H^T * [r + H * p * H^T]^(-1), H^T means transpose. */
 //    temp0 = state->p[0][0] * state->H[0] + state->p[0][1] * state->H[1];
@@ -150,19 +155,29 @@ float* kalman2_filter(kalman2_state *state, float u, float *z_measure)
 //    state->gain[1] = temp1 / temp;
 	/* calculate inv(S), H = I */
 	float S[2][2], invS[2][2], detS;
-	S[0][0] = state->p[0][0] + state->r[0][0];
-	S[0][1] = state->p[0][1] + state->r[0][1];
-	S[1][0] = state->p[1][0] + state->r[1][0];
-	S[1][1] = state->p[1][1] + state->r[1][1];
+	S[0][0] = prev_p[0][0] + state->r[0][0];
+	S[0][1] = prev_p[0][1] + state->r[0][1];
+	S[1][0] = prev_p[1][0] + state->r[1][0];
+	S[1][1] = prev_p[1][1] + state->r[1][1];
 	detS = S[0][0]*S[1][1] - S[0][1]*S[1][0];
+//	if(state == &state_x){
+//		Log.w(TAG, "detS:%f\n", detS);
+//	}
 	invS[0][0] =  S[1][1] / detS;
-	invS[0][1] = -S[1][0] / detS;
-	invS[1][0] = -S[0][1] / detS;
+	invS[0][1] = -S[0][1] / detS;
+	invS[1][0] = -S[1][0] / detS;
 	invS[1][1] =  S[0][0] / detS;
-	state->gain[0][0] =  state->p[0][0]*invS[0][0] + state->p[0][1]*invS[1][0];
-	state->gain[0][1] =  state->p[0][0]*invS[0][1] + state->p[0][1]*invS[1][1];
-	state->gain[1][0] =  state->p[1][0]*invS[0][0] + state->p[1][1]*invS[1][0];
-	state->gain[1][1] =  state->p[1][0]*invS[0][1] + state->p[1][1]*invS[1][1];
+	state->gain[0][0] =  prev_p[0][0]*invS[0][0] + prev_p[0][1]*invS[1][0];
+	state->gain[0][1] =  prev_p[0][0]*invS[0][1] + prev_p[0][1]*invS[1][1];
+	state->gain[1][0] =  prev_p[1][0]*invS[0][0] + prev_p[1][1]*invS[1][0];
+	state->gain[1][1] =  prev_p[1][0]*invS[0][1] + prev_p[1][1]*invS[1][1];
+	
+//	if(state == &state_y){
+//		Log.w(TAG, "P:%f %f %f %f gain:%f %f %f %f\n", state->p[0][0],state->p[0][1],state->p[1][0],state->p[1][1], state->gain[0][0],state->gain[0][1],state->gain[1][0],state->gain[1][1]);
+//		//Log.w(TAG, "P:%f %f %f %f R:%f %f %f %f\n", state->p[0][0],state->p[0][1],state->p[1][0],state->p[1][1],
+//		//	state->r[0][0],state->r[0][1],state->r[1][0],state->r[1][1]);
+//	}
+	
     /* x(n|n) = x(n|n-1) + gain(n) * [z_measure - H(n)*x(n|n-1)]*/
 //    temp = state->H[0] * state->x[0] + state->H[1] * state->x[1];
 //    state->x[0] = state->x[0] + state->gain[0] * (z_measure[0] - temp); 
@@ -174,15 +189,22 @@ float* kalman2_filter(kalman2_state *state, float u, float *z_measure)
 	state->x[0] += state->gain[0][0]*y[0] + state->gain[0][1]*y[1];
 	state->x[1] += state->gain[1][0]*y[0] + state->gain[1][1]*y[1];
 
+//	if(state == &state_x){
+//		Log.w(TAG, "stage1 x[0]:%f\n", state->x[0]);
+//	}
     /* Update @p: p(n|n) = [I - gain * H] * p(n|n-1) */
 //    state->p[0][0] = (1 - state->gain[0] * state->H[0]) * state->p[0][0];
 //    state->p[0][1] = (1 - state->gain[0] * state->H[1]) * state->p[0][1];
 //    state->p[1][0] = (1 - state->gain[1] * state->H[0]) * state->p[1][0];
 //    state->p[1][1] = (1 - state->gain[1] * state->H[1]) * state->p[1][1];
-    state->p[0][0] = (1 - state->gain[0][0])*state->p[0][0] - state->gain[0][1]*state->p[1][0];
-    state->p[0][1] = (1 - state->gain[0][0])*state->p[0][1] - state->gain[0][1]*state->p[1][1];
-    state->p[1][0] = (1 - state->gain[1][1])*state->p[1][0] - state->gain[1][0]*state->p[0][0];
-    state->p[1][1] = (1 - state->gain[1][1])*state->p[1][1] - state->gain[1][0]*state->p[0][1];
+	
+    state->p[0][0] = (1 - state->gain[0][0])*prev_p[0][0] - state->gain[0][1]*prev_p[1][0];
+    state->p[0][1] = (1 - state->gain[0][0])*prev_p[0][1] - state->gain[0][1]*prev_p[1][1];
+    state->p[1][0] = (1 - state->gain[1][1])*prev_p[1][0] - state->gain[1][0]*prev_p[0][0];
+    state->p[1][1] = (1 - state->gain[1][1])*prev_p[1][1] - state->gain[1][0]*prev_p[0][1];
 
+//	if(state == &state_x){
+//		Log.w(TAG, "stage2 p:%f %f %f %f\n", state->p[0][0], state->p[0][1], state->p[1][0], state->p[1][1]);
+//	}
     return state->x;
 }

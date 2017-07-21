@@ -81,31 +81,33 @@ uint8_t setInitialState(void)
 //	//float cov_sx = 1364.084034;
 //	float cov_sx = 0.1;
 	//float cov_ax = 0.529286;
-	float cov_ax = 0;
-	float cov_vx = 0.097278;
-	//float cov_vx = 0;
+	float cov_ax = 0.1;
+	//float cov_vx = 0.097278;
+	float cov_vx = 1;
 	//float cov_sy = 6171.600817;
-	float cov_sx = 10;
+	float cov_sx = 1;
 	
 	//float cov_ay = 0.529286;
-	float cov_ay = 0;
-	float cov_vy = 0.097278;
-	//float cov_vy = 0;
+	float cov_ay = 1;
+	//float cov_vy = 0.097278;
+	float cov_vy = 1;
 	//float cov_sy = 6171.600817;
-	float cov_sy = 10;
+	float cov_sy = 1;
 	
 	//float cov_az = 0.019341;
 	//float cov_az = 0.019341;
-	float cov_az = 0;
-	float cov_vz = 0.046193;
-	//float cov_vz = 0;
-	float cov_sz = 0.033301;
-	//float cov_sz = 0;
+	//float cov_az = 0.09;
+	float cov_az = 1;
+	//float cov_vz = 0.046193;
+	float cov_vz = 1;
+	//float cov_sz = 0.033301;
+	float cov_sz = 1;
 	
 	/* set initial state to home */
 	state_x.x[0] = (float)home_pos.lat;
 	state_x.x[1] = 0.0f;
 	state_y.x[0] = (float)home_pos.lon;
+	//state_y.x[0] = (float)home_pos.lat;
 	state_y.x[1] = 0.0f;
 	state_z.x[0] = (float)home_pos.alt;
 	state_z.x[1] = 0.0f;
@@ -115,10 +117,10 @@ uint8_t setInitialState(void)
 	float Tx = 180.0f/(PI*EARTH_RADIUS)*1e7;
 	/* Ax = [ 1  dt*Tx ] */
 	/*	    [ 0     1  ] */
-	state_x.A[0][0] = 1;
+	state_x.A[0][0] = 1.0f;
 	state_x.A[0][1] = dt*Tx;
-	state_x.A[1][0] = 0;
-	state_x.A[1][1] = 1;		
+	state_x.A[1][0] = 0.0f;
+	state_x.A[1][1] = 1.0f;		
 	/* Ty is the operator which transfer Delta(y)(meter) to Delta(lon)(1e7 degree) */
 	/* Ty = 180/(PI*r), r = R*cos(sita), sita = lat*PI/180, where R is the average radius of earth */
 	float sita = Deg2Rad(90.0f-state_x.x[0]*1e-7);
@@ -129,10 +131,10 @@ uint8_t setInitialState(void)
 	
 	/* Ay = [ 1  dt*Ty ] */
 	/*	    [ 0     1  ] */
-	state_y.A[0][0] = 1;
+	state_y.A[0][0] = 1.0f;
 	state_y.A[0][1] = dt*Ty;
-	state_y.A[1][0] = 0;
-	state_y.A[1][1] = 1;
+	state_y.A[1][0] = 0.0f;
+	state_y.A[1][1] = 1.0f;
 	/* Az = [ 1  dt] */
 	/*	    [ 0  1 ] */
 	state_z.A[0][0] = 1.0f;
@@ -141,13 +143,13 @@ uint8_t setInitialState(void)
 	state_z.A[1][1] = 1.0f;
 	
 	/* Bx = [ Tx*dt^2/2  dt ]^T */
-	state_x.B[0] = dt*dt/2*Tx;
+	state_x.B[0] = 0;
 	state_x.B[1] = dt;	
 	/* By = [ Ty*dt^2/2  dt ]^T */
-	state_y.B[0] = dt*dt/2*Ty;
+	state_y.B[0] = 0;
 	state_y.B[1] = dt;	
 	/* Bz = [ dt^2/2  dt ]^T */
-	state_z.B[0] = dt*dt/2;
+	state_z.B[0] = 0;
 	state_z.B[1] = dt;
 	/* H = I, don't need to initialize H, because we has ignored H */
 	state_x.H[0][0] = state_y.H[0][0] = state_z.H[0][0] = 1.0f;
@@ -155,17 +157,29 @@ uint8_t setInitialState(void)
 	state_x.H[1][0] = state_y.H[1][0] = state_z.H[1][0] = 0.0f;
 	state_x.H[1][1] = state_y.H[1][1] = state_z.H[1][1] = 1.0f;
 	/* Q = cov(a)^2 * B * B^T */
-	state_x.q[0][0] = Tx*Tx*cov_ax*cov_ax*dt*dt*dt*dt/4;
-	state_x.q[0][1] = Tx*cov_ax*cov_ax*dt*dt*dt/2;
-	state_x.q[1][0] = Tx*cov_ax*cov_ax*dt*dt*dt/2;
+//	state_x.q[0][0] = Tx*Tx*cov_ax*cov_ax*dt*dt*dt*dt/4;
+//	state_x.q[0][1] = Tx*cov_ax*cov_ax*dt*dt*dt/2;
+//	state_x.q[1][0] = Tx*cov_ax*cov_ax*dt*dt*dt/2;
+//	state_x.q[1][1] = cov_ax*cov_ax*dt*dt;
+//	state_y.q[0][0] = Ty*Ty*cov_ay*cov_ay*dt*dt*dt*dt/4;
+//	state_y.q[0][1] = Ty*cov_ay*cov_ay*dt*dt*dt/2;
+//	state_y.q[1][0] = Ty*cov_ay*cov_ay*dt*dt*dt/2;
+//	state_y.q[1][1] = cov_ay*cov_ay*dt*dt;
+//	state_z.q[0][0] = cov_az*cov_az*dt*dt*dt*dt/4;
+//	state_z.q[0][1] = cov_az*cov_az*dt*dt*dt/2;
+//	state_z.q[1][0] = cov_az*cov_az*dt*dt*dt/2;
+//	state_z.q[1][1] = cov_az*cov_az*dt*dt;
+	state_x.q[0][0] = 0;
+	state_x.q[0][1] = 0;
+	state_x.q[1][0] = 0;
 	state_x.q[1][1] = cov_ax*cov_ax*dt*dt;
-	state_y.q[0][0] = Ty*Ty*cov_ay*cov_ay*dt*dt*dt*dt/4;
-	state_y.q[0][1] = Ty*cov_ay*cov_ay*dt*dt*dt/2;
-	state_y.q[1][0] = Ty*cov_ay*cov_ay*dt*dt*dt/2;
+	state_y.q[0][0] = 0;
+	state_y.q[0][1] = 0;
+	state_y.q[1][0] = 0;
 	state_y.q[1][1] = cov_ay*cov_ay*dt*dt;
-	state_z.q[0][0] = cov_az*cov_az*dt*dt*dt*dt/4;
-	state_z.q[0][1] = cov_az*cov_az*dt*dt*dt/2;
-	state_z.q[1][0] = cov_az*cov_az*dt*dt*dt/2;
+	state_z.q[0][0] = 0;
+	state_z.q[0][1] = 0;
+	state_z.q[1][0] = 0;
 	state_z.q[1][1] = cov_az*cov_az*dt*dt;
 	printf("\nQx:\n");
 	printf("%f\n", state_x.q[0][0]);
@@ -306,6 +320,43 @@ void position_loop(void *parameter)
 	
 	while(1)
 	{
+		
+//		#define INT_POS		100
+//		static uint32_t cur_time = 0;
+//		static uint32_t temp_time = 0;
+//		static float vel[3] = {0,0,0};
+//		static float pos[3] = {0,0,0};
+//		uint32_t time = time_nowMs();
+//		
+//		if(time - cur_time > INT_POS){
+//			cur_time = time;
+//			sensor_acc_get_calibrated_data(acc);
+//			quaternion_rotateVector(attitude_getAttitude(), acc, accE);
+//			//Log.w(TAG, "acc: %f %f %f\n", accE[0], accE[1], accE[2]);
+//			accE[2] += 9.8f;
+//			accE[2] = -accE[2];
+//			//Log.w(TAG, "acc: %.3f	%.3f	%.3f\n", accE[0], accE[1], accE[2]);
+//			if(abs(accE[0])<0.1)
+//				accE[0] = 0.0f;
+//			if(abs(accE[1])<0.1)
+//				accE[1] = 0.0f;
+//			if(abs(accE[2])<0.1)
+//				accE[2] = 0.0f;
+//			
+//			float interval = ((float)INT_POS/1000.0f);
+//			for(uint8_t i = 0 ; i < 3 ; i++){
+//				vel[i] += accE[i]*interval;
+//				//pos[i] += vel[i]*interval + 0.5f*accE[i]*interval*interval;
+//				pos[i] += vel[i]*interval;
+//			}
+//			
+//			if(time - temp_time > 200 ){
+//				temp_time = time;
+//				Log.w(TAG, "v: %.3f %.3f %.3f pos: %.3f %.3f %.3f\n", vel[0], vel[1], vel[2], pos[0], pos[1], pos[2]);
+//			}
+//			//Log.w(TAG, "v: %.3f %.3f %.3f pos: %.3f %.3f %.3f\n", vel[0], vel[1], vel[2], pos[0], pos[1], pos[2]);
+//		}
+		
 		/* wait event occur */
 		res = rt_event_recv(&event_position, wait_set, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, 
 								RT_WAITING_FOREVER, &recv_set);
@@ -319,43 +370,57 @@ void position_loop(void *parameter)
 				sensor_acc_get_calibrated_data(acc);			
 				
 				/* set observation value */
-				pos_vel_x[0] = gps_position.lat;
-				pos_vel_x[1] = gps_position.vel_n_m_s;
-				pos_vel_y[0] = gps_position.lon; 
-				pos_vel_y[1] = gps_position.vel_e_m_s;
-				pos_vel_z[0] = baro_report.altitude;
-				pos_vel_z[1] = gps_position.vel_d_m_s;
+//				pos_vel_x[0] = gps_position.lat;
+//				pos_vel_x[1] = gps_position.vel_n_m_s;
+//				pos_vel_y[0] = gps_position.lon; 
+//				pos_vel_y[1] = gps_position.vel_e_m_s;
+//				pos_vel_z[0] = baro_report.altitude;
+//				pos_vel_z[1] = gps_position.vel_d_m_s;
+				
+				pos_vel_x[0] = 200;
+				pos_vel_x[1] = 0;
+				pos_vel_y[0] = 300; 
+				pos_vel_y[1] = 0;
+				pos_vel_z[0] = 400;
+				pos_vel_z[1] = 0;
+				
+				//Log.w(TAG, "lat:%f x_v:%f lon:%f y_v:%f\n", pos_vel_x[0], pos_vel_x[1], pos_vel_y[0], pos_vel_y[1]);
 				
 				/* update Ty */
-				float sita = Deg2Rad(90.0f-state_x.x[0]*1e-7);
+				float sita = Deg2Rad(90.0f-state_x.x[0]*1e-7);	//这里不是线性的，EKF?
 				float r = EARTH_RADIUS*sin(sita);
 				float Ty = 180.0f/(PI*r)*1e7;
 				/* update Ay, By */
 				state_y.A[0][1] = dt*Ty;
-				state_y.B[0] = dt*dt/2*Ty;
+				//state_y.B[0] = dt*dt/2*Ty;
 				
-				/* transfer acceleration from vehicle axis to earth axis */
+				/* transfer acceleration from body grame to global frame */
 				quaternion_rotateVector(attitude_getAttitude(), acc, accE);
+				
+				/*remove gravity*/
+				accE[2] += 9.8f;
+				/*Change to NEU axis*/
+				accE[2] = -accE[2];
 				
 				result=kalman2_filter(&state_x, accE[0], pos_vel_x);
 				result=kalman2_filter(&state_y, accE[1], pos_vel_y);
-				result=kalman2_filter(&state_z, accE[2]+9.8f, pos_vel_z);
+				result=kalman2_filter(&state_z, accE[2], pos_vel_z);
 				
-//				static uint32_t now;
-//				static uint32_t prev = 0;
-//				now = time_nowMs();
-//				if(now - prev >= 300){
-//					prev = now;
-//                
-//					//printf("alt:%f v:%f\n" , state_z.x[0], state_z.x[1]);
-//					//printf("acc %f %f %f\n", accE[0], accE[1], accE[2]);
-//					printf("pos %f %f %f v:%f %f %f acc:%f %f %f\n", state_x.x[0], state_y.x[0],state_z.x[0], state_x.x[1],state_y.x[1], state_z.x[1],accE[0], accE[1], accE[2]-9.8f);
-//					//printf("s:%f v:%f acc:%f\n", pos_vel_z[0], pos_vel_z[1], acc[2]);
-//					//printf("acc %.2f %.2f %.2f accE: %.2f %.2f %.2f\n", acc[0], acc[1], acc[2], accE[0],accE[1], accE[2]);
-//					//printf("accE %.2f %.2f %.2f alt:%f v:%f\n", accE[0],accE[1], accE[2], state_z.x[0], state_z.x[1]);
-////						Log.w(TAG, "x: %.2f %.2f y: %.2f %.2f z:%.2f %.2f\n", state_x.x[0], state_x.x[1], state_y.x[0], state_y.x[1]
-////						, state_z.x[0], state_z.x[1]);
-//				}
+				static uint32_t now;
+				static uint32_t prev = 0;
+				now = time_nowMs();
+				if(now - prev >= 300){
+					prev = now;
+                
+					//printf("alt:%f v:%f\n" , state_z.x[0], state_z.x[1]);
+					//printf("acc %f %f %f\n", accE[0], accE[1], accE[2]);
+					printf("pos %f %f %f v:%f %f %f acc:%f %f %f\n", state_x.x[0], state_y.x[0],state_z.x[0], state_x.x[1],state_y.x[1], state_z.x[1],accE[0], accE[1], accE[2]);
+					//printf("s:%f %f v:%f %f\n", pos_vel_x[0], pos_vel_x[1], pos_vel_y[0], pos_vel_y[1]);
+					//printf("acc %.2f %.2f %.2f accE: %.2f %.2f %.2f\n", acc[0], acc[1], acc[2], accE[0],accE[1], accE[2]);
+					//printf("accE %.2f %.2f %.2f alt:%f v:%f\n", accE[0],accE[1], accE[2], state_z.x[0], state_z.x[1]);
+//						Log.w(TAG, "x: %.2f %.2f y: %.2f %.2f z:%.2f %.2f\n", state_x.x[0], state_x.x[1], state_y.x[0], state_y.x[1]
+//						, state_z.x[0], state_z.x[1]);
+				}
 			}
 		}else{
 			//some err occurs

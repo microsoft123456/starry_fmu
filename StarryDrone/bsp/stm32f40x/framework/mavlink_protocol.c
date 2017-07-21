@@ -21,7 +21,7 @@ static rt_device_t usb_device = NULL;
 uint8_t mav_tx_buff[1024];
 mavlink_system_t mavlink_system;
 /* disable mavlink sending */
-uint8_t mav_disenable = 0;
+uint8_t mav_disenable = 1;
 
 static char *TAG = "MAV";
 
