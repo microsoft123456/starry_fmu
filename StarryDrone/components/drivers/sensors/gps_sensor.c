@@ -15,7 +15,7 @@
 #define FNV1_32_PRIME	((uint32_t)0x01000193)	// magic prime for FNV1 hash algorithm
 #define M_DEG_TO_RAD_F 		0.01745329251994f
 #define M_RAD_TO_DEG_F 		57.2957795130823f
-#define MIN(x,y) (x < y ? x : y)
+//#define MIN(x,y) (x < y ? x : y)
 
 static rt_device_t serial_device;
 static struct rt_device gps_device;

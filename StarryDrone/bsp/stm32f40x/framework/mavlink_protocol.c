@@ -21,7 +21,7 @@ static rt_device_t usb_device = NULL;
 uint8_t mav_tx_buff[1024];
 mavlink_system_t mavlink_system;
 /* disable mavlink sending */
-uint8_t mav_disenable = 1;
+uint8_t mav_disenable = 0;
 
 static char *TAG = "MAV";
 
@@ -85,6 +85,27 @@ uint8_t mavlink_send_msg_attitude_quaternion(uint8_t system_status)
 	
 	mavlink_msg_attitude_quaternion_pack(mavlink_system.sysid, mavlink_system.compid, &msg,
 						       0, attitude.w, attitude.x, attitude.y, attitude.z,0,0,0);
+	
+	len = mavlink_msg_to_send_buffer(mav_tx_buff, &msg);
+	mavlink_msg_transfer(0, mav_tx_buff, len);
+	
+	return 1;
+}
+
+uint8_t mavlink_send_msg_global_position(uint8_t system_status)
+{
+	mavlink_message_t msg;
+	uint16_t len;
+	Position_Info pos_info;
+	
+	if(mav_disenable)
+		return 0;
+	
+	pos_info = get_pos_info();
+	
+	mavlink_msg_global_position_int_pack(mavlink_system.sysid, mavlink_system.compid, &msg,
+						       0, pos_info.lat, pos_info.lon, pos_info.alt, pos_info.relative_alt, 
+								pos_info.vx, pos_info.vy, pos_info.vz, UINT16_MAX);
 	
 	len = mavlink_msg_to_send_buffer(mav_tx_buff, &msg);
 	mavlink_msg_transfer(0, mav_tx_buff, len);
@@ -163,6 +184,7 @@ void mavlink_loop(void *parameter)
 			if(recv_set & EVENT_MAV_1HZ_UPDATE)
 			{
 				mavlink_send_msg_heartbeat(MAV_STATE_STANDBY);	
+				mavlink_send_msg_global_position(MAV_STATE_STANDBY);
 			}
 			
 			if(recv_set & EVENT_MAV_3HZ_UPDATE)

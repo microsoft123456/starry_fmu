@@ -20,7 +20,7 @@ typedef struct {
 }kalman2_state;                   
 
 void kalman2_init(kalman2_state *state, float *init_x, float init_u, float* init_p[2]);
-extern float* kalman2_filter(kalman2_state *state, float u, float *z_measure);
+void kalman2_filter(kalman2_state *state, float u, float *z_measure);
 float gaussrand(void);
 //void position_loop(void *parameter);
 

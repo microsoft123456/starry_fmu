@@ -568,6 +568,17 @@ int cmd_sethome(int argc, char** argv)
 			printf("set home: %d %d %.2f\n", lon, lat, alt);
 			set_home(lon, lat, alt);
 		}
+		
+		return 0;
 	}
+	
+	return 1;
 }
 FINSH_FUNCTION_EXPORT_ALIAS(cmd_sethome, __cmd_sethome, set home with current position.);
+
+int handle_sensor_shell_cmd(int argc, char** argv);
+int cmd_sensor(int argc, char** argv)
+{
+	return handle_sensor_shell_cmd(argc, argv);
+}
+FINSH_FUNCTION_EXPORT_ALIAS(cmd_sensor, __cmd_sensor, get sensor information.);

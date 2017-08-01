@@ -82,10 +82,10 @@ rt_err_t sensor_mag_get_calibrated_data(float mag[3])
 	
 	res = sensor_mag_measure(mag_f);
 	
-	for(uint8_t i=0 ; i<3 ; i++)
-	{
-		mag[i] = (mag_f[i] + param->mag_offset[i]) * param->mag_gain[i];
-	}
+//	for(uint8_t i=0 ; i<3 ; i++)
+//	{
+//		mag[i] = (mag_f[i] + param->mag_offset[i]) * param->mag_gain[i];
+//	}
 	
 //	mag[0] = 0.905035*mag_f[0] - 0.078528*mag_f[1] - 0.023417*mag_f[2] - 0.025694;
 //	mag[1] = 0.938565*mag_f[1] + 0.019469*mag_f[2] - 0.059417;
@@ -93,6 +93,38 @@ rt_err_t sensor_mag_get_calibrated_data(float mag[3])
 //	mag[0] = 1.024532*mag_f[0] + 0.181527*mag_f[1] - 0.010846*mag_f[2] - 0.067172;
 //	mag[1] = 1.284464*mag_f[1] - 0.236356*mag_f[2] + 0.026534;
 //	mag[2] = mag_f[2] + 0.069139;
+	
+//	float ofs[3] = {0.053472, 0.063352, 0.058256};
+//	float gain[3] = {0.50187, 0.4447, 0.42454};
+//	float rotM[3][3] = {
+//		{0.7730,    0.2220,   -0.5942},
+//		{0.6049,    0.0244,    0.7960},
+//		{-0.1912,    0.9747,    0.1154}
+//	};
+//	
+//	float ofs_mag[3], rot_mag[3];
+//	for(uint8_t i=0 ; i<3 ; i++){
+//		ofs_mag[i] = mag_f[i] - ofs[i];
+//	}
+//	for(uint8_t i=0 ; i<3 ; i++){
+//		rot_mag[i] = ofs_mag[0]*rotM[0][i] + ofs_mag[1]*rotM[1][i] + ofs_mag[2]*rotM[2][i];
+//		mag[i] = rot_mag[i]/gain[i];
+//	}
+
+	float ofs[3] = {0.053472, 0.063352, 0.058256};
+	float transM[3][3] = {
+		{2.1333, -0.17029, 0.030542},
+		{-0.17029, 2.2226, 0.039441},
+		{0.030542, 0.039441, 2.2408}
+	};
+	
+	float ofs_mag[3], rot_mag[3];
+	for(uint8_t i=0 ; i<3 ; i++){
+		ofs_mag[i] = mag_f[i] - ofs[i];
+	}
+	for(uint8_t i=0 ; i<3 ; i++){
+		mag[i] = ofs_mag[0]*transM[0][i] + ofs_mag[1]*transM[1][i] + ofs_mag[2]*transM[2][i];
+	}
 	
 	return res;
 }
@@ -275,6 +307,168 @@ void sensorAxis2NedAxis(float from[3], float to[3])
 	to[2] = -from[2];
 }
 
+int handle_sensor_shell_cmd(int argc, char** argv)
+{
+	uint8_t sensor_type = 0;
+	uint32_t interval = 1000;	//default is 1s
+	uint32_t cnt = 0;
+	uint8_t raw_data = 0;
+	uint8_t no_cali = 0;
+	
+	if(argc > 1){
+		if(strcmp(argv[1], "acc") == 0){
+			sensor_type = 1;
+		}
+		else if(strcmp(argv[1], "mag") == 0){
+			sensor_type = 2;
+		}
+		else if(strcmp(argv[1], "gyr") == 0){
+			sensor_type = 3;
+		}else{
+			printf("unknow parameter:%s\n", argv[1]);
+			return 1;
+		}
+		
+		for(uint16_t i = 2 ; i < argc ; i++){
+			if(strcmp(argv[i], "-t") == 0){
+				i++;
+				if(i >= argc){
+					printf("wrong cmd format.\n");
+					return 2;
+				}
+				interval = atoi(argv[i]);
+			}
+			if(strcmp(argv[i], "-n") == 0){
+				i++;
+				if(i >= argc){
+					printf("wrong cmd format.\n");
+					return 2;
+				}
+				cnt = atoi(argv[i]);
+			}
+			if(strcmp(argv[i], "-r") == 0){
+				raw_data = 1;
+			}
+			if(strcmp(argv[i], "-nc") == 0){
+				no_cali = 1;
+			}
+		}
+		
+		switch(sensor_type)
+		{
+			case 1:	//acc
+			{
+				if(!cnt){
+					if(raw_data){
+						int16_t raw_acc[3];
+						sensor_acc_raw_measure(raw_acc);
+						printf("raw acc:%d %d %d\n", raw_acc[0], raw_acc[1], raw_acc[2]);
+					}else if(no_cali){
+						float acc[3];
+						sensor_acc_measure(acc);
+						printf("acc:%f %f %f\n", acc[0], acc[1], acc[2]);
+					}else{
+						float acc[3];
+						sensor_acc_get_calibrated_data(acc);
+						printf("cali acc:%f %f %f\n", acc[0], acc[1], acc[2]);
+					}
+				}else{
+					for(uint32_t i = 0 ; i < cnt ; i++){
+						if(raw_data){
+							int16_t raw_acc[3];
+							sensor_acc_raw_measure(raw_acc);
+							printf("raw acc:%d %d %d\n", raw_acc[0], raw_acc[1], raw_acc[2]);
+						}else if(no_cali){
+							float acc[3];
+							sensor_acc_measure(acc);
+							printf("acc:%f %f %f\n", acc[0], acc[1], acc[2]);
+						}else{
+							float acc[3];
+							sensor_acc_get_calibrated_data(acc);
+							printf("cali acc:%f %f %f\n", acc[0], acc[1], acc[2]);
+						}
+						rt_thread_delay(interval);
+					}
+				}
+			}break;
+			case 2:	//mag
+			{
+				if(!cnt){
+					if(raw_data){
+						int16_t raw_mag[3];
+						sensor_mag_raw_measure(raw_mag);
+						printf("raw mag:%d %d %d\n", raw_mag[0], raw_mag[1], raw_mag[2]);
+					}else if(no_cali){
+						float mag[3];
+						sensor_mag_measure(mag);
+						printf("mag:%f %f %f\n", mag[0], mag[1], mag[2]);
+					}else{
+						float mag[3];
+						sensor_mag_get_calibrated_data(mag);
+						printf("cali mag:%f %f %f\n", mag[0], mag[1], mag[2]);
+					}
+				}else{
+					for(uint32_t i = 0 ; i < cnt ; i++){
+						if(raw_data){
+							int16_t raw_mag[3];
+							sensor_mag_raw_measure(raw_mag);
+							printf("raw mag:%d %d %d\n", raw_mag[0], raw_mag[1], raw_mag[2]);
+						}else if(no_cali){
+							float mag[3];
+							sensor_mag_measure(mag);
+							printf("mag:%f %f %f\n", mag[0], mag[1], mag[2]);
+						}else{
+							float mag[3];
+							sensor_mag_get_calibrated_data(mag);
+							printf("cali mag:%f %f %f\n", mag[0], mag[1], mag[2]);
+						}
+						rt_thread_delay(interval);
+					}
+				}			
+			}break;
+			case 3:	//gyr
+			{
+				if(!cnt){
+					if(raw_data){
+						int16_t raw_gyr[3];
+						sensor_gyr_raw_measure(raw_gyr);
+						printf("raw gyr:%d %d %d\n", raw_gyr[0], raw_gyr[1], raw_gyr[2]);
+					}else if(no_cali){
+						float gyr[3];
+						sensor_gyr_measure(gyr);
+						printf("gyr:%f %f %f\n", gyr[0], gyr[1], gyr[2]);
+					}else{
+						float gyr[3];
+						sensor_gyr_get_calibrated_data(gyr);
+						printf("cali gyr:%f %f %f\n", gyr[0], gyr[1], gyr[2]);
+					}
+				}else{
+					for(uint32_t i = 0 ; i < cnt ; i++){
+						if(raw_data){
+							int16_t raw_gyr[3];
+							sensor_gyr_raw_measure(raw_gyr);
+							printf("raw gyr:%d %d %d\n", raw_gyr[0], raw_gyr[1], raw_gyr[2]);
+						}else if(no_cali){
+							float gyr[3];
+							sensor_gyr_measure(gyr);
+							printf("gyr:%f %f %f\n", gyr[0], gyr[1], gyr[2]);
+						}else{
+							float gyr[3];
+							sensor_gyr_get_calibrated_data(gyr);
+							printf("cali gyr:%f %f %f\n", gyr[0], gyr[1], gyr[2]);
+						}
+						rt_thread_delay(interval);
+					}
+				}	
+			}break;
+			default:
+				break;
+		}
+	}
+	
+	return 0;
+}
+
 rt_err_t lsm303d_mag_measure(float mag[3]);
 /**************************	INIT FUNC **************************/
 rt_err_t device_sensor_init(void)
@@ -362,9 +556,11 @@ rt_err_t device_sensor_init(void)
 //		sensor_acc_raw_measure(acc);
 //		sensor_mag_get_calibrated_data(mag_cali);
 //		sensor_acc_get_calibrated_data(acc_cali);
+//		float angle= atan2((double)mag_cali[0], (double)mag_cali[1])*180/3.1415926+180;
+//		Log.w(TAG, "mag:%f %f %f mag length:%f angle:%f\n",mag_cali[0],mag_cali[1],mag_cali[2], sqrt(mag_cali[0]*mag_cali[0]+mag_cali[1]*mag_cali[1]+mag_cali[2]*mag_cali[2]), angle);
 //		//lsm303d_mag_measure(mag_cali);
 //		//Log.w(TAG, "mag %d %d %d mag_c %f %f %f\n", mag[0], mag[1], mag[2], mag_cali[0], mag_cali[1], mag_cali[2]);
-//		Log.w(TAG, "acc %d %d %d acc_c %f %f %f\n", acc[0], acc[1], acc[2], acc_cali[0], acc_cali[1], acc_cali[2]);
+//		//Log.w(TAG, "acc %d %d %d acc_c %f %f %f\n", acc[0], acc[1], acc[2], acc_cali[0], acc_cali[1], acc_cali[2]);
 //		rt_thread_delay(300);
 //	}
 

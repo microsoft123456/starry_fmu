@@ -47,6 +47,8 @@ static uint8_t home_flag = 0;
 static uint8_t init_flag = 0;
 static float dt = POS_UPDATE_INTERVAL * 0.001f;
 
+Position_Info pos_info;
+
 static char *TAG = "POS";
 
 static void timer_pos_update(void* parameter)
@@ -81,16 +83,16 @@ uint8_t setInitialState(void)
 //	//float cov_sx = 1364.084034;
 //	float cov_sx = 0.1;
 	//float cov_ax = 0.529286;
-	float cov_ax = 0.1;
+	float cov_ax = 0.1f;
 	//float cov_vx = 0.097278;
-	float cov_vx = 1;
+	float cov_vx = 0.1f;
 	//float cov_sy = 6171.600817;
 	float cov_sx = 1;
 	
 	//float cov_ay = 0.529286;
-	float cov_ay = 1;
+	float cov_ay = 0.1f;
 	//float cov_vy = 0.097278;
-	float cov_vy = 1;
+	float cov_vy = 0.1f;
 	//float cov_sy = 6171.600817;
 	float cov_sy = 1;
 	
@@ -143,13 +145,16 @@ uint8_t setInitialState(void)
 	state_z.A[1][1] = 1.0f;
 	
 	/* Bx = [ Tx*dt^2/2  dt ]^T */
-	state_x.B[0] = 0;
+	state_x.B[0] = Tx*dt*dt/2;
+	//state_x.B[0] = 0;
 	state_x.B[1] = dt;	
 	/* By = [ Ty*dt^2/2  dt ]^T */
-	state_y.B[0] = 0;
+	state_y.B[0] = Ty*dt*dt/2;
+	//state_y.B[0] = 0;
 	state_y.B[1] = dt;	
 	/* Bz = [ dt^2/2  dt ]^T */
-	state_z.B[0] = 0;
+	state_z.B[0] = dt*dt/2;
+	//state_z.B[0] = 0;
 	state_z.B[1] = dt;
 	/* H = I, don't need to initialize H, because we has ignored H */
 	state_x.H[0][0] = state_y.H[0][0] = state_z.H[0][0] = 1.0f;
@@ -157,30 +162,31 @@ uint8_t setInitialState(void)
 	state_x.H[1][0] = state_y.H[1][0] = state_z.H[1][0] = 0.0f;
 	state_x.H[1][1] = state_y.H[1][1] = state_z.H[1][1] = 1.0f;
 	/* Q = cov(a)^2 * B * B^T */
-//	state_x.q[0][0] = Tx*Tx*cov_ax*cov_ax*dt*dt*dt*dt/4;
-//	state_x.q[0][1] = Tx*cov_ax*cov_ax*dt*dt*dt/2;
-//	state_x.q[1][0] = Tx*cov_ax*cov_ax*dt*dt*dt/2;
-//	state_x.q[1][1] = cov_ax*cov_ax*dt*dt;
-//	state_y.q[0][0] = Ty*Ty*cov_ay*cov_ay*dt*dt*dt*dt/4;
-//	state_y.q[0][1] = Ty*cov_ay*cov_ay*dt*dt*dt/2;
-//	state_y.q[1][0] = Ty*cov_ay*cov_ay*dt*dt*dt/2;
-//	state_y.q[1][1] = cov_ay*cov_ay*dt*dt;
-//	state_z.q[0][0] = cov_az*cov_az*dt*dt*dt*dt/4;
-//	state_z.q[0][1] = cov_az*cov_az*dt*dt*dt/2;
-//	state_z.q[1][0] = cov_az*cov_az*dt*dt*dt/2;
-//	state_z.q[1][1] = cov_az*cov_az*dt*dt;
-	state_x.q[0][0] = 0;
-	state_x.q[0][1] = 0;
-	state_x.q[1][0] = 0;
+	state_x.q[0][0] = Tx*Tx*cov_ax*cov_ax*dt*dt*dt*dt/4;
+	state_x.q[0][1] = Tx*cov_ax*cov_ax*dt*dt*dt/2;
+	state_x.q[1][0] = Tx*cov_ax*cov_ax*dt*dt*dt/2;
 	state_x.q[1][1] = cov_ax*cov_ax*dt*dt;
-	state_y.q[0][0] = 0;
-	state_y.q[0][1] = 0;
-	state_y.q[1][0] = 0;
+	state_y.q[0][0] = Ty*Ty*cov_ay*cov_ay*dt*dt*dt*dt/4;
+	state_y.q[0][1] = Ty*cov_ay*cov_ay*dt*dt*dt/2;
+	state_y.q[1][0] = Ty*cov_ay*cov_ay*dt*dt*dt/2;
 	state_y.q[1][1] = cov_ay*cov_ay*dt*dt;
-	state_z.q[0][0] = 0;
-	state_z.q[0][1] = 0;
-	state_z.q[1][0] = 0;
+	state_z.q[0][0] = cov_az*cov_az*dt*dt*dt*dt/4;
+	state_z.q[0][1] = cov_az*cov_az*dt*dt*dt/2;
+	state_z.q[1][0] = cov_az*cov_az*dt*dt*dt/2;
 	state_z.q[1][1] = cov_az*cov_az*dt*dt;
+
+//	state_x.q[0][0] = 0;
+//	state_x.q[0][1] = 0;
+//	state_x.q[1][0] = 0;
+//	state_x.q[1][1] = cov_ax*cov_ax*dt*dt;
+//	state_y.q[0][0] = 0;
+//	state_y.q[0][1] = 0;
+//	state_y.q[1][0] = 0;
+//	state_y.q[1][1] = cov_ay*cov_ay*dt*dt;
+//	state_z.q[0][0] = 0;
+//	state_z.q[0][1] = 0;
+//	state_z.q[1][0] = 0;
+//	state_z.q[1][1] = cov_az*cov_az*dt*dt;
 	printf("\nQx:\n");
 	printf("%f\n", state_x.q[0][0]);
 	printf("%f\n", state_x.q[0][1]);
@@ -276,6 +282,23 @@ void set_home_with_current_pos(void)
 	set_home(lon, lat, alt);
 }
 
+void update_pos_info(Position_Info* p_i, int32_t lat, int32_t lon, int32_t alt, 
+						int32_t relative_alt, int16_t vx, int16_t vy, int16_t vz)
+{
+	p_i->lat = lat;
+	p_i->lon = lon;
+	p_i->alt = alt;
+	p_i->relative_alt = relative_alt;
+	p_i->vx = vx;
+	p_i->vy = vy;
+	p_i->vz = vz;
+}
+
+Position_Info get_pos_info(void)
+{
+	return pos_info;
+}
+
 void position_loop(void *parameter)
 {
 	rt_err_t res;
@@ -290,8 +313,6 @@ void position_loop(void *parameter)
 	float pos_vel_x[2];
 	float pos_vel_y[2];
 	float pos_vel_z[2];
-
-	float* result;
 	
 	/* create event */
 	res = rt_event_init(&event_position, "pos_event", RT_IPC_FLAG_FIFO);
@@ -370,19 +391,23 @@ void position_loop(void *parameter)
 				sensor_acc_get_calibrated_data(acc);			
 				
 				/* set observation value */
-//				pos_vel_x[0] = gps_position.lat;
-//				pos_vel_x[1] = gps_position.vel_n_m_s;
-//				pos_vel_y[0] = gps_position.lon; 
-//				pos_vel_y[1] = gps_position.vel_e_m_s;
-//				pos_vel_z[0] = baro_report.altitude;
-//				pos_vel_z[1] = gps_position.vel_d_m_s;
+				pos_vel_x[0] = gps_position.lat;
+				//pos_vel_x[0] = 0;
+				pos_vel_x[1] = gps_position.vel_n_m_s;
+				//pos_vel_x[1] = 0;
+				pos_vel_y[0] = gps_position.lon; 
+				//pos_vel_y[0] = 0;
+				pos_vel_y[1] = gps_position.vel_e_m_s;
+				//pos_vel_y[1] = 0;
+				pos_vel_z[0] = baro_report.altitude;
+				pos_vel_z[1] = gps_position.vel_d_m_s;
 				
-				pos_vel_x[0] = 200;
-				pos_vel_x[1] = 0;
-				pos_vel_y[0] = 300; 
-				pos_vel_y[1] = 0;
-				pos_vel_z[0] = 400;
-				pos_vel_z[1] = 0;
+//				pos_vel_x[0] = 200;
+//				pos_vel_x[1] = 0;
+//				pos_vel_y[0] = 300; 
+//				pos_vel_y[1] = 0;
+//				pos_vel_z[0] = 400;
+//				pos_vel_z[1] = 0;
 				
 				//Log.w(TAG, "lat:%f x_v:%f lon:%f y_v:%f\n", pos_vel_x[0], pos_vel_x[1], pos_vel_y[0], pos_vel_y[1]);
 				
@@ -392,29 +417,33 @@ void position_loop(void *parameter)
 				float Ty = 180.0f/(PI*r)*1e7;
 				/* update Ay, By */
 				state_y.A[0][1] = dt*Ty;
-				//state_y.B[0] = dt*dt/2*Ty;
+				state_y.B[0] = dt*dt/2*Ty;
 				
 				/* transfer acceleration from body grame to global frame */
 				quaternion_rotateVector(attitude_getAttitude(), acc, accE);
 				
 				/*remove gravity*/
 				accE[2] += 9.8f;
-				/*Change to NEU axis*/
+				/*change to NEU axis*/
 				accE[2] = -accE[2];
 				
-				result=kalman2_filter(&state_x, accE[0], pos_vel_x);
-				result=kalman2_filter(&state_y, accE[1], pos_vel_y);
-				result=kalman2_filter(&state_z, accE[2], pos_vel_z);
+				kalman2_filter(&state_x, accE[0], pos_vel_x);
+				kalman2_filter(&state_y, accE[1], pos_vel_y);
+				kalman2_filter(&state_z, accE[2], pos_vel_z);
+				
+				update_pos_info(&pos_info, state_x.x[0], state_y.x[0], state_z.x[0]*1000, 
+						(state_z.x[0]-home_pos.alt)*1000, state_x.x[1]*1000, state_y.x[1]*1000, state_z.x[1]*1000);
 				
 				static uint32_t now;
 				static uint32_t prev = 0;
 				now = time_nowMs();
 				if(now - prev >= 300){
 					prev = now;
-                
+					
 					//printf("alt:%f v:%f\n" , state_z.x[0], state_z.x[1]);
 					//printf("acc %f %f %f\n", accE[0], accE[1], accE[2]);
-					printf("pos %f %f %f v:%f %f %f acc:%f %f %f\n", state_x.x[0], state_y.x[0],state_z.x[0], state_x.x[1],state_y.x[1], state_z.x[1],accE[0], accE[1], accE[2]);
+//					printf("pos %f %f %f v:%f %f %f z:%f %f %f\n", state_x.x[0], state_y.x[0],state_z.x[0], state_x.x[1],state_y.x[1], state_z.x[1],
+//							pos_vel_x[1], pos_vel_y[1], pos_vel_z[1]);
 					//printf("s:%f %f v:%f %f\n", pos_vel_x[0], pos_vel_x[1], pos_vel_y[0], pos_vel_y[1]);
 					//printf("acc %.2f %.2f %.2f accE: %.2f %.2f %.2f\n", acc[0], acc[1], acc[2], accE[0],accE[1], accE[2]);
 					//printf("accE %.2f %.2f %.2f alt:%f v:%f\n", accE[0],accE[1], accE[2], state_z.x[0], state_z.x[1]);
