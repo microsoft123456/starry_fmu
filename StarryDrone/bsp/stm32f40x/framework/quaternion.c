@@ -36,7 +36,7 @@ void quaternion_mult(quaternion * result,const quaternion left,const quaternion 
     result->z = left.z * right.w + left.w * right.z + left.x * right.y - left.y * right.x;
 }
 
-//左乘四元数矩阵
+// transfer from body frame to navigation frame ,v_n = C * v_b
 void quaternion_rotateVector(const quaternion rotation,const float from[3],float to[3])
 {
     float x2  = rotation.x * 2;
@@ -52,12 +52,12 @@ void quaternion_rotateVector(const quaternion rotation,const float from[3],float
     float yz2 = rotation.y * z2;
     float xz2 = rotation.z * x2;
     //
-    to[0] = from[0]*(1 - yy2 - zz2) + from[1]*(xy2 - wz2)     + from[2]*(xz2 + wy2);
-    to[1] = from[0]*(xy2 + wz2)     + from[1]*(1 - xx2 - zz2) + from[2]*(yz2 - wx2);
-    to[2] = from[0]*(xz2 - wy2)     + from[1]*(yz2 + wx2)     + from[2]*(1 - xx2 - yy2);
+    to[0] = from[0]*(1.0f - yy2 - zz2) + from[1]*(xy2 - wz2)     + from[2]*(xz2 + wy2);
+    to[1] = from[0]*(xy2 + wz2)     + from[1]*(1.0f- xx2 - zz2) + from[2]*(yz2 - wx2);
+    to[2] = from[0]*(xz2 - wy2)     + from[1]*(yz2 + wx2)     + from[2]*(1.0f - xx2 - yy2);
 }
 
-//右乘四元数矩阵
+// transfer from navigation frame to body frame ,v_b = C^T * v_n
 void quaternion_inv_rotateVector(const quaternion rotation,const float from[3],float to[3])
 {
 	float x2  = rotation.x * 2;

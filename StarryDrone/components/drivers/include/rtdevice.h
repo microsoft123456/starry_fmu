@@ -384,6 +384,8 @@ rt_inline void rt_work_init(struct rt_work* work, void (*work_func)(struct rt_wo
 #include "drivers/gps_sensor.h"
 #include "drivers/rc_receiver.h"
 #include "drivers/motor.h"
+#include "math/ap_math.h"
+#include "math/light_matrix.h"
 #include "framework/global.h"
 #include "framework/led.h"
 #include "framework/delay.h"
@@ -392,7 +394,6 @@ rt_inline void rt_work_init(struct rt_work* work, void (*work_func)(struct rt_wo
 #include "framework/quaternion.h"
 #include "framework/attitude.h"
 #include "framework/filter.h"
-#include "framework/ap_math.h"
 #include "framework/mix.h"
 #include "framework/param.h"
 #include "framework/calibration.h"
@@ -407,6 +408,7 @@ rt_inline void rt_work_init(struct rt_work* work, void (*work_func)(struct rt_wo
 #include "framework/log.h"
 #include "framework/kalman.h"
 #include "framework/position.h"
+#include "framework/ekf.h"
 #include <stdio.h>
 
 #ifdef __cplusplus

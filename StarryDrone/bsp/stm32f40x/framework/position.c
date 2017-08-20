@@ -10,6 +10,7 @@
 #include <rtdevice.h>
 #include <rtthread.h>
 #include <math.h>
+#include "FIR.h"
 
 #define EVENT_POS_UPDATE        (1<<0)
 #define EVENT_ACC_UPDATE		(1<<1)
@@ -17,7 +18,6 @@
 #define EVENT_SET_HOME        (1<<0)
 
 #define POS_UPDATE_INTERVAL     100
-//#define POS_UPDATE_INTERVAL     20
 #define ACC_UPDATE_INTERVAL		15
 #define BARO_UPDATE_INTERVAL    15
 
@@ -46,6 +46,9 @@ kalman2_state state_z;
 static uint8_t home_flag = 0;
 static uint8_t init_flag = 0;
 static float dt = POS_UPDATE_INTERVAL * 0.001f;
+static float cur_alt = 0.0f;
+
+static EKF_Def ekf;
 
 Position_Info pos_info;
 
@@ -262,6 +265,8 @@ uint8_t set_home(uint32_t lon, uint32_t lat, float alt)
 	
 	rt_event_send(&event_sethome, EVENT_SET_HOME);
 	
+	cur_alt = home_pos.alt;
+	
 	return home_flag;
 }
 
@@ -298,6 +303,9 @@ Position_Info get_pos_info(void)
 {
 	return pos_info;
 }
+
+void EKF_Init(EKF_Def* ekf_t, float dT);
+void EKF_Update(EKF_Def* ekf_t);
 
 void position_loop(void *parameter)
 {
@@ -339,45 +347,29 @@ void position_loop(void *parameter)
 								RT_WAITING_FOREVER, &recv_set);
 	Log.w(TAG, "set home finish \n");
 	
+	
+//	ekf_init(&ekf, dt);
+//	/* set initial state to home */
+//	ekf.x.element[0][0] = (float)home_pos.lat;
+//	ekf.x.element[1][0] = (float)home_pos.lon;
+//	ekf.x.element[2][0] = (float)home_pos.alt;
+//	ekf.x.element[3][0] = 0.0f;
+//	ekf.x.element[4][0] = 0.0f;
+//	ekf.x.element[5][0] = 0.0f;
+//	init_flag = 1;
+
+	EKF_Init(&ekf, dt);
+	/* set initial state to home */
+	ekf.x.element[0][0] = (float)home_pos.alt;
+	ekf.x.element[1][0] = 0.0f;
+	init_flag = 1;
+	
+	FIR_Init();
+	
+	float pre_alt = (float)home_pos.alt;
+	float calc_v = 0.0f;
 	while(1)
 	{
-		
-//		#define INT_POS		100
-//		static uint32_t cur_time = 0;
-//		static uint32_t temp_time = 0;
-//		static float vel[3] = {0,0,0};
-//		static float pos[3] = {0,0,0};
-//		uint32_t time = time_nowMs();
-//		
-//		if(time - cur_time > INT_POS){
-//			cur_time = time;
-//			sensor_acc_get_calibrated_data(acc);
-//			quaternion_rotateVector(attitude_getAttitude(), acc, accE);
-//			//Log.w(TAG, "acc: %f %f %f\n", accE[0], accE[1], accE[2]);
-//			accE[2] += 9.8f;
-//			accE[2] = -accE[2];
-//			//Log.w(TAG, "acc: %.3f	%.3f	%.3f\n", accE[0], accE[1], accE[2]);
-//			if(abs(accE[0])<0.1)
-//				accE[0] = 0.0f;
-//			if(abs(accE[1])<0.1)
-//				accE[1] = 0.0f;
-//			if(abs(accE[2])<0.1)
-//				accE[2] = 0.0f;
-//			
-//			float interval = ((float)INT_POS/1000.0f);
-//			for(uint8_t i = 0 ; i < 3 ; i++){
-//				vel[i] += accE[i]*interval;
-//				//pos[i] += vel[i]*interval + 0.5f*accE[i]*interval*interval;
-//				pos[i] += vel[i]*interval;
-//			}
-//			
-//			if(time - temp_time > 200 ){
-//				temp_time = time;
-//				Log.w(TAG, "v: %.3f %.3f %.3f pos: %.3f %.3f %.3f\n", vel[0], vel[1], vel[2], pos[0], pos[1], pos[2]);
-//			}
-//			//Log.w(TAG, "v: %.3f %.3f %.3f pos: %.3f %.3f %.3f\n", vel[0], vel[1], vel[2], pos[0], pos[1], pos[2]);
-//		}
-		
 		/* wait event occur */
 		res = rt_event_recv(&event_position, wait_set, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, 
 								RT_WAITING_FOREVER, &recv_set);
@@ -388,68 +380,105 @@ void position_loop(void *parameter)
 			if(recv_set & EVENT_POS_UPDATE & init_flag){
 				/* read sensor value */
 				gps_position = get_gps_position();
-				sensor_acc_get_calibrated_data(acc);			
-				
-				/* set observation value */
-				pos_vel_x[0] = gps_position.lat;
-				//pos_vel_x[0] = 0;
-				pos_vel_x[1] = gps_position.vel_n_m_s;
-				//pos_vel_x[1] = 0;
-				pos_vel_y[0] = gps_position.lon; 
-				//pos_vel_y[0] = 0;
-				pos_vel_y[1] = gps_position.vel_e_m_s;
-				//pos_vel_y[1] = 0;
-				pos_vel_z[0] = baro_report.altitude;
-				pos_vel_z[1] = gps_position.vel_d_m_s;
-				
-//				pos_vel_x[0] = 200;
-//				pos_vel_x[1] = 0;
-//				pos_vel_y[0] = 300; 
-//				pos_vel_y[1] = 0;
-//				pos_vel_z[0] = 400;
-//				pos_vel_z[1] = 0;
-				
-				//Log.w(TAG, "lat:%f x_v:%f lon:%f y_v:%f\n", pos_vel_x[0], pos_vel_x[1], pos_vel_y[0], pos_vel_y[1]);
-				
-				/* update Ty */
-				float sita = Deg2Rad(90.0f-state_x.x[0]*1e-7);	//这里不是线性的，EKF?
-				float r = EARTH_RADIUS*sin(sita);
-				float Ty = 180.0f/(PI*r)*1e7;
-				/* update Ay, By */
-				state_y.A[0][1] = dt*Ty;
-				state_y.B[0] = dt*dt/2*Ty;
-				
+				sensor_acc_get_calibrated_data(acc);	
 				/* transfer acceleration from body grame to global frame */
-				quaternion_rotateVector(attitude_getAttitude(), acc, accE);
-				
+				quaternion_rotateVector(attitude_getAttitude(), acc, accE);	
+
+				//Log.w(TAG, "acc %f %f %f norm:%f\n", acc[0], acc[1], acc[2], acc[0]*acc[0]+acc[1]*acc[1]+acc[2]*acc[2]);
+				//Log.w(TAG, "accE %f %f %f norm:%f\n", accE[0], accE[1], accE[2], accE[0]*accE[0]+accE[1]*accE[1]+accE[2]*accE[2]);
 				/*remove gravity*/
 				accE[2] += 9.8f;
 				/*change to NEU axis*/
 				accE[2] = -accE[2];
+				accE[2] -= 0.1;	//调整偏移
 				
-				kalman2_filter(&state_x, accE[0], pos_vel_x);
-				kalman2_filter(&state_y, accE[1], pos_vel_y);
-				kalman2_filter(&state_z, accE[2], pos_vel_z);
+//				ekf.u.element[3][0] = accE[0];
+//				ekf.u.element[4][0] = accE[1];
+//				ekf.u.element[5][0] = accE[2];
+////				ekf.u.element[3][0] = 0;
+////				ekf.u.element[4][0] = 0;
+////				ekf.u.element[5][0] = 0;
+//				
+//				ekf.z.element[0][0] = gps_position.lat;
+//				ekf.z.element[1][0] = gps_position.lon;
+////				ekf.z.element[0][0] = 0.0f;
+////				ekf.z.element[1][0] = 0.0f;
+//				ekf.z.element[2][0] = baro_report.altitude;
+//				ekf.z.element[3][0] = gps_position.vel_n_m_s;
+//				ekf.z.element[4][0] = gps_position.vel_e_m_s;
+//				ekf.z.element[5][0] = gps_position.vel_d_m_s;
+////				ekf.z.element[3][0] = 0.0f;
+////				ekf.z.element[4][0] = 0.0f;
+////				ekf.z.element[5][0] = 0.0f;
+//				
+//				ekf_update(&ekf);
+
+				//calc_v = calc_v*0.8+(ekf.x.element[0][0]-pre_alt)/ekf.T*0.2;
+				calc_v = (ekf.x.element[0][0]-pre_alt)/ekf.T;
+
+				ekf.u.element[0][0] = 0.0f;
+				ekf.u.element[1][0] = accE[2];
 				
-				update_pos_info(&pos_info, state_x.x[0], state_y.x[0], state_z.x[0]*1000, 
-						(state_z.x[0]-home_pos.alt)*1000, state_x.x[1]*1000, state_y.x[1]*1000, state_z.x[1]*1000);
+				ekf.z.element[0][0] = baro_report.altitude;
+				//ekf.z.element[1][0] = -gps_position.vel_d_m_s;
+				ekf.z.element[1][0] = calc_v;
 				
-				static uint32_t now;
-				static uint32_t prev = 0;
-				now = time_nowMs();
-				if(now - prev >= 300){
-					prev = now;
-					
-					//printf("alt:%f v:%f\n" , state_z.x[0], state_z.x[1]);
-					//printf("acc %f %f %f\n", accE[0], accE[1], accE[2]);
-//					printf("pos %f %f %f v:%f %f %f z:%f %f %f\n", state_x.x[0], state_y.x[0],state_z.x[0], state_x.x[1],state_y.x[1], state_z.x[1],
-//							pos_vel_x[1], pos_vel_y[1], pos_vel_z[1]);
-					//printf("s:%f %f v:%f %f\n", pos_vel_x[0], pos_vel_x[1], pos_vel_y[0], pos_vel_y[1]);
-					//printf("acc %.2f %.2f %.2f accE: %.2f %.2f %.2f\n", acc[0], acc[1], acc[2], accE[0],accE[1], accE[2]);
-					//printf("accE %.2f %.2f %.2f alt:%f v:%f\n", accE[0],accE[1], accE[2], state_z.x[0], state_z.x[1]);
-//						Log.w(TAG, "x: %.2f %.2f y: %.2f %.2f z:%.2f %.2f\n", state_x.x[0], state_x.x[1], state_y.x[0], state_y.x[1]
-//						, state_z.x[0], state_z.x[1]);
-				}
+				pre_alt = ekf.x.element[0][0];
+				EKF_Update(&ekf);
+				
+				update_pos_info(&pos_info, 0, 0, (int32_t)(ekf.x.element[0][0]*1000.0f), 
+						(int32_t)((ekf.x.element[0][0]-home_pos.alt)*1000.0f), 0, 0, (int32_t)(ekf.x.element[1][0]*100));
+				
+//				/* set observation value */
+//				pos_vel_x[0] = gps_position.lat;
+//				//pos_vel_x[0] = 0;
+//				pos_vel_x[1] = gps_position.vel_n_m_s;
+//				//pos_vel_x[1] = 0;
+//				pos_vel_y[0] = gps_position.lon; 
+//				//pos_vel_y[0] = 0;
+//				pos_vel_y[1] = gps_position.vel_e_m_s;
+//				//pos_vel_y[1] = 0;
+//				pos_vel_z[0] = baro_report.altitude;
+//				pos_vel_z[1] = gps_position.vel_d_m_s;
+//				
+//				//Log.w(TAG, "lat:%f x_v:%f lon:%f y_v:%f\n", pos_vel_x[0], pos_vel_x[1], pos_vel_y[0], pos_vel_y[1]);
+//				
+//				/* update Ty */
+//				float sita = Deg2Rad(90.0f-state_x.x[0]*1e-7);	//这里不是线性的，EKF?
+//				float r = EARTH_RADIUS*sin(sita);
+//				float Ty = 180.0f/(PI*r)*1e7;
+//				/* update Ay, By */
+//				state_y.A[0][1] = dt*Ty;
+//				state_y.B[0] = dt*dt/2*Ty;
+//				
+//				/* transfer acceleration from body grame to global frame */
+//				quaternion_rotateVector(attitude_getAttitude(), acc, accE);
+//				
+//				/*remove gravity*/
+//				accE[2] += 9.8f;
+//				/*change to NEU axis*/
+//				accE[2] = -accE[2];
+//				
+//				kalman2_filter(&state_x, accE[0], pos_vel_x);
+//				kalman2_filter(&state_y, accE[1], pos_vel_y);
+//				kalman2_filter(&state_z, accE[2], pos_vel_z);
+//				
+//				update_pos_info(&pos_info, state_x.x[0], state_y.x[0], state_z.x[0]*1000, 
+//						(state_z.x[0]-home_pos.alt)*1000, state_x.x[1]*1000, state_y.x[1]*1000, state_z.x[1]*1000);
+				
+				//Log.w(TAG, "%f %f\n", baro_report.altitude-home_pos.alt, FIR_Filter(baro_report.altitude)-home_pos.alt);
+				
+				//Log.w(TAG, "%.3f	%.3f	%.3f	%.3f	%.3f	%.3f\n", ekf.x.element[0][0], ekf.z.element[0][0], cur_alt, baro_report.altitude, ekf.x.element[1][0], ekf.z.element[1][0]);
+				//Log.w(TAG, "%.3f	%.3f	%.3f\n", baro_report.altitude, calc_v, accE[2]);
+				//Log.w(TAG, "%.3f	%.3f	%.3f	%.3f\n", ekf.x.element[0][0], ekf.x.element[1][0], ekf.z.element[0][0], ekf.z.element[1][0]);
+				
+//				static uint32_t now;
+//				static uint32_t prev = 0;
+//				now = time_nowMs();
+//				if(now - prev >= 300){
+//					prev = now;
+//					//Log.w(TAG, "%.3f	%.3f	%.3f	%.3f	%.3f	%.3f\n", ekf.x.element[0][0], ekf.x.element[1][0], ekf.z.element[0][0], baro_report.altitude, ekf.z.element[1][0], calc_v);
+//				}
 			}
 		}else{
 			//some err occurs

@@ -22,7 +22,8 @@ static float accU[3], magU[3];
 static float acc_const[3] = {0.0f, 0.0f, -1.0f};
 static float acc_constV[3];
 static float acc_cross[3];
-static float mag_const[3] = {MIX_MAG_X, 0.0f, MIX_MAG_Z};
+//static float mag_const[3] = {MIX_MAG_X, 0.0f, MIX_MAG_Z};
+static float mag_const[3] = {1.0f, 0.0f, 0.0f};
 static float mag_constV[3];
 static float mag_cross[3];
 static float delta[3];
@@ -60,49 +61,44 @@ void mix_gyrAccMag_crossMethod(quaternion * q,const float gyr[3],const float acc
 	Vector3_Normalize(accU, acc);
 	Vector3_Normalize(magU, mag);
 	
-	quaternion_inv_rotateVector(*q, acc_const, acc_constV);
-	Vector3_CrossProduct(acc_cross, accU, acc_constV);
+	//transfer from body frame to nav frame
+	float acc_N[3], mag_N[3];
+	quaternion_rotateVector(*q, accU, acc_N);
+	quaternion_rotateVector(*q, magU, mag_N);
 	
-	quaternion_inv_rotateVector(*q, mag_const, mag_constV);
-	Vector3_CrossProduct(mag_cross, magU, mag_constV);
+	//cross product to calculate diffirence
+	Vector3_CrossProduct(acc_cross, acc_N, acc_const);
+	Vector3_CrossProduct(mag_cross, mag_N, mag_const);
 	
-	/* we only need mag value to correct the yaw, so we project the x,y,z axis from
-		vehicle to NED axis. By mutiplying mag_cross[2] with this axis in z, we can
-		get more accurate value for yaw correction */	
-	static float ez[3] = {0,0,1};
-	float vz[3];
-	float err[3];
-	/* rotate z axis from earth(NED) axis to vehicle axis */
-	//quaternion_rotateVector(*q, ez, vz);
-	quaternion_inv_rotateVector(*q, ez, vz);
-
-	err[0] = acc_cross[0] + mag_cross[2]*vz[0];
-	err[1] = acc_cross[1] + mag_cross[2]*vz[1];
-	err[2] = acc_cross[2] + mag_cross[2]*vz[2];
-//	err[0] = acc_cross[0];
-//	err[1] = acc_cross[1];
-//	err[2] = acc_cross[2];
+	//create err
+	float err_N[3], err_B[3];
+	err_N[0] = acc_cross[0];
+	err_N[1] = acc_cross[1];
+	err_N[2] = acc_cross[2] + mag_cross[2];
+	
+	//transfer err from nav frame to body frame
+	quaternion_inv_rotateVector(*q, err_N, err_B);
 	
 	//TODO: need constrainst the max value of di
-	di[0] += err[0];
+	di[0] += err_B[0];
 	if(di[0] >= 100)
 		di[0] = 100;
 	if(di[0] <= -100)
 		di[0] = -100;
-	di[1] += err[1];
+	di[1] += err_B[1];
 	if(di[1] >= 100)
 		di[1] = 100;
 	if(di[1] <= -100)
 		di[1] = -100;
-	di[2] += err[2];
+	di[2] += err_B[2];
 	if(di[2] >= 100)
 		di[2] = 100;
 	if(di[2] <= -100)
 		di[2] = -100;
 
-	delta[0] = gyr[0] + err[0]*FACTOR_P + di[0]*FACTOR_I;
-	delta[1] = gyr[1] + err[1]*FACTOR_P + di[1]*FACTOR_I;
-	delta[2] = gyr[2] + err[2]*FACTOR_P + di[2]*FACTOR_I;
+	delta[0] = gyr[0] + err_B[0]*FACTOR_P + di[0]*FACTOR_I;
+	delta[1] = gyr[1] + err_B[1]*FACTOR_P + di[1]*FACTOR_I;
+	delta[2] = gyr[2] + err_B[2]*FACTOR_P + di[2]*FACTOR_I;
 	
 //	static uint32_t now;
 //	static uint32_t prev = 0;
@@ -121,10 +117,13 @@ void mix_gyrAccMag_crossMethod(quaternion * q,const float gyr[3],const float acc
 //		//Log.w(TAG, "magU:%.2f %.2f %.2f magCons:%.2f %.2f %.2f\n", magU[0], magU[1], magU[2], mag_constV[0], mag_constV[1], mag_constV[2]);
 //		//Log.w(TAG, "mag: %.2f %.2f %.2f\n", mag[0], mag[1], mag[2]);
 //		
-//		float mag_c[3], acc_c[3];
-//		quaternion_rotateVector(*q, magU, mag_c);
-//		quaternion_rotateVector(*q, accU, acc_c);
-//		Log.w(TAG, "mag_c: %.2f %.2f %.2f acc_c: %.2f %.2f %.2f\n", mag_c[0], mag_c[1], mag_c[2],acc_c[0],acc_c[1],acc_c[2]);
+//		//Log.w(TAG, "delta %.2f %.2f %.2f cross %.2f %.2f %.2f\n", delta[0], delta[1], delta[2],acc_cross[0],acc_cross[1],acc_cross[2]);
+//		Log.w(TAG, "accU %.2f %.2f %.2f accN %.2f %.2f %.2f\n",accU[0],accU[1],accU[2],acc_N[0],acc_N[1],acc_N[2]);
+//		
+////		float mag_c[3], acc_c[3];
+////		quaternion_rotateVector(*q, magU, mag_c);
+////		quaternion_rotateVector(*q, accU, acc_c);
+////		Log.w(TAG, "mag_c: %.2f %.2f %.2f acc_c: %.2f %.2f %.2f\n", mag_c[0], mag_c[1], mag_c[2],acc_c[0],acc_c[1],acc_c[2]);
 //	}
 
 	//first order runge-kutta to create quaternion

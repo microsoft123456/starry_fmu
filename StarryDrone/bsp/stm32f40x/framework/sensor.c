@@ -48,10 +48,25 @@ rt_err_t sensor_acc_get_calibrated_data(float acc[3])
 	rt_err_t res;
 	
 	res = sensor_acc_measure(acc_f);
+//	
+//	for(uint8_t i ; i<3 ; i++)
+//	{
+//		acc[i] = (acc_f[i] + param->acc_offset[i]) * param->acc_gain[i];
+//	}
 	
-	for(uint8_t i ; i<3 ; i++)
-	{
-		acc[i] = (acc_f[i] + param->acc_offset[i]) * param->acc_gain[i];
+	float ofs[3] = { -0.18096, 0.11072, 1.1492};
+	float transM[3][3] = {
+		{0.98656, -0.00092413, -0.0048647},
+		{-0.00092413, 1.0092, 0.013932},
+		{-0.0048647, 0.013932, 1.0203}
+	};
+	
+	float ofs_acc[3], rot_acc[3];
+	for(uint8_t i=0 ; i<3 ; i++){
+		ofs_acc[i] = acc_f[i] - ofs[i];
+	}
+	for(uint8_t i=0 ; i<3 ; i++){
+		acc[i] = ofs_acc[0]*transM[0][i] + ofs_acc[1]*transM[1][i] + ofs_acc[2]*transM[2][i];
 	}
 	
 	return res;

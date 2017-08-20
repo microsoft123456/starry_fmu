@@ -444,11 +444,6 @@
               <FilePath>.\framework\quaternion.c</FilePath>
             </File>
             <File>
-              <FileName>ap_math.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\framework\ap_math.c</FilePath>
-            </File>
-            <File>
               <FileName>mix.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\framework\mix.c</FilePath>
@@ -563,6 +558,31 @@
               <FileName>position.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\framework\position.c</FilePath>
+            </File>
+            <File>
+              <FileName>ekf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\framework\ekf.c</FilePath>
+            </File>
+            <File>
+              <FileName>FIR.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\framework\FIR.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Math</GroupName>
+          <Files>
+            <File>
+              <FileName>ap_math.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\math\ap_math.c</FilePath>
+            </File>
+            <File>
+              <FileName>light_matrix.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\math\light_matrix.c</FilePath>
             </File>
           </Files>
         </Group>
