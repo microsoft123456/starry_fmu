@@ -7,8 +7,8 @@
  * 2017-02-25     zoujiachi   	the first version
  */
 
-#ifndef _MOTOR_H__
-#define _MOTOR_H__
+#ifndef __MOTOR_H__
+#define __MOTOR_H__
 
 #include <rtthread.h>
 #include <rtdevice.h>
@@ -37,7 +37,7 @@ typedef enum
 
 struct rt_pwm_ops
 {
-    void (*pwm_configure)(struct rt_device *device, rt_base_t frequency);
+    void (*pwm_configure)(rt_device_t dev, rt_uint8_t cmd, void *args);
     void (*pwm_write)(struct rt_device *device, uint8_t chanel, float* duty_cyc);
     int (*pwm_read)(struct rt_device *device, uint8_t chanel, float* buffer);
 };

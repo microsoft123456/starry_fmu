@@ -9,6 +9,7 @@
 #include <rthw.h>
 #include <rtthread.h>
 #include <rtdevice.h>
+#include "sensor.h"
 
 /* SPI protocol address bits */
 #define DIR_READ                (1<<7)

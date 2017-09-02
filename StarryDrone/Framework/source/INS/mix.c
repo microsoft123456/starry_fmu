@@ -28,7 +28,7 @@ static float mag_const[3] = {1.0f, 0.0f, 0.0f};
 static float mag_constV[3];
 static float mag_cross[3];
 static float delta[3];
-static float FACTOR_P = 0.6;
+static float FACTOR_P = 0.2;
 static float FACTOR_I = 0.001;
 //static float FACTOR_I = 0;
 
@@ -103,6 +103,28 @@ void mix_gyrAcc_crossMethod(quaternion * q,const float gyr[3],const float acc[3]
 	quaternion_normalize(q);
 }
 
+void mix_accMag_crossMethod(quaternion * q, const float acc[3],const float mag[3])
+{
+    float w_q = q->w;
+    float x_q = q->x;
+    float y_q = q->y;
+    float z_q = q->z;
+    float x_q_2 = x_q * 2;
+    float y_q_2 = y_q * 2;
+    float z_q_2 = z_q * 2;
+
+	Vector3_Normalize(accU, acc);
+	Vector3_Normalize(magU, mag);
+	
+	float from[3] = {1.0, 0, 0};	/* x axis vector */
+	float to[3] = {magU[0], magU[1], 0};	/* generate vector according to acc and mag */
+	to[2] = -(accU[0]*to[0] + accU[1]*to[1])/accU[2];
+	Vector3_Normalize(to, to);
+	
+	//TODO: 正常应该是从from到to，可是那样姿态的旋转就反了
+	quaternion_fromTwoVectorRotation(q, to, from);
+}
+
 void mix_gyrAccMag_crossMethod(quaternion * q,const float gyr[3],const float acc[3],const float mag[3],float dT)
 {
     float w_q = q->w;
@@ -129,7 +151,8 @@ void mix_gyrAccMag_crossMethod(quaternion * q,const float gyr[3],const float acc
 	float err_N[3], err_B[3];
 	err_N[0] = acc_cross[0];
 	err_N[1] = acc_cross[1];
-	err_N[2] = acc_cross[2] + mag_cross[2];
+	//err_N[2] = acc_cross[2] + mag_cross[2];
+	err_N[2] = mag_cross[2];
 	
 	//transfer err from nav frame to body frame
 	quaternion_inv_rotateVector(*q, err_N, err_B);

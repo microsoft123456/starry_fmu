@@ -16,6 +16,7 @@
 #include "ap_math.h"
 
 void mix_init(void);
+void mix_accMag_crossMethod(quaternion * q, const float acc[3],const float mag[3]);
 void mix_gyrAcc_crossMethod(quaternion * q,const float gyr[3],const float acc[3],float dT);
 void mix_gyrAccMag_crossMethod(quaternion * q,const float gyr[3],const float acc[3],const float mag[3],float dT);
 

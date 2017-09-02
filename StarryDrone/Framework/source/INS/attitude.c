@@ -10,6 +10,12 @@
 #include <rtdevice.h>
 #include <rtthread.h>
 #include <math.h>
+#include "quaternion.h"
+#include "sensor.h"
+#include "mix.h"
+#include "filter.h"
+#include "delay.h"
+#include "log.h"
 
 #define EVENT_GYR_UPDATE		(1<<0)
 #define EVENT_ACC_UPDATE		(1<<1)
@@ -41,7 +47,12 @@ struct rt_event event_sensor;
 rt_err_t attitude_init(void)
 {
 	//initialize attitude
-	quaternion_load_init_attitude(&drone_attitude);
+	//quaternion_load_init_attitude(&drone_attitude);
+	
+	float acc[3], mag[3];
+	sensor_acc_get_calibrated_data(acc);
+	sensor_mag_get_calibrated_data(mag);
+	mix_accMag_crossMethod(&drone_attitude, acc, mag);
 
 	return RT_EOK;
 }
@@ -85,6 +96,7 @@ void attitude_mixGyrAccMag(void)
     //
     mix_gyrAccMag_crossMethod(&drone_attitude,gyrfilter_current(),accfilter_getCurrent(),magfilter_getCurrent(),time_interval_s);
 	//mix_gyrAcc_crossMethod(&drone_attitude,gyrfilter_current(),accfilter_getCurrent(),time_interval_s);
+	//mix_accMag_crossMethod(&drone_attitude, accfilter_getCurrent(),magfilter_getCurrent());
 }
 
 int32_t acc_gyr_dataIsReady(void)

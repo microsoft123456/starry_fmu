@@ -10,8 +10,10 @@
 #ifndef __EKF_H__
 #define __EKF_H__
 
-#include <rtthread.h>
-#include <rtdevice.h>
+//#include <rtthread.h>
+//#include <rtdevice.h>
+#include "light_matrix.h"
+#include "position.h"
 
 #define EKF_QVN_SIGMA		(0.1f)
 #define EKF_QVE_SIGMA		(0.1f)

@@ -22,8 +22,10 @@
 #include "gpio.h"
 #include "pwm.h"
 #include "delay.h"
-#include <spi.h>
+//#include <spi.h>
 #include "stm32f4_spi.h"
+#include "log.h"
+#include "cdcacm.h"
 
 /**
  * @addtogroup STM32

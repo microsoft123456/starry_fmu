@@ -10,6 +10,11 @@
 #include <rthw.h>
 #include <rtdevice.h>
 #include <rtthread.h>
+#include "log.h"
+#include "delay.h"
+#include "quaternion.h"
+#include "position.h"
+#include "attitude.h"
 
 #pragma anon_unions
 #include <..\..\mavlink\v1.0\common/mavlink.h>

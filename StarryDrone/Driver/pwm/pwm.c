@@ -10,12 +10,13 @@
 #include "stm32f4xx.h"
 #include "pwm.h"
 #include "log.h"
+#include "motor.h"
 
 #define TIM1_FREQUENCY	3000000						// Timer frequency: 3M
 #define PWM_DEFAULT_FREQUENCY	50					// pwm default frequqncy: 50Hz
 #define PWM_ARR(freq) 	(TIM1_FREQUENCY/freq) 		// CCR reload value, Timer frequency = 3M/60K = 50 Hz
 
-static rt_base_t pwm_freq;
+static int pwm_freq;
 static float TIM_duty_cycle[4] = {0.05, 0.05, 0.05, 0.05};
 
 void pwm_gpio_init(void)
@@ -87,14 +88,22 @@ void pwm_timer_init(void)
 	
 	TIM_ARRPreloadConfig(TIM1, ENABLE);
 	TIM_Cmd(TIM1, ENABLE);
-	/* TIM1 Main Output Enable */
-	TIM_CtrlPWMOutputs(TIM1, ENABLE);
+	/* TIM1 Main Output Enable, Need Enable later */
+	//TIM_CtrlPWMOutputs(TIM1, ENABLE);
 }
 
-void stm32_pwm_configure(struct rt_device *device, rt_base_t frequency)
+void stm32_pwm_configure(rt_device_t dev, rt_uint8_t cmd, void *args)
 {
-	pwm_freq = frequency;
-	pwm_timer_init();
+	if(cmd == PWM_CMD_FREQ){
+		pwm_freq = *((int*)args);
+		pwm_timer_init();
+	}else if(cmd == PWM_CMD_SWITCH){
+		int on_off = *((int*)args);
+		if(on_off)
+			TIM_CtrlPWMOutputs(TIM1, ENABLE);
+		else
+			TIM_CtrlPWMOutputs(TIM1, DISABLE);
+	}
 }
 
 void stm32_pwm_write(struct rt_device *device, uint8_t chanel, float* duty_cyc)
@@ -102,41 +111,33 @@ void stm32_pwm_write(struct rt_device *device, uint8_t chanel, float* duty_cyc)
 	if(chanel & MOTOR_CH1){
 		TIM_SetCompare1(TIM1, PWM_ARR(pwm_freq)*duty_cyc[0]);
 		TIM_duty_cycle[0] = duty_cyc[0];
-		//Log.console("set ch1 duty:%f\n", TIM_duty_cycle[0]);
 	}
 	if(chanel & MOTOR_CH2){
 		TIM_SetCompare2(TIM1, PWM_ARR(pwm_freq)*duty_cyc[1]);
 		TIM_duty_cycle[1] = duty_cyc[1];
-		//Log.console("set ch2 duty:%f\n", TIM_duty_cycle[1]);
 	}
 	if(chanel & MOTOR_CH3){
 		TIM_SetCompare3(TIM1, PWM_ARR(pwm_freq)*duty_cyc[2]);
 		TIM_duty_cycle[2] = duty_cyc[2];
-		//Log.console("set ch3 duty:%f\n", TIM_duty_cycle[2]);
 	}
 	if(chanel & MOTOR_CH4){
 		TIM_SetCompare4(TIM1, PWM_ARR(pwm_freq)*duty_cyc[3]);
 		TIM_duty_cycle[3] = duty_cyc[3];
-		//Log.console("set ch4 duty:%f\n", TIM_duty_cycle[3]);
 	}
 }
 
 int stm32_pwm_read(struct rt_device *device, uint8_t chanel, float* buffer)
 {
 	if(chanel & MOTOR_CH1){
-		//Log.console("ch1 duty:%f\n", TIM_duty_cycle[0]);
 		buffer[0] = TIM_duty_cycle[0];
 	}
 	if(chanel & MOTOR_CH2){
-		//Log.console("ch2 duty:%f\n", TIM_duty_cycle[1]);
 		buffer[1] = TIM_duty_cycle[1];
 	}
 	if(chanel & MOTOR_CH3){
-		//Log.console("ch3 duty:%f\n", TIM_duty_cycle[2]);
 		buffer[2] = TIM_duty_cycle[2];
 	}
 	if(chanel & MOTOR_CH4){
-		//Log.console("ch4 duty:%f\n", TIM_duty_cycle[3]);
 		buffer[3] = TIM_duty_cycle[3];
 	}
 	

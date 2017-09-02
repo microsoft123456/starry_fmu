@@ -9,6 +9,9 @@
 #include <rthw.h>
 #include <rtdevice.h>
 #include <rtthread.h>
+#include "px4io_manager.h"
+#include "px4io_protocol.h"
+#include "log.h"
 
 //#define PX4IO_DEBUG
 
@@ -17,6 +20,7 @@ struct rt_semaphore px4io_dbg_rx_sem;
 struct rt_semaphore px4io_rx_pack_sem;
 static rt_device_t serial_dev;
 //static ringbuffer* rb;
+static char* TAG = "PX4IO Manager";
 
 uint8_t ppm_send_freq = 20;	/* sending frequemcy of ppm signal, HZ */
 
@@ -142,7 +146,7 @@ void px4io_loop(void *parameter)
 	
 	if(serial_dev == RT_NULL)
     {
-        printf("serial device %s not found!\r\n", "uart6");
+        Log.e(TAG, "serial device %s not found!\r\n", "uart6");
     }
 	
 	rt_sem_init(&px4io_rx_pack_sem, "rxpack", 0, 0);

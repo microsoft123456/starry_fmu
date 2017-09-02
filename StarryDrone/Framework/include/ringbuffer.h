@@ -9,8 +9,7 @@
 #ifndef __RINGBUFFER_H__
 #define __RINGBUFFER_H__
 
-#include "stm32f4xx.h"
-#include <rtthread.h>
+#include <stdint.h>
  
 typedef struct
 {

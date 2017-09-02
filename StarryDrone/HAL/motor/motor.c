@@ -8,6 +8,8 @@
  */
  
 #include "motor.h"
+#include "pwm.h"
+#include "log.h"
 #include <stdlib.h>
 
 static struct rt_device_motor _hw_motor;
@@ -92,9 +94,7 @@ static rt_err_t  _motor_control(rt_device_t dev, rt_uint8_t cmd, void *args)
 {
 	struct rt_device_motor *motor = (struct rt_device_motor *)dev;
 	
-	if(cmd == MOTOR_CTRL_FREQUENCY){
-		motor->ops->pwm_configure(dev, *(rt_base_t*)args);
-	}
+	motor->ops->pwm_configure(dev, cmd, args);
 	
     return 0;
 }
@@ -115,7 +115,7 @@ int handle_motor_shell_cmd(int argc, char** argv)
 				Log.console("throttle must between 0.0~1.0\n");
 			}
 		}
-		if(strcmp(argv[1], "get") == 0){
+		else if(strcmp(argv[1], "get") == 0){
 			float throttle_dc[4];
 			float throttle[4];
 			
@@ -128,7 +128,20 @@ int handle_motor_shell_cmd(int argc, char** argv)
 			
 			Log.console("ch1:%.2f ch2:%.2f ch3:%.2f ch4:%.2f\n", throttle[0],throttle[1],throttle[2],throttle[3]);
 		}
+		else if(strcmp(argv[1], "switch") == 0 && argc == 3){
+			if(strcmp(argv[2], "on") == 0){
+				int on_off = 1;
+				_hw_motor.ops->pwm_configure((rt_device_t)&_hw_motor, PWM_CMD_SWITCH, (void*)&on_off);
+			}else if(strcmp(argv[2], "off") == 0){
+				int on_off = 0;
+				_hw_motor.ops->pwm_configure((rt_device_t)&_hw_motor, PWM_CMD_SWITCH, (void*)&on_off);
+			}
+		}else{
+			Log.console("incorrect cmd, using help!\n");
+		}
 	}
+	
+	return 0;
 }
 
 int rt_device_motor_register(const char *name, const struct rt_pwm_ops *ops, void *user_data)

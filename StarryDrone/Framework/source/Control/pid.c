@@ -19,7 +19,7 @@ uint8_t pid_init(void)
     return RT_EOK;
 }
 
-uint8_t pid_calculate(const float input[3],float output[3],float baseThrottle)
+uint8_t pid_calculate(const float input[3],float output[3], float gyr[3])
 {
     const PARAM_Def *p = get_param();
  
@@ -29,14 +29,14 @@ uint8_t pid_calculate(const float input[3],float output[3],float baseThrottle)
     {
         float p_o = input[i] * p->ctl_pid[i].outer_P; /*比例调节输出分量*/
 
-        if(baseThrottle>0.2f)
-        {
-            pid_accumulate[i] += input[i]*p->ctl_pid[i].outer_I;    /*积分累加值*/
-        }
-        else
-        {
-           pid_accumulate[i] = 0; 
-        }
+//        if(baseThrottle>0.2f)
+//        {
+//            pid_accumulate[i] += input[i]*p->ctl_pid[i].outer_I;    /*积分累加值*/
+//        }
+//        else
+//        {
+//           pid_accumulate[i] = 0; 
+//        }
         if(pid_accumulate[i] < -0.05f)  /*限定积分输出分量在-0.1~0.1之间*/
             pid_accumulate[i] = -0.05f;
         if(pid_accumulate[i] > 0.05f)
@@ -53,20 +53,20 @@ uint8_t pid_calculate(const float input[3],float output[3],float baseThrottle)
     for(int i = 0 ; i<3 ; i++)
     {
 		//TODO: need to modify
-        //err_xyz[i] = outer_output[i] - MPU6050_GYRO_LAST[i];
+        err_xyz[i] = outer_output[i] - gyr[i];
     }
     for(int i=0;i<3;i++)
     {
         float p_o = err_xyz[i] * p->ctl_pid[i].inner_P; /*比例调节输出分量*/
         //if(input[0]*input[0]<0.01 && input[1]*input[1]<0.01 && baseThrottle>0.2)
-        if(baseThrottle>0.2f)
-        {
-            inner_pid_accumulate[i] += err_xyz[i]*p->ctl_pid[i].inner_I;    /*积分累加值*/
-        }
-        else
-        {
-           inner_pid_accumulate[i] = 0; 
-        }
+//        if(baseThrottle>0.2f)
+//        {
+//            inner_pid_accumulate[i] += err_xyz[i]*p->ctl_pid[i].inner_I;    /*积分累加值*/
+//        }
+//        else
+//        {
+//           inner_pid_accumulate[i] = 0; 
+//        }
         if(inner_pid_accumulate[i] < -0.05f)  /*限定积分输出分量在-0.1~0.1之间*/
             inner_pid_accumulate[i] = -0.05f;
         if(inner_pid_accumulate[i] > 0.05f)

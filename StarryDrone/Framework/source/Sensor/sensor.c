@@ -11,6 +11,13 @@
 #include <rtthread.h>
 #include <string.h>
 #include <math.h>
+#include "log.h"
+#include "ms5611.h"
+#include "gps.h"
+#include "param.h"
+#include "sensor.h"
+#include "lsm303d.h"
+#include "l3gd20h.h"
 
 #define ADDR_CMD_CONVERT_D1			0x48	/* write to this address to start pressure conversion */
 #define ADDR_CMD_CONVERT_D2			0x58	/* write to this address to start temperature conversion */
@@ -335,7 +342,7 @@ int handle_sensor_shell_cmd(int argc, char** argv)
 		else if(strcmp(argv[1], "gyr") == 0){
 			sensor_type = 3;
 		}else{
-			printf("unknow parameter:%s\n", argv[1]);
+			Log.console("unknow parameter:%s\n", argv[1]);
 			return 1;
 		}
 		
@@ -343,7 +350,7 @@ int handle_sensor_shell_cmd(int argc, char** argv)
 			if(strcmp(argv[i], "-t") == 0){
 				i++;
 				if(i >= argc){
-					printf("wrong cmd format.\n");
+					Log.console("wrong cmd format.\n");
 					return 2;
 				}
 				interval = atoi(argv[i]);
@@ -351,7 +358,7 @@ int handle_sensor_shell_cmd(int argc, char** argv)
 			if(strcmp(argv[i], "-n") == 0){
 				i++;
 				if(i >= argc){
-					printf("wrong cmd format.\n");
+					Log.console("wrong cmd format.\n");
 					return 2;
 				}
 				cnt = atoi(argv[i]);
@@ -372,30 +379,30 @@ int handle_sensor_shell_cmd(int argc, char** argv)
 					if(raw_data){
 						int16_t raw_acc[3];
 						sensor_acc_raw_measure(raw_acc);
-						printf("raw acc:%d %d %d\n", raw_acc[0], raw_acc[1], raw_acc[2]);
+						Log.console("raw acc:%d %d %d\n", raw_acc[0], raw_acc[1], raw_acc[2]);
 					}else if(no_cali){
 						float acc[3];
 						sensor_acc_measure(acc);
-						printf("acc:%f %f %f\n", acc[0], acc[1], acc[2]);
+						Log.console("acc:%f %f %f\n", acc[0], acc[1], acc[2]);
 					}else{
 						float acc[3];
 						sensor_acc_get_calibrated_data(acc);
-						printf("cali acc:%f %f %f\n", acc[0], acc[1], acc[2]);
+						Log.console("cali acc:%f %f %f\n", acc[0], acc[1], acc[2]);
 					}
 				}else{
 					for(uint32_t i = 0 ; i < cnt ; i++){
 						if(raw_data){
 							int16_t raw_acc[3];
 							sensor_acc_raw_measure(raw_acc);
-							printf("raw acc:%d %d %d\n", raw_acc[0], raw_acc[1], raw_acc[2]);
+							Log.console("raw acc:%d %d %d\n", raw_acc[0], raw_acc[1], raw_acc[2]);
 						}else if(no_cali){
 							float acc[3];
 							sensor_acc_measure(acc);
-							printf("acc:%f %f %f\n", acc[0], acc[1], acc[2]);
+							Log.console("acc:%f %f %f\n", acc[0], acc[1], acc[2]);
 						}else{
 							float acc[3];
 							sensor_acc_get_calibrated_data(acc);
-							printf("cali acc:%f %f %f\n", acc[0], acc[1], acc[2]);
+							Log.console("cali acc:%f %f %f\n", acc[0], acc[1], acc[2]);
 						}
 						rt_thread_delay(interval);
 					}
@@ -407,30 +414,30 @@ int handle_sensor_shell_cmd(int argc, char** argv)
 					if(raw_data){
 						int16_t raw_mag[3];
 						sensor_mag_raw_measure(raw_mag);
-						printf("raw mag:%d %d %d\n", raw_mag[0], raw_mag[1], raw_mag[2]);
+						Log.console("raw mag:%d %d %d\n", raw_mag[0], raw_mag[1], raw_mag[2]);
 					}else if(no_cali){
 						float mag[3];
 						sensor_mag_measure(mag);
-						printf("mag:%f %f %f\n", mag[0], mag[1], mag[2]);
+						Log.console("mag:%f %f %f\n", mag[0], mag[1], mag[2]);
 					}else{
 						float mag[3];
 						sensor_mag_get_calibrated_data(mag);
-						printf("cali mag:%f %f %f\n", mag[0], mag[1], mag[2]);
+						Log.console("cali mag:%f %f %f\n", mag[0], mag[1], mag[2]);
 					}
 				}else{
 					for(uint32_t i = 0 ; i < cnt ; i++){
 						if(raw_data){
 							int16_t raw_mag[3];
 							sensor_mag_raw_measure(raw_mag);
-							printf("raw mag:%d %d %d\n", raw_mag[0], raw_mag[1], raw_mag[2]);
+							Log.console("raw mag:%d %d %d\n", raw_mag[0], raw_mag[1], raw_mag[2]);
 						}else if(no_cali){
 							float mag[3];
 							sensor_mag_measure(mag);
-							printf("mag:%f %f %f\n", mag[0], mag[1], mag[2]);
+							Log.console("mag:%f %f %f\n", mag[0], mag[1], mag[2]);
 						}else{
 							float mag[3];
 							sensor_mag_get_calibrated_data(mag);
-							printf("cali mag:%f %f %f\n", mag[0], mag[1], mag[2]);
+							Log.console("cali mag:%f %f %f\n", mag[0], mag[1], mag[2]);
 						}
 						rt_thread_delay(interval);
 					}
@@ -442,30 +449,30 @@ int handle_sensor_shell_cmd(int argc, char** argv)
 					if(raw_data){
 						int16_t raw_gyr[3];
 						sensor_gyr_raw_measure(raw_gyr);
-						printf("raw gyr:%d %d %d\n", raw_gyr[0], raw_gyr[1], raw_gyr[2]);
+						Log.console("raw gyr:%d %d %d\n", raw_gyr[0], raw_gyr[1], raw_gyr[2]);
 					}else if(no_cali){
 						float gyr[3];
 						sensor_gyr_measure(gyr);
-						printf("gyr:%f %f %f\n", gyr[0], gyr[1], gyr[2]);
+						Log.console("gyr:%f %f %f\n", gyr[0], gyr[1], gyr[2]);
 					}else{
 						float gyr[3];
 						sensor_gyr_get_calibrated_data(gyr);
-						printf("cali gyr:%f %f %f\n", gyr[0], gyr[1], gyr[2]);
+						Log.console("cali gyr:%f %f %f\n", gyr[0], gyr[1], gyr[2]);
 					}
 				}else{
 					for(uint32_t i = 0 ; i < cnt ; i++){
 						if(raw_data){
 							int16_t raw_gyr[3];
 							sensor_gyr_raw_measure(raw_gyr);
-							printf("raw gyr:%d %d %d\n", raw_gyr[0], raw_gyr[1], raw_gyr[2]);
+							Log.console("raw gyr:%d %d %d\n", raw_gyr[0], raw_gyr[1], raw_gyr[2]);
 						}else if(no_cali){
 							float gyr[3];
 							sensor_gyr_measure(gyr);
-							printf("gyr:%f %f %f\n", gyr[0], gyr[1], gyr[2]);
+							Log.console("gyr:%f %f %f\n", gyr[0], gyr[1], gyr[2]);
 						}else{
 							float gyr[3];
 							sensor_gyr_get_calibrated_data(gyr);
-							printf("cali gyr:%f %f %f\n", gyr[0], gyr[1], gyr[2]);
+							Log.console("cali gyr:%f %f %f\n", gyr[0], gyr[1], gyr[2]);
 						}
 						rt_thread_delay(interval);
 					}

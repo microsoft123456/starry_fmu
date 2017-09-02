@@ -11,7 +11,7 @@
 #define __ATTITUDE_H__
 
 #include <rtthread.h>
-#include <rtdevice.h>
+#include "quaternion.h"
 
 rt_err_t attitude_init(void);
 quaternion attitude_getAttitude(void);

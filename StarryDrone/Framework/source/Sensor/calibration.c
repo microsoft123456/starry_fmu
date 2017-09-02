@@ -8,11 +8,16 @@
 * 2016-06-30	zoujiachi		the first version
 */
 
-#include <rthw.h>
+//#include <rthw.h>
 #include <rtdevice.h>
 #include <rtthread.h>
 #include <string.h>
 #include <math.h>
+#include "log.h"
+#include "sensor.h"
+#include "delay.h"
+#include "shell.h"
+#include "calibration.h"
 
 #define MATRIX_SIZE 7
 #define u8 unsigned char
@@ -44,16 +49,16 @@ rt_err_t calibrate_gyr(uint16_t p_num)
 		sum_gyr[0] += gyr_data_p[i*3];
 		sum_gyr[1] += gyr_data_p[i*3+1];
 		sum_gyr[2] += gyr_data_p[i*3+2];
-		printf("(%.2f,%.2f,%.2f) " , gyr_data_p[i*3],gyr_data_p[i*3+1],gyr_data_p[i*3+2]);
+		Log.console("(%.2f,%.2f,%.2f) " , gyr_data_p[i*3],gyr_data_p[i*3+1],gyr_data_p[i*3+2]);
 		time_waitMs(3);
 	}
-	rt_kprintf("\r\n");
+	Log.console("\r\n");
 	
 	offset_gyr[0] = -sum_gyr[0]/p_num;
 	offset_gyr[1] = -sum_gyr[1]/p_num;
 	offset_gyr[2] = -sum_gyr[2]/p_num;
 	
-	printf("gyr offset:%f %f %f\r\n" , offset_gyr[0],offset_gyr[1],offset_gyr[2]);
+	Log.console("gyr offset:%f %f %f\r\n" , offset_gyr[0],offset_gyr[1],offset_gyr[2]);
 	
 	return RT_EOK;
 }
@@ -135,7 +140,7 @@ u8 Matrix_GaussElimination(void)
 		
 		//整列都为0
 		if(Equal(m_matrix[row][column],0.0f)){
-			//printf("qiyi matrix:%d %d\r\n" , row , column);
+			//Log.console("qiyi matrix:%d %d\r\n" , row , column);
 			//DispMatrix();
 			//return 0;
 			row--;
@@ -155,7 +160,7 @@ u8 Matrix_GaussElimination(void)
 		}
 
 //		DispMatrix();
-//		printf("\r\n");
+//		Log.console("\r\n");
 	}
 
 	return 1;
@@ -201,7 +206,7 @@ int Matrix_RowSimplify(void)
             //
         }
 //		DispMatrix();
-//		printf("\r\n");
+//		Log.console("\r\n");
     }
     //
     return c;
@@ -246,9 +251,9 @@ void DispMatrix(void)
 	
 	for(row = 0 ; row<m ; row++){
 		for(column = 0 ; column<n ; column++){
-			printf("%.2f		" , m_matrix[row][column]);
+			Log.console("%.2f		" , m_matrix[row][column]);
 		}
-		printf("\r\n");
+		Log.console("\r\n");
 	}
 }
 
@@ -269,13 +274,13 @@ double* calibrate_process(double radius)
 
 	Matrix_Solve(C , Res);
 
-	printf("a:%.2f b:%.2f c:%.2f d:%.2f e:%.2f f:%.2f g:%.2f\r\n" , Res[0],Res[1],Res[2],Res[3],Res[4],Res[5],Res[6]);
+	Log.console("a:%.2f b:%.2f c:%.2f d:%.2f e:%.2f f:%.2f g:%.2f\r\n" , Res[0],Res[1],Res[2],Res[3],Res[4],Res[5],Res[6]);
 	
 	k = (Res[3]*Res[3]/Res[0]+Res[4]*Res[4]/Res[1]+Res[5]*Res[5]/Res[2] - 4*Res[6])/(4*radius*radius);
 
 	if(Res[0]*k<0 || Res[1]*k<0 || Res[2]*k<0)
 	{
-		printf("data is not typical\r\n");
+		Log.console("data is not typical\r\n");
 		return RT_NULL;
 	}
 	
@@ -286,7 +291,7 @@ double* calibrate_process(double radius)
     m_result[4] = Res[4] / (2 * Res[1]);
     m_result[5] = Res[5] / (2 * Res[2]);
 
-	printf("Xo:%f Yo:%f Zo:%f Xg:%f Yg:%f Zg:%f k:%f\r\n" , m_result[3],m_result[4],m_result[5],m_result[0],m_result[1],m_result[2],k);
+	Log.console("Xo:%f Yo:%f Zo:%f Xg:%f Yg:%f Zg:%f k:%f\r\n" , m_result[3],m_result[4],m_result[5],m_result[0],m_result[1],m_result[2],k);
 
 	return m_result;
 }
@@ -299,11 +304,11 @@ void cali_input_acc_data(uint16_t p_num)
 	for(i = 0 ; i<p_num ; i++)
 	{
 		sensor_acc_measure(acc);
-		printf("(%.2f,%.2f,%.2f) " , acc[0],acc[1],acc[2]);
+		Log.console("(%.2f,%.2f,%.2f) " , acc[0],acc[1],acc[2]);
 		CalcData_Input(acc[0], acc[1], acc[2]);
 		time_waitMs(20);
 	}
-	rt_kprintf("\r\n");
+	Log.console("\r\n");
 }
 
 void cali_input_mag_data(uint16_t p_num)
@@ -314,11 +319,11 @@ void cali_input_mag_data(uint16_t p_num)
 	for(i = 0 ; i<p_num ; i++)
 	{
 		sensor_mag_measure(mag);
-		printf("(%.2f,%.2f,%.2f) " , mag[0],mag[1],mag[2]);
+		Log.console("(%.2f,%.2f,%.2f) " , mag[0],mag[1],mag[2]);
 		CalcData_Input(mag[0], mag[1], mag[2]);
 		time_waitMs(20);
 	}
-	rt_kprintf("\r\n");
+	Log.console("\r\n");
 }
 
 void Calc_Process(double radius)
@@ -383,7 +388,7 @@ void Calc_Process(double radius)
 
 	Matrix_Solve(C , Res);
 
-	printf("a:%.2f b:%.2f c:%.2f d:%.2f e:%.2f f:%.2f g:%.2f\r\n" , Res[0],Res[1],Res[2],Res[3],Res[4],Res[5],Res[6]);
+	Log.console("a:%.2f b:%.2f c:%.2f d:%.2f e:%.2f f:%.2f g:%.2f\r\n" , Res[0],Res[1],Res[2],Res[3],Res[4],Res[5],Res[6]);
 
 	k = (Res[3]*Res[3]/Res[0]+Res[4]*Res[4]/Res[1]+Res[5]*Res[5]/Res[2] - 4*Res[6])/(4*radius*radius);
 
@@ -394,7 +399,7 @@ void Calc_Process(double radius)
     m_result[4] = Res[4] / (2 * Res[1]);
     m_result[5] = Res[5] / (2 * Res[2]);
 
-	printf("Xo:%f Yo:%f Zo:%f Xg:%f Yg:%f Zg:%f k:%f\r\n" , m_result[3],m_result[4],m_result[5],m_result[0],m_result[1],m_result[2],k);
+	Log.console("Xo:%f Yo:%f Zo:%f Xg:%f Yg:%f Zg:%f k:%f\r\n" , m_result[3],m_result[4],m_result[5],m_result[0],m_result[1],m_result[2],k);
 }
 /**************************** Elipsoid fitting algorithm End ************************************/
 
@@ -543,11 +548,11 @@ void DispMatrix2(void)
 	
 	for(row = 0 ; row<MAX_ROW ; row++){
 		for(column = 0 ; column<MAX_COL ; column++){
-			printf("%.2f	" , m_matrix2[row][column]);
+			Log.console("%.2f	" , m_matrix2[row][column]);
 		}
-		printf("\r\n");
+		Log.console("\r\n");
 	}
-	printf("\r\n");
+	Log.console("\r\n");
 }
 
 //高斯消元法，求行阶梯型矩阵
@@ -562,7 +567,7 @@ u8 Matrix_GaussElimination2(void)
 		
 		//整列都为0
 		if(Equal(m_matrix2[row][column],0.0f)){
-			//printf("qiyi matrix:%d %d\r\n" , row , column);
+			//Log.console("qiyi matrix:%d %d\r\n" , row , column);
 			//DispMatrix();
 			//return 0;
 			row--;
@@ -584,7 +589,7 @@ u8 Matrix_GaussElimination2(void)
 	}
 
 	DispMatrix2();
-	printf("\r\n");
+	Log.console("\r\n");
 
 	return 1;
 }
@@ -633,7 +638,7 @@ int solveMatrix2(double* solution)
 			return 1;
 		
 		solution[i] = m_matrix2[i][MAX_COL-1] / m_matrix2[i][i];
-		printf("solution[%d]:%f\n", i, solution[i]);
+		Log.console("solution[%d]:%f\n", i, solution[i]);
 	}
 
 	return 0;
@@ -644,13 +649,13 @@ u8 validate(void)
 	u8 i;
 	double cali[3];
 
-	printf("\nvalidate value:\n");
+	Log.console("\nvalidate value:\n");
 	for(i = 0 ; i < 9 ; i++){
 		cali[0] = a11*saveP[i][0] + a12*saveP[i][1] + a13*saveP[i][2] + bx;
 		cali[1] = a22*saveP[i][1] + a23*saveP[i][2] + by;
 		cali[2] = saveP[i][2] + bz;
 
-		printf("before:%f after:%f\n", saveP[i][0]*saveP[i][0]+saveP[i][1]*saveP[i][1]+saveP[i][2]*saveP[i][2],
+		Log.console("before:%f after:%f\n", saveP[i][0]*saveP[i][0]+saveP[i][1]*saveP[i][1]+saveP[i][2]*saveP[i][2],
 				cali[0]*cali[0]+cali[1]*cali[1]+cali[2]*cali[2]);
 	}
 }
@@ -663,11 +668,11 @@ void cali_input_mag_data2(uint16_t p_num)
 	for(i = 0 ; i<p_num ; i++)
 	{
 		sensor_mag_measure(mag);
-		printf("(%.2f,%.2f,%.2f) " , mag[0],mag[1],mag[2]);
+		Log.console("(%.2f,%.2f,%.2f) " , mag[0],mag[1],mag[2]);
 		inputMagRawData(mag[0], mag[1], mag[2]);
 		time_waitMs(20);
 	}
-	rt_kprintf("\r\n");
+	Log.console("\r\n");
 }
 
 void reset_cali(void)
@@ -681,7 +686,7 @@ void calibrate_process2(void)
 	double solution[8];
 
 	if(solveMatrix2(solution))
-		printf("NA\n");
+		Log.console("NA\n");
 	else{
 		a11 = 1 + solution[0];
 		a22 = 1 + solution[1];
@@ -692,9 +697,9 @@ void calibrate_process2(void)
 		by = solution[6];
 		bz = solution[7];
 
-		printf("a11:%f a12:%f a13:%f bx:%f\n", a11, a12, a13, bx);
-		printf("a22:%f a23:%f by:%f\n", a22, a23, by);
-		printf("bz:%f\n", bz);
+		Log.console("a11:%f a12:%f a13:%f bx:%f\n", a11, a12, a13, bx);
+		Log.console("a22:%f a23:%f by:%f\n", a22, a23, by);
+		Log.console("bz:%f\n", bz);
 
 		validate();
 	}	
@@ -704,48 +709,48 @@ void calibrate_process2(void)
 
 int calibrate_acc_run(struct finsh_shell *shell)
 {
-	rt_kprintf("Calibrate acc:\r\n");
+	Log.console("Calibrate acc:\r\n");
 	char ch;
 
 	/* reset matrix */
 	ResetMatrix();
 
-	rt_kprintf("forward [Y/N]\r\n");
+	Log.console("forward [Y/N]\r\n");
 	if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
 	rt_device_read(shell->device, 0, &ch, 1);
 	if(ch != 'Y' && ch != 'y')
 		return 1;
 	cali_input_acc_data(6);
 
-	rt_kprintf("behind [Y/N]\r\n");
+	Log.console("behind [Y/N]\r\n");
 	if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
 	rt_device_read(shell->device, 0, &ch, 1);
 	if(ch != 'Y' && ch != 'y')
 		return 1;
 	cali_input_acc_data(6);
 
-	rt_kprintf("left [Y/N]\r\n");
+	Log.console("left [Y/N]\r\n");
 	if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
 	rt_device_read(shell->device, 0, &ch, 1);
 	if(ch != 'Y' && ch != 'y')
 		return 1;
 	cali_input_acc_data(6);
 
-	rt_kprintf("right [Y/N]\r\n");
+	Log.console("right [Y/N]\r\n");
 	if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
 	rt_device_read(shell->device, 0, &ch, 1);
 	if(ch != 'Y' && ch != 'y')
 		return 1;
 	cali_input_acc_data(6);
 
-	rt_kprintf("up [Y/N]\r\n");
+	Log.console("up [Y/N]\r\n");
 	if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
 	rt_device_read(shell->device, 0, &ch, 1);
 	if(ch != 'Y' && ch != 'y')
 		return 1;
 	cali_input_acc_data(6);
 
-	rt_kprintf("down [Y/N]\r\n");
+	Log.console("down [Y/N]\r\n");
 	if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
 	rt_device_read(shell->device, 0, &ch, 1);
 	if(ch != 'Y' && ch != 'y')
@@ -761,49 +766,49 @@ int calibrate_acc_run(struct finsh_shell *shell)
 
 int calibrate_mag_run(struct finsh_shell *shell)
 {
-	rt_kprintf("Calibrate mag:\r\n");
+	Log.console("Calibrate mag:\r\n");
 	char ch;
 
 #ifdef CALI_METHOD_1	
 	/* reset matrix */
 	ResetMatrix();
 	
-	rt_kprintf("forward [Y/N]\r\n");
+	Log.console("forward [Y/N]\r\n");
 	if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
 	rt_device_read(shell->device, 0, &ch, 1);
 	if(ch != 'Y' && ch != 'y')
 		return 1;
 	cali_input_mag_data(6);
 	
-	rt_kprintf("behind [Y/N]\r\n");
+	Log.console("behind [Y/N]\r\n");
 	if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
 	rt_device_read(shell->device, 0, &ch, 1);
 	if(ch != 'Y' && ch != 'y')
 		return 1;
 	cali_input_mag_data(6);
 	
-	rt_kprintf("left [Y/N]\r\n");
+	Log.console("left [Y/N]\r\n");
 	if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
 	rt_device_read(shell->device, 0, &ch, 1);
 	if(ch != 'Y' && ch != 'y')
 		return 1;
 	cali_input_mag_data(6);
 	
-	rt_kprintf("right [Y/N]\r\n");
+	Log.console("right [Y/N]\r\n");
 	if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
 	rt_device_read(shell->device, 0, &ch, 1);
 	if(ch != 'Y' && ch != 'y')
 		return 1;
 	cali_input_mag_data(6);
 	
-	rt_kprintf("up [Y/N]\r\n");
+	Log.console("up [Y/N]\r\n");
 	if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
 	rt_device_read(shell->device, 0, &ch, 1);
 	if(ch != 'Y' && ch != 'y')
 		return 1;
 	cali_input_mag_data(6);
 	
-	rt_kprintf("down [Y/N]\r\n");
+	Log.console("down [Y/N]\r\n");
 	if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
 	rt_device_read(shell->device, 0, &ch, 1);
 	if(ch != 'Y' && ch != 'y')
@@ -819,7 +824,7 @@ int calibrate_mag_run(struct finsh_shell *shell)
 	reset_cali();
 	
 	for(int i = 0 ; i < 9 ; i++){
-		rt_kprintf("%d point [Y/N]\r\n", i+1);
+		Log.console("%d point [Y/N]\r\n", i+1);
 		if (rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER) != RT_EOK) return 1;
 		rt_device_read(shell->device, 0, &ch, 1);
 		if(ch != 'Y' && ch != 'y')
@@ -833,7 +838,7 @@ int calibrate_mag_run(struct finsh_shell *shell)
 
 void calibrate_gyr_run(struct finsh_shell *shell)
 {
-	rt_kprintf("Calibrate gyr:\r\n");
+	Log.console("Calibrate gyr:\r\n");
 	calibrate_gyr(200);
 }
 

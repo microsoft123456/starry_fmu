@@ -11,7 +11,8 @@
 #define __SENSOR_H__
 
 #include <rtthread.h>
-#include <rtdevice.h>
+#include <stdint.h>
+#include "ms5611.h"
 
 #define ACC_MAG_DEVICE_NAME		"acc_mag"
 #define GYR_DEVICE_NAME			"gyr"

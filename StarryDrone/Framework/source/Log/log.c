@@ -9,6 +9,9 @@
 
 #include <rtthread.h>
 #include <rtdevice.h>
+#include <stdio.h>
+#include "log.h"
+#include "delay.h"
 
 #define LOG_BUFF_SIZE		128
 static char log_buf[LOG_BUFF_SIZE];

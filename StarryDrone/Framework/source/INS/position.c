@@ -11,6 +11,16 @@
 #include <rtthread.h>
 #include <math.h>
 #include "FIR.h"
+#include "ms5611.h"
+#include "position.h"
+#include "kalman.h"
+#include "ekf.h"
+#include "sensor.h"
+#include "log.h"
+#include "gps.h"
+#include "quaternion.h"
+#include "attitude.h"
+#include "global.h"
 
 #define EVENT_POS_UPDATE        (1<<0)
 #define EVENT_ACC_UPDATE		(1<<1)
@@ -25,7 +35,7 @@
 #define Deg2Rad(a)		(a*PI/180.0f)
 
 const float EARTH_RADIUS = 6371393;	/* average earth radius, meter */
-const float PI = 3.1415926536;
+//const float PI = 3.1415926536;
 
 static struct rt_timer timer_pos;
 static struct rt_timer timer_baro;

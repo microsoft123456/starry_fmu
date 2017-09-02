@@ -80,34 +80,47 @@ void quaternion_inv_rotateVector(const quaternion rotation,const float from[3],f
     to[2] = from[0]*(xz2 + wy2)     + from[1]*(yz2 - wx2)     + from[2]*(1 - xx2 - yy2);
 }
 
+void quaternion_conjugate(quaternion q, quaternion* res)
+{
+	res->w = q.w;
+	res->x = -q.x;
+	res->y = -q.y;
+	res->z = -q.z;
+}
+
+// calculate quaternion rotate from q1 to q2
+void quaternion_fromTwoQuaternionRotation(quaternion * q,const quaternion q1, const quaternion q2)
+{
+	quaternion cj_q;
+	
+	quaternion_conjugate(q1, &cj_q);
+	quaternion_normalize(&cj_q);
+	quaternion_mult(q, q2, cj_q);
+}
+
 // calculate quaternion rotate from vector1 to vector2
 void quaternion_fromTwoVectorRotation(quaternion * result,const float from[3],const float to[3])
 {
-    float from_norm = fabsf(from[0]*from[0] + from[1]*from[1] + from[2]*from[2]);
-    float to_norm = fabsf(to[0]*to[0] + to[1]*to[1] + to[2]*to[2]);
-    //
-    from_norm = sqrtf(from_norm);
-    to_norm = sqrtf(to_norm);
-    float cos_theta = (from[0]*to[0] + from[1]*to[1] + from[2]*to[2]) / (from_norm*to_norm);
-    result->w = sqrtf((1.0f + cos_theta) / 2); // cos(theta/2)
-    float sin_half_theta = sqrtf((1 - cos_theta) / 2);
-    float cross_x = from[1]*to[2] - from[2]*to[1];
-    float cross_y = from[2]*to[0] - from[0]*to[2];
-    float cross_z = from[0]*to[1] - from[1]*to[0];
-    if(cos_theta < 0)
-    {
-        cross_x = - cross_x;
-        cross_y = - cross_y;
-        cross_z = - cross_z;
-    }
-    float sin_half_theta_div_cross_norm = sin_half_theta /
-        sqrtf(cross_x*cross_x + cross_y*cross_y + cross_z*cross_z);
-    result->x = cross_x * sin_half_theta_div_cross_norm;
-    result->y = cross_y * sin_half_theta_div_cross_norm;
-    result->z = cross_z * sin_half_theta_div_cross_norm;
+	float n[3], a[3], b[3];
+	float theta;
+	float sin_half_theta;
+	
+	Vector3_Normalize(a, from);
+	Vector3_Normalize(b, to);
+	theta = acos(Vector3_DotProduct(a, b));
+	Vector3_CrossProduct(n, a, b);
+	Vector3_Normalize(n,n);
+	
+	sin_half_theta = sin(theta*0.5);
+	result->w = cos(theta*0.5);
+	result->x = n[0]*sin_half_theta;
+	result->y = n[1]*sin_half_theta;
+	result->z = n[2]*sin_half_theta;
+
+	quaternion_normalize(result);
 }
 
-//euler[3]: roll pitch yaw
+//euler[3]: roll pitch yaw	unit:rad
 void quaternion_toEuler(const quaternion q, float euler[3])
 {
 	double ysqr = q.y * q.y;
@@ -129,9 +142,39 @@ void quaternion_toEuler(const quaternion q, float euler[3])
 	euler[2] = atan2(t3, t4);
 }
 
-void quaternion_invert(quaternion *q)
+//euler[3]: roll pitch yaw	 unit:rad
+void quaternion_fromEuler(const float euler[3], quaternion* q)
 {
-	q->x = -q->x;
-	q->y = -q->y;
-	q->z = -q->z;
+	double cr = cos(euler[0] * 0.5);
+	double sr = sin(euler[0] * 0.5);	
+	double cp = cos(euler[1] * 0.5);
+	double sp = sin(euler[1] * 0.5);
+	double cy = cos(euler[2] * 0.5);
+	double sy = sin(euler[2] * 0.5);
+	
+	q->w = cy * cr * cp + sy * sr * sp;
+	q->x = cy * sr * cp - sy * cr * sp;
+	q->y = cy * cr * sp + sy * sr * cp;
+	q->z = sy * cr * cp - cy * sr * sp;
+}
+
+float quaternion_getEuler(const quaternion q, int index)
+{
+	if(index == 0){
+		// roll
+		double t0 = +2.0f * (q.w * q.x + q.y * q.z);
+		double t1 = +1.0f - 2.0f * (q.x * q.x + q.y*q.y);
+		return atan2(t0, t1);
+	}else if(index == 1){
+		// pitch
+		double t2 = +2.0f * (q.w * q.y - q.z * q.x);
+		t2 = t2 > 1.0f ? 1.0f : t2;
+		t2 = t2 < -1.0f ? -1.0f : t2;
+		return asin(t2);
+	}else{
+		// yaw
+		double t3 = +2.0f * (q.w * q.z + q.x *q.y);
+		double t4 = +1.0f - 2.0f * (q.y*q.y + q.z * q.z);  
+		return atan2(t3, t4);
+	}
 }

@@ -589,3 +589,10 @@ int cmd_motor(int argc, char** argv)
 	return handle_motor_shell_cmd(argc, argv);
 }
 FINSH_FUNCTION_EXPORT_ALIAS(cmd_motor, __cmd_motor, motor operation);
+
+int handle_rc_shell_cmd(int argc, char** argv);
+int cmd_rc(int argc, char** argv)
+{
+	return handle_rc_shell_cmd(argc, argv);
+}
+FINSH_FUNCTION_EXPORT_ALIAS(cmd_rc, __cmd_rc, rc operation);

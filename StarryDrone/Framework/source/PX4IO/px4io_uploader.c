@@ -6,11 +6,15 @@
  * 2017-02-04     zoujiachi   	the first version
  */
  
-#include <rthw.h>
 #include <rtdevice.h>
 #include <rtthread.h>
-#include <shell.h>
+#include "shell.h"
 #include <stdlib.h>
+#include "ringbuffer.h"
+#include "log.h"
+#include "px4io_uploader.h"
+#include "delay.h"
+#include "px4io_manager.h"
 
 static const uint32_t crc32_tab[] = {
 	0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f, 0xe963a535, 0x9e6495a3,
@@ -163,7 +167,7 @@ static rt_err_t get_sync(unsigned timeout)
 	}
 
 	if ((c[0] != PROTO_INSYNC) || (c[1] != PROTO_OK)) {
-		//printf("bad sync 0x%02x,0x%02x\r\n", c[0], c[1]);
+		//Log.console("bad sync 0x%02x,0x%02x\r\n", c[0], c[1]);
 		return RT_ERROR;
 	}
 
@@ -229,7 +233,7 @@ static rt_err_t program(uint8_t* file_name, size_t fw_size)
 	file_buf = (uint8_t*)malloc(fw_size);
 	
 	if(file_buf == NULL){
-		printf("malloc fail\r\n");
+		Log.console("malloc fail\r\n");
 		return RT_ERROR;
 	}
 	
@@ -237,17 +241,17 @@ static rt_err_t program(uint8_t* file_name, size_t fw_size)
 		count += rt_device_read(shell->device, 0, &file_buf[count], fw_size-count);
 	}
 	
-	printf("program...\r\n");
+	Log.console("program...\r\n");
 	
 	for (uint32_t i = 0 ; i < prog_cnt ; i++) {
 		
-//		printf("i:%d\r\n", i);
+//		Log.console("i:%d\r\n", i);
 //		
 //		while (count < PROG_MULTI_MAX) {
 //			count += rt_device_read(shell->device, 0, &file_buf[count], PROG_MULTI_MAX-count);
 //		}
 		
-		//printf("cnt:%d\r\n", count);
+		//Log.console("cnt:%d\r\n", count);
 		
 		/* calculate crc32 sum */
 		sum = crc32part((uint8_t *)&file_buf[i*PROG_MULTI_MAX], PROG_MULTI_MAX, sum);
@@ -260,7 +264,7 @@ static rt_err_t program(uint8_t* file_name, size_t fw_size)
 		ret = get_sync(1000);
 		
 		if (ret != RT_EOK) {
-			printf("program fail %ld\r\n", ret);
+			Log.console("program fail %ld\r\n", ret);
 			break;
 		}
 	}
@@ -284,7 +288,7 @@ static rt_err_t program(uint8_t* file_name, size_t fw_size)
 		ret = get_sync(1000);
 		
 		if (ret != RT_EOK) {
-			printf("program fail %ld\r\n", ret);
+			Log.console("program fail %ld\r\n", ret);
 		}
 	}
 	
@@ -295,7 +299,7 @@ static rt_err_t program(uint8_t* file_name, size_t fw_size)
 	send_char(PROTO_EOC);
 
 	if (ret != RT_EOK) {
-		printf("could not read firmware size\r\n");
+		Log.console("could not read firmware size\r\n");
 		return ret;
 	}
 	
@@ -313,16 +317,16 @@ static rt_err_t program(uint8_t* file_name, size_t fw_size)
 	ret = recv_bytes((uint8_t *)(&crc), sizeof(crc));
 	
 	if (ret != RT_EOK) {
-		printf("did not receive CRC checksum\r\n");
+		Log.console("did not receive CRC checksum\r\n");
 		return ret;
 	}
 
 	/* compare the CRC sum from the IO with the one calculated */
 	if (sum != crc) {
-		printf("CRC wrong: received: %x, expected: %x\r\n", crc, sum);
+		Log.console("CRC wrong: received: %x, expected: %x\r\n", crc, sum);
 		return RT_ERROR;
 	}else{
-		printf("CRC check ok, received: %x, expected: %x\r\n", crc, sum);
+		Log.console("CRC check ok, received: %x, expected: %x\r\n", crc, sum);
 	}
 
 	return RT_EOK;
@@ -348,10 +352,10 @@ static rt_err_t uploader_serial_rx_ind(rt_device_t dev, rt_size_t size)
 	if(bytes){
 		for(uint32_t i = 0 ; i<bytes ; i++){
 			if(!ringbuffer_putc(rb, ch[i]))
-				printf("ringbuffer full\r\n");
+				Log.console("ringbuffer full\r\n");
 		}
 	}else{
-		printf("uploader listen err:%ld\r\n" , bytes);
+		Log.console("uploader listen err:%ld\r\n" , bytes);
 	}
 
     return RT_EOK;
@@ -367,7 +371,7 @@ void px4io_upload(void)
 	
 	struct finsh_shell* shell = finsh_get_shell();
 	
-	printf("px4uploader...\r\n");
+	Log.console("px4uploader...\r\n");
 	
 	if(uploader_init() != RT_EOK){
 		uploader_deinit();
@@ -380,11 +384,11 @@ void px4io_upload(void)
 	
 	while(time_nowMs() - time < 10000) {
 		if(sync() == RT_EOK){
-			printf("sync success\r\n");
+			Log.console("sync success\r\n");
 			get_info(INFO_BL_REV, (uint8_t*)&bl_rev, sizeof(bl_rev));
-			printf("found bootloader revision: %d\r\n", bl_rev);
+			Log.console("found bootloader revision: %d\r\n", bl_rev);
 			
-			printf(".bin file size:");
+			Log.console(".bin file size:");
 			
 			for(uint32_t i = 0 ; ; i++){
 				rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER);
@@ -396,38 +400,38 @@ void px4io_upload(void)
 			}
 			
 			size_t f_size = atoi((char*)file_size);
-			printf("file size is %d, upload now? Y/N\r\n", f_size);
+			Log.console("file size is %d, upload now? Y/N\r\n", f_size);
 			rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER);
 			rt_device_read(shell->device, 0, &c, 1);
 			if(c == 'y' || c == 'Y'){
-				printf("erase...\r\n");
+				Log.console("erase...\r\n");
 				
 				ret = erase();
 
 				if (ret != RT_EOK) {
-					printf("erase failed\r\n");
+					Log.console("erase failed\r\n");
 					return;
 				}
 				
-				printf("please send file...\r\n");
+				Log.console("please send file...\r\n");
 //				rt_sem_take(&shell->rx_sem, RT_WAITING_FOREVER);
 //				
-//				printf("program...\r\n");
+//				Log.console("program...\r\n");
 				ret = program("px4io.bin", f_size);
 				
 				if (ret != RT_EOK) {
-					printf("program failed!\r\n");
+					Log.console("program failed!\r\n");
 				}else{
-					printf("program success!\r\n");
+					Log.console("program success!\r\n");
 				}
 				
 				ret = reboot();
 				
 				if (ret != RT_EOK) {
-					printf("reboot failed\r\n");
+					Log.console("reboot failed\r\n");
 					rt_device_close(_dev);
 				}else{
-					printf("update complete\r\n");
+					Log.console("update complete\r\n");
 				}
 			}
 			
@@ -443,7 +447,7 @@ rt_err_t uploader_init(void)
 	
 	if(_dev == RT_NULL)
     {
-        printf("serial device usart6 not found!\r\n");
+        Log.console("serial device usart6 not found!\r\n");
         return RT_EEMPTY;
     }
 	
@@ -451,7 +455,7 @@ rt_err_t uploader_init(void)
 	rt_device_set_rx_indicate(_dev, uploader_serial_rx_ind);
 
 	if(rb == NULL){
-		printf("create ringbuffer err\r\n");
+		Log.console("create ringbuffer err\r\n");
 		return RT_ERROR;
 	}
 	

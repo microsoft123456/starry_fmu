@@ -9,6 +9,8 @@
 #include <rthw.h>
 #include <rtthread.h>
 #include <rtdevice.h>
+#include "cdcacm.h"
+#include "ringbuffer.h"
 
 #define RECEIVE_RINGBUFF_SIZE		256
 
@@ -22,8 +24,6 @@ static uint8_t receiv_pack[RX_FIFO_FS_SIZE];
 
 uint8_t rb_buffer[RECEIVE_RINGBUFF_SIZE];
 ringbuffer* rb;
-
-
 
 static struct rt_device usb_device;
 

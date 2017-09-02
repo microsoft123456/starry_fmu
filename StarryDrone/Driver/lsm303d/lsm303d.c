@@ -9,6 +9,7 @@
 #include <rthw.h>
 #include <rtthread.h>
 #include <rtdevice.h>
+#include "sensor.h"
 
 #define SLAVE_ADDR		0x1D
 

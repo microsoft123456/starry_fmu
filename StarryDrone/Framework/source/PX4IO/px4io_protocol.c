@@ -6,10 +6,13 @@
  * 2017-02-18     zoujiachi   	the first version
  */
  
-#include <rthw.h>
-#include <rtdevice.h>
-#include <rtthread.h>
+//#include <rthw.h>
+//#include <rtdevice.h>
+//#include <rtthread.h>
 #include <stdlib.h>
+#include "rc.h"
+#include "px4io_protocol.h"
+#include "log.h"
 
 static uint8_t pack_buff[MAX_PACKAGE_SIZE];
 static uint8_t pack_usr_buff[MAX_PACKAGE_SIZE];
@@ -315,16 +318,15 @@ void handle_package(const Package_Def package)
 		}break;
 		case CMD_CHANNEL_VAL:
 		{
+			//发送这个会卡住，打开mavlink接收后就不卡了
 			//mavlink_send_msg_rc_channels_raw((uint32_t*)package.usr_data);
 
-			//for test
+			float chan_val[CHAN_NUM];
 			
-			float throttle[4];
-			uint32_t raw_throttle[4] = {((uint32_t*)package.usr_data)[2],((uint32_t*)package.usr_data)[2],
-										((uint32_t*)package.usr_data)[2],((uint32_t*)package.usr_data)[2]};
-			rc_raw2throttle(raw_throttle, throttle, 4);
-			set_throttle_base(throttle, 4);
-			
+			for(int i = 0 ; i < CHAN_NUM ; i++){
+				chan_val[i] = rc_raw2chanval(((uint32_t*)package.usr_data)[i]);
+			}
+			rc_handle_ppm_signal(chan_val);
 		}break;
 		case ACK_CONFIG_CHANNEL:
 		{

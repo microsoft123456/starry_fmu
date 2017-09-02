@@ -18,6 +18,15 @@
 #include <rtthread.h>
 #include <stdio.h>
 #include "board.h"
+#include "attitude.h"
+#include "global.h"
+#include "px4io_manager.h"
+#include "control.h"
+#include "mavlink_protocol.h"
+#include "position.h"
+#include "led.h"
+#include "param.h"
+#include "sensor.h"
 
 #ifdef RT_USING_LWIP
 #include <lwip/sys.h>

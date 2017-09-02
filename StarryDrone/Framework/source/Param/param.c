@@ -6,14 +6,16 @@
  * 2016-07-01     zoujiachi    first version.
  */
  
-#include <rthw.h>
-#include <rtdevice.h>
+//#include <rthw.h>
+//#include <rtdevice.h>
 #include <rtthread.h>
+#include "global.h"
+#include "param.h"
 
 PARAM_Def global_param;
 PARAM_Def* global_param_t = &global_param;
 
-static const float PI = 3.141592657589793;
+//static const float PI = 3.141592657589793;
 
 rt_err_t load_default_param(PARAM_Def* param_t)
 {
@@ -24,9 +26,9 @@ rt_err_t load_default_param(PARAM_Def* param_t)
 		/* convert dps to rad */
         param_t->gyr_gain[i] = (PI/180.0f);
     }
-	param_t->gyr_offset[0] = 3.034150;
-    param_t->gyr_offset[1] = -3.866451;
-    param_t->gyr_offset[2] = 8.129102;
+	param_t->gyr_offset[0] = 3.199699;
+    param_t->gyr_offset[1] = -4.918550;
+    param_t->gyr_offset[2] = 6.294048;
 
     param_t->acc_offset[0] =  0.091815;
     param_t->acc_offset[1] = -0.141828;

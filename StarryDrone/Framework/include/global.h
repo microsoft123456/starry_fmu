@@ -10,11 +10,18 @@
 #ifndef __GLOBAL_H__
 #define __GLOBAL_H__
 
-#define ATTITUDE_THREAD_PRIORITY	5
-#define POS_THREAD_PRIORITY			6
-#define UBX_THREAD_PRIORITY			7
-#define PX4IO_THREAD_PRIORITY		8
-#define CONTROL_THREAD_PRIORITY		9
-#define MAVLINK_THREAD_PRIORITY		10
+#define PX4IO_THREAD_PRIORITY		5
+#define ATTITUDE_THREAD_PRIORITY	6
+#define POS_THREAD_PRIORITY			7
+#define CONTROL_THREAD_PRIORITY		8
+#define MAVLINK_THREAD_PRIORITY		9
+
+extern const float PI;
+
+typedef enum
+{
+	false = 0,
+	true = 1,
+}bool;
 
 #endif

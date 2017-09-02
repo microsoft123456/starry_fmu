@@ -5,22 +5,24 @@
  * Date           Author       Notes
  * 2017-02-04     zoujiachi   	the first version
  */
- 
-#include <rthw.h>
-#include <rtthread.h>
-#include <rtdevice.h>
+
+#include <stdlib.h>
+#include "ringbuffer.h"
+#include "log.h"
+
+static char* TAG = "Ringbuffer";
 
 ringbuffer* ringbuffer_create(uint16_t size)
 {
 	ringbuffer* rb = malloc(sizeof(ringbuffer));
 	if(rb == NULL){
-		printf("ringbuffer_create fail\r\n");
+		Log.e(TAG, "ringbuffer_create fail\r\n");
 		return NULL;
 	}
 	
 	rb->buff = malloc(size);
 	if(rb->buff == NULL){
-		printf("ringbuffer_create fail\r\n");
+		Log.e(TAG, "ringbuffer_create fail\r\n");
 		return NULL;
 	}
 	
@@ -35,7 +37,7 @@ ringbuffer* ringbuffer_static_create(uint8_t* buffer, uint16_t size)
 {
 	ringbuffer* rb = malloc(sizeof(ringbuffer));
 	if(rb == NULL){
-		printf("ringbuffer_static_create fail\r\n");
+		Log.e(TAG, "ringbuffer_static_create fail\r\n");
 		return NULL;
 	}
 	

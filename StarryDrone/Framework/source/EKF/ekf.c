@@ -6,19 +6,21 @@
  * 2017-08-09     zoujiachi    first version.
  */
  
-#include <rthw.h>
-#include <rtdevice.h>
-#include <rtthread.h>
+//#include <rthw.h>
+//#include <rtdevice.h>
+//#include <rtthread.h>
 #include <math.h>
+#include "global.h"
+#include "ekf.h"
 
-static const float PI = 3.141592658;
+//static const float PI = 3.141592658;
 const float R0 = 6371393.0f;
 
 #define Deg2Rad(a)		(a*PI/180.0f)
 
 Mat temp_mat1, temp_mat2, temp_mat3;
 Mat temp_mat4;
-static float Tx = 180.0f*1e7/(PI*R0);
+static float Tx = 180.0f*1e7/(3.14159265359f*R0);
 
 void EKF6_Init(EKF_Def* ekf_t, float dT, HOME_Pos home_pos)
 {

@@ -4,6 +4,8 @@
 #include <rtthread.h>
 #include <sensor.h>
 #include "kalman.h"
+#include <math.h>
+#include "global.h"
 
 //#define EVENT_POS_UPDATE        (1<<0)
 //#define EVENT_ACC_UPDATE				(1<<1)
@@ -51,7 +53,7 @@ const float* position_getPosition(void)
 }
 
 
-#define PI 3.1415926535 
+//#define PI 3.1415926535 
 float gaussrand(){
     static float U, V;
     static int phase = 0;

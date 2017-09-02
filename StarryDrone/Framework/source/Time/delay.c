@@ -8,7 +8,7 @@
 */
 
 #include <rtthread.h>
-#include <rtdevice.h>
+#include "delay.h"
 
 DELAY_TIME_Def _delay_t;
 

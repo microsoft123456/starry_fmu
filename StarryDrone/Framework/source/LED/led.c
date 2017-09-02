@@ -11,6 +11,8 @@
 #include <rtthread.h>
 #include <rtdevice.h>
 #include "i2c_soft.h"
+#include "led.h"
+#include "log.h"
 
 #define FMU_LED_PIN		43
 #define SALVE_ADDR		0x55	//7 bit addr

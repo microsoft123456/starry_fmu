@@ -22,8 +22,10 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include <rtdevice.h>
+//#include <rtdevice.h>
 #include "usb_dcd_int.h"
+#include "cdcacm.h"
+#include <stdio.h>
 
 /******************************************************************************/
 /*            Cortex-M4 Processor Exceptions Handlers                         */

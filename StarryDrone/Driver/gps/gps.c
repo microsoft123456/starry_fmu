@@ -10,12 +10,16 @@
 #include <rtthread.h>
 #include <rtdevice.h>
 #include <string.h>
+#include "gps.h"
+#include "log.h"
+#include "delay.h"
+#include "sensor.h"
 
 #define FNV1_32_INIT	((uint32_t)0x811c9dc5)	// init value for FNV1 hash algorithm
 #define FNV1_32_PRIME	((uint32_t)0x01000193)	// magic prime for FNV1 hash algorithm
 #define M_DEG_TO_RAD_F 		0.01745329251994f
 #define M_RAD_TO_DEG_F 		57.2957795130823f
-//#define MIN(x,y) (x < y ? x : y)
+#define MIN(x,y) (x < y ? x : y)
 
 static rt_device_t serial_device;
 static struct rt_device gps_device;
@@ -49,7 +53,7 @@ void _decode_init(void)
 	_rx_payload_length = 0;
 	_rx_payload_index = 0;
 	
-	//printf("_decode_state %d\n" , _decode_state);
+	//Log.console("_decode_state %d\n" , _decode_state);
 }
 
 void _add_byte_to_checksum(const uint8_t b)
@@ -108,7 +112,7 @@ payload_rx_add_nav_svinfo(const uint8_t b)
 		if (_rx_payload_index == sizeof(ubx_payload_rx_nav_svinfo_part1_t)) {
 			// Part 1 complete: decode Part 1 buffer
 			_satellite_info->count = MIN(_buf.payload_rx_nav_svinfo_part1.numCh, SAT_INFO_MAX_SATELLITES);
-//			printf("SVINFO len %u  numCh %u\r\n", (unsigned)_rx_payload_length,
+//			Log.console("SVINFO len %u  numCh %u\r\n", (unsigned)_rx_payload_length,
 //					 (unsigned)_buf.payload_rx_nav_svinfo_part1.numCh);
 		}
 
@@ -128,7 +132,7 @@ payload_rx_add_nav_svinfo(const uint8_t b)
 				_satellite_info->elevation[sat_index]	= (uint8_t)(_buf.payload_rx_nav_svinfo_part2.elev);
 				_satellite_info->azimuth[sat_index]	= (uint8_t)((float)_buf.payload_rx_nav_svinfo_part2.azim * 255.0f / 360.0f);
 				_satellite_info->svid[sat_index]	= (uint8_t)(_buf.payload_rx_nav_svinfo_part2.svid);
-//				printf("SVINFO #%02u  used %u  snr %3u  elevation %3u  azimuth %3u  svid %3u\r\n",
+//				Log.console("SVINFO #%02u  used %u  snr %3u  elevation %3u  azimuth %3u  svid %3u\r\n",
 //						 (unsigned)sat_index + 1,
 //						 (unsigned)_satellite_info->used[sat_index],
 //						 (unsigned)_satellite_info->snr[sat_index],
@@ -162,9 +166,9 @@ payload_rx_add_mon_ver(const uint8_t b)
 			// Part 1 complete: decode Part 1 buffer and calculate hash for SW&HW version strings
 			_ubx_version = fnv1_32_str(_buf.payload_rx_mon_ver_part1.swVersion, FNV1_32_INIT);
 			_ubx_version = fnv1_32_str(_buf.payload_rx_mon_ver_part1.hwVersion, _ubx_version);
-//			printf("VER hash 0x%08x\r\n", _ubx_version);
-//			printf("VER hw  \"%10s\"\r\n", _buf.payload_rx_mon_ver_part1.hwVersion);
-//			printf("VER sw  \"%30s\"\r\n", _buf.payload_rx_mon_ver_part1.swVersion);
+//			Log.console("VER hash 0x%08x\r\n", _ubx_version);
+//			Log.console("VER hw  \"%10s\"\r\n", _buf.payload_rx_mon_ver_part1.hwVersion);
+//			Log.console("VER sw  \"%30s\"\r\n", _buf.payload_rx_mon_ver_part1.swVersion);
 		}
 
 		// fill Part 2 buffer
@@ -174,7 +178,7 @@ payload_rx_add_mon_ver(const uint8_t b)
 
 		if (buf_index == sizeof(ubx_payload_rx_mon_ver_part2_t) - 1) {
 			// Part 2 complete: decode Part 2 buffer
-			printf("VER ext \" %30s\"\r\n", _buf.payload_rx_mon_ver_part2.extension);
+			Log.console("VER ext \" %30s\"\r\n", _buf.payload_rx_mon_ver_part2.extension);
 		}
 	}
 
@@ -201,7 +205,7 @@ payload_rx_done(void)
 		{
 			struct tm timeinfo;
 			
-			//printf("Rx NAV-PVT\r\n");
+			//Log.console("Rx NAV-PVT\r\n");
 			
 			if ((_buf.payload_rx_nav_pvt.flags & UBX_RX_NAV_PVT_FLAGS_GNSSFIXOK) == 1) {
 				_gps_position->fix_type		 = _buf.payload_rx_nav_pvt.fixType;
@@ -254,7 +258,7 @@ payload_rx_done(void)
 			_rate_count_vel++;
 			_rate_count_lat_lon++;
 			
-			//printf("alt:%d lat:%d lon:%d %d-%d-%d %d:%d:%d\r\n" , _gps_position->alt, _gps_position->lat,_gps_position->lon,
+			//Log.console("alt:%d lat:%d lon:%d %d-%d-%d %d:%d:%d\r\n" , _gps_position->alt, _gps_position->lat,_gps_position->lon,
 			//timeinfo.tm_year,timeinfo.tm_mon,timeinfo.tm_mday,timeinfo.tm_hour,timeinfo.tm_min,timeinfo.tm_sec);
 
 			_got_posllh = RT_TRUE;
@@ -264,7 +268,7 @@ payload_rx_done(void)
 		}break;
 		case UBX_MSG_NAV_POSLLH:
 		{
-			//printf("Rx NAV-POSLLH\r\n");
+			//Log.console("Rx NAV-POSLLH\r\n");
 			
 			_gps_position->lat	= _buf.payload_rx_nav_posllh.lat;
 			_gps_position->lon	= _buf.payload_rx_nav_posllh.lon;
@@ -278,13 +282,13 @@ payload_rx_done(void)
 			_rate_count_lat_lon++;
 			_got_posllh = RT_TRUE;
 			
-			//printf("alt:%d lat:%d lon:%d\r\n" , _gps_position->alt, _gps_position->lat,_gps_position->lon);
+			//Log.console("alt:%d lat:%d lon:%d\r\n" , _gps_position->alt, _gps_position->lat,_gps_position->lon);
 
 			ret = 1;
 		}break;
 		case UBX_MSG_NAV_SOL:
 		{
-			//printf("Rx NAV-SOL\r\n");
+			//Log.console("Rx NAV-SOL\r\n");
 			
 			_gps_position->fix_type		= _buf.payload_rx_nav_sol.gpsFix;
 			_gps_position->s_variance_m_s	= (float)_buf.payload_rx_nav_sol.sAcc * 1e-2f;	// from cm to m
@@ -294,7 +298,7 @@ payload_rx_done(void)
 		}break;
 		case UBX_MSG_NAV_DOP:
 		{
-			//printf("Rx NAV-DOP\r\n");
+			//Log.console("Rx NAV-DOP\r\n");
 			
 			_gps_position->hdop		= _buf.payload_rx_nav_dop.hDOP * 0.01f;	// from cm to m
 			_gps_position->vdop		= _buf.payload_rx_nav_dop.vDOP * 0.01f;	// from cm to m
@@ -305,7 +309,7 @@ payload_rx_done(void)
 		}break;
 		case UBX_MSG_NAV_TIMEUTC:
 		{
-			//printf("Rx NAV-TIMEUTC\r\n");
+			//Log.console("Rx NAV-TIMEUTC\r\n");
 			
 			if (_buf.payload_rx_nav_timeutc.valid & UBX_RX_NAV_TIMEUTC_VALID_VALIDUTC) {
 				// convert to unix timestamp
@@ -318,7 +322,7 @@ payload_rx_done(void)
 				timeinfo.tm_sec		= _buf.payload_rx_nav_timeutc.sec;
 
 				//_gps_position->time_utc_usec = 0;
-				//printf("%d-%d-%d %d:%d:%d\r\n" , timeinfo.tm_year,timeinfo.tm_mon,timeinfo.tm_mday,timeinfo.tm_hour,timeinfo.tm_min,timeinfo.tm_sec);
+				//Log.console("%d-%d-%d %d:%d:%d\r\n" , timeinfo.tm_year,timeinfo.tm_mon,timeinfo.tm_mday,timeinfo.tm_hour,timeinfo.tm_min,timeinfo.tm_sec);
 			}
 
 			_gps_position->timestamp_time = time_nowUs();
@@ -327,7 +331,7 @@ payload_rx_done(void)
 		}break;
 		case UBX_MSG_NAV_SVINFO:
 		{
-			//printf("Rx NAV-SVINFO\r\n");
+			//Log.console("Rx NAV-SVINFO\r\n");
 			// _satellite_info already populated by payload_rx_add_svinfo(), just add a timestamp
 			_satellite_info->timestamp = time_nowUs();
 			
@@ -337,7 +341,7 @@ payload_rx_done(void)
 		}break;
 		case UBX_MSG_NAV_VELNED:
 		{
-			//printf("Rx NAV-VELNED\r\n");
+			//Log.console("Rx NAV-VELNED\r\n");
 			
 			_gps_position->vel_m_s		= (float)_buf.payload_rx_nav_velned.speed * 1e-2f;
 			_gps_position->vel_n_m_s	= (float)_buf.payload_rx_nav_velned.velN * 1e-2f; /* NED NORTH velocity */
@@ -352,17 +356,17 @@ payload_rx_done(void)
 			_rate_count_vel++;
 			_got_velned = RT_TRUE;
 			
-			//printf("nV:%.2f eV:%.2f dV:%.2f" , _gps_position->vel_n_m_s,_gps_position->vel_e_m_s,_gps_position->vel_d_m_s);
+			//Log.console("nV:%.2f eV:%.2f dV:%.2f" , _gps_position->vel_n_m_s,_gps_position->vel_e_m_s,_gps_position->vel_d_m_s);
 
 			ret = 1;
 		}break;
 		case UBX_MSG_MON_VER:
 		{
-			//printf("Rx MON-VER\r\n");
+			//Log.console("Rx MON-VER\r\n");
 		}break;
 		case UBX_MSG_MON_HW:
 		{
-			//printf("Rx MON-HW\r\n");
+			//Log.console("Rx MON-HW\r\n");
 			
 			switch (_rx_payload_length) {
 				case sizeof(ubx_payload_rx_mon_hw_ubx6_t):	/* u-blox 6 msg format */
@@ -386,7 +390,7 @@ payload_rx_done(void)
 		}break;
 		case UBX_MSG_ACK_ACK:
 		{
-			//printf("Rx ACK-ACK\r\n");
+			//Log.console("Rx ACK-ACK\r\n");
 			
 			if ((_ack_state == UBX_ACK_WAITING) && (_buf.payload_rx_ack_ack.msg == _ack_waiting_msg)) {
 				_ack_state = UBX_ACK_GOT_ACK;
@@ -396,7 +400,7 @@ payload_rx_done(void)
 		}break;
 		case UBX_MSG_ACK_NAK:
 		{
-			//printf("Rx ACK-NAK\r\n");
+			//Log.console("Rx ACK-NAK\r\n");
 			
 			if ((_ack_state == UBX_ACK_WAITING) && (_buf.payload_rx_ack_ack.msg == _ack_waiting_msg)) {
 				_ack_state = UBX_ACK_GOT_NAK;
@@ -408,11 +412,11 @@ payload_rx_done(void)
 			break;
 	}
 	
-//	printf("r: %x,%x," , _rx_msg, _rx_payload_length);
+//	Log.console("r: %x,%x," , _rx_msg, _rx_payload_length);
 //	for(int i = 0 ; i<_rx_payload_length ; i++){
-//		printf(" %x" , _buf.raw[i]);
+//		Log.console(" %x" , _buf.raw[i]);
 //	}
-//	printf("\r\n");
+//	Log.console("\r\n");
 
 	return ret;
 }
@@ -625,7 +629,7 @@ _parse_ubx_char(const uint8_t c)
 {	
 	int ret = 0;
 	
-	//printf("%x," , c);
+	//Log.console("%x," , c);
 	
 	switch(_decode_state)
 	{
@@ -655,7 +659,7 @@ _parse_ubx_char(const uint8_t c)
 			_rx_msg |= c << 8;
 			_decode_state = UBX_DECODE_LENGTH1;
 			
-			//printf("msg:%x\r\n" , _rx_msg);
+			//Log.console("msg:%x\r\n" , _rx_msg);
 //			if(_rx_msg == UBX_MSG_NAV_SVINFO && _configured == RT_FALSE)
 //				_decode_init();	//if configuration is not finish, ignore SVINFO
 		}break;
@@ -679,7 +683,7 @@ _parse_ubx_char(const uint8_t c)
 			} else {
 				_decode_state = (_rx_payload_length > 0) ? UBX_DECODE_PAYLOAD : UBX_DECODE_CHKSUM1;
 			}
-			//printf("len:%d\r\n" , _rx_payload_length);
+			//Log.console("len:%d\r\n" , _rx_payload_length);
 		}break;
 		case UBX_DECODE_PAYLOAD:
 		{
@@ -701,7 +705,7 @@ _parse_ubx_char(const uint8_t c)
 				}break;
 			}
 			
-			//printf("payload ret:%d\r\n" , ret);
+			//Log.console("payload ret:%d\r\n" , ret);
 			if (ret < 0) {
 				// payload not handled, discard message
 				_decode_init();
@@ -717,7 +721,7 @@ _parse_ubx_char(const uint8_t c)
 		case UBX_DECODE_CHKSUM1:
 		{
 			if (_rx_ck_a != c) {
-				//printf("ubx checksum err\r\n");
+				//Log.console("ubx checksum err\r\n");
 				_decode_init();
 			} else {
 				_decode_state = UBX_DECODE_CHKSUM2;
@@ -725,9 +729,9 @@ _parse_ubx_char(const uint8_t c)
 		}break;
 		case UBX_DECODE_CHKSUM2:
 		{
-			//printf("check sum 2\r\n");
+			//Log.console("check sum 2\r\n");
 			if (_rx_ck_b != c) {
-				printf("ubx checksum err\r\n");
+				Log.console("ubx checksum err\r\n");
 			} else {
 				ret = payload_rx_done();	// finish payload processing
 			}
@@ -735,7 +739,7 @@ _parse_ubx_char(const uint8_t c)
 			_decode_init();
 		}break;
 	}
-	//printf("state:%d %x\r\n" , _decode_state , c);
+	//Log.console("state:%d %x\r\n" , _decode_state , c);
 	
 	return ret;
 }
@@ -764,19 +768,19 @@ void _send_ubx_msg(const uint16_t msg, const uint8_t *payload, const uint16_t le
 		_calc_ubx_checksum(payload, length, &checksum);
 	}
 	
-//	printf("head:");
+//	Log.console("head:");
 //	for(int i = 0 ; i<sizeof(header) ; i++){
-//		printf("%x " , ((uint8_t*)&header)[i]);
+//		Log.console("%x " , ((uint8_t*)&header)[i]);
 //	}
-//	printf(" payload:");
+//	Log.console(" payload:");
 //	for(int i = 0 ; i<length ; i++){
-//		printf("%x " , payload[i]);
+//		Log.console("%x " , payload[i]);
 //	}
-//	printf(" checksum:");
+//	Log.console(" checksum:");
 //	for(int i = 0 ; i<sizeof(checksum) ; i++){
-//		printf("%x " , ((uint8_t*)&checksum)[i]);
+//		Log.console("%x " , ((uint8_t*)&checksum)[i]);
 //	}
-//	printf("\r\n");
+//	Log.console("\r\n");
 	
 	rt_device_write(serial_device, 0, (const void *)&header, sizeof(header));
 	
@@ -843,7 +847,7 @@ int _configure_by_ubx(void)
 		_wait_for_ack(UBX_MSG_CFG_PRT, UBX_CONFIG_TIMEOUT);
 		
 		if (UBX_TX_CFG_PRT_BAUDRATE != baudrate) {
-			printf("change gps baudrate from %d to %d\r\n" , baudrate, UBX_TX_CFG_PRT_BAUDRATE);
+			Log.console("change gps baudrate from %d to %d\r\n" , baudrate, UBX_TX_CFG_PRT_BAUDRATE);
 			_set_baudrate(serial_device, UBX_TX_CFG_PRT_BAUDRATE);
 			baudrate = UBX_TX_CFG_PRT_BAUDRATE;
 		}
@@ -853,7 +857,7 @@ int _configure_by_ubx(void)
 	}
 	
 	if (i >= sizeof(baudrates) / sizeof(baudrates[0])) {
-		printf("connection and/or baudrate detection failed\r\n");
+		Log.console("connection and/or baudrate detection failed\r\n");
 		return 1;	// connection and/or baudrate detection failed
 	}
 	
@@ -958,11 +962,11 @@ static rt_err_t gps_serial_rx_ind(rt_device_t dev, rt_size_t size)
 	
 	if(bytes){
 		for(uint32_t j = 0 ; j<bytes ; j++){
-			//printf("%x," , ch[j]);
+			//Log.console("%x," , ch[j]);
 			_parse_ubx_char(ch[j]);
 		}
 	}else{
-		printf("ubx listen err:%ld\r\n" , bytes);
+		Log.console("ubx listen err:%ld\r\n" , bytes);
 	}
 
 //	for(i = 0 ; i<size ; i++){
@@ -973,11 +977,11 @@ static rt_err_t gps_serial_rx_ind(rt_device_t dev, rt_size_t size)
 
 //		if(bytes){
 //			for(uint32_t j = 0 ; j<bytes ; j++){
-//				printf("%x," , ch[j]);
+//				Log.console("%x," , ch[j]);
 //				_parse_ubx_char(ch[j]);
 //			}
 //		}else{
-//			printf("ubx listen err:%ld\r\n" , bytes);
+//			Log.console("ubx listen err:%ld\r\n" , bytes);
 //		}
 //	}
 	
