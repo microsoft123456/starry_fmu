@@ -19,5 +19,7 @@ rt_err_t request_reboot(void);
 rt_err_t reply_sync(void);
 uint8_t send_package(uint8_t cmd, uint8_t* data, uint16_t len);
 
+extern uint8_t ppm_send_freq;
+
 #endif 
 

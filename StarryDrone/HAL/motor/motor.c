@@ -11,6 +11,7 @@
 #include "pwm.h"
 #include "log.h"
 #include <stdlib.h>
+#include <string.h>
 
 static struct rt_device_motor _hw_motor;
 static char* TAG = "motor";
@@ -37,7 +38,7 @@ static rt_size_t _motor_write(rt_device_t dev, rt_off_t pos, const void *buffer,
 	float throttle;
 	
 	if(size > MOTOR_NUM){
-		printf("unsupport motor num:%ld\n", size);
+		Log.e(TAG, "unsupport motor num:%ld\n", size);
 		return 0;
 	}
 	
@@ -102,18 +103,36 @@ static rt_err_t  _motor_control(rt_device_t dev, rt_uint8_t cmd, void *args)
 int handle_motor_shell_cmd(int argc, char** argv)
 {
 	if(argc > 1){
-		if(strcmp(argv[1], "set") == 0 && argc == 3){
+		if(strcmp(argv[1], "setall") == 0 && argc == 3){
 			float base_throttle = atof(argv[2]);
 			float throttle[4];
 			if(base_throttle >= 0.0f && base_throttle <= 1.0f){
-				throttle[0] = MOTOR_MIN_DC + base_throttle * (MOTOR_MAX_DC - MOTOR_MIN_DC);
-				throttle[1] = MOTOR_MIN_DC + base_throttle * (MOTOR_MAX_DC - MOTOR_MIN_DC);
-				throttle[2] = MOTOR_MIN_DC + base_throttle * (MOTOR_MAX_DC - MOTOR_MIN_DC);
-				throttle[3] = MOTOR_MIN_DC + base_throttle * (MOTOR_MAX_DC - MOTOR_MIN_DC);
+				for(int i = 0 ; i < MOTOR_NUM ; i++)
+					throttle[i] = MOTOR_MIN_DC + base_throttle * (MOTOR_MAX_DC - MOTOR_MIN_DC);
+				
 				_hw_motor.ops->pwm_write((rt_device_t)&_hw_motor, MOTOR_CH_ALL, throttle);
+				Log.console("motor have been set to %.2f\n", base_throttle);
 			}else{
 				Log.console("throttle must between 0.0~1.0\n");
+				return 1;
 			}
+		}
+		else if(strcmp(argv[1], "set") == 0 && argc == 2 + MOTOR_NUM){
+			float throttle[MOTOR_NUM];
+			float base_throttle[MOTOR_NUM];
+			for(int i = 0 ; i < MOTOR_NUM ; i++){
+				base_throttle[i] = atof(argv[2+i]);
+				if(base_throttle[i] < 0.0f || base_throttle[i] > 1.0f){
+					Log.console("throttle must between 0.0~1.0\n");
+					return 1;
+				}
+				throttle[i] = MOTOR_MIN_DC + base_throttle[i] * (MOTOR_MAX_DC - MOTOR_MIN_DC);
+			}
+			_hw_motor.ops->pwm_write((rt_device_t)&_hw_motor, MOTOR_CH_ALL, throttle);
+			Log.console("motor have been set to: ");
+			for(int i = 0 ; i < MOTOR_NUM ; i++)
+				Log.console("%.2f ", base_throttle[i]);
+			Log.console("\n");
 		}
 		else if(strcmp(argv[1], "get") == 0){
 			float throttle_dc[4];
@@ -121,23 +140,25 @@ int handle_motor_shell_cmd(int argc, char** argv)
 			
 			_hw_motor.ops->pwm_read((rt_device_t)&_hw_motor, MOTOR_CH_ALL, throttle_dc);
 			
-			throttle[0] = (throttle_dc[0] - MOTOR_MIN_DC) / (MOTOR_MAX_DC - MOTOR_MIN_DC);
-			throttle[1] = (throttle_dc[1] - MOTOR_MIN_DC) / (MOTOR_MAX_DC - MOTOR_MIN_DC);
-			throttle[2] = (throttle_dc[2] - MOTOR_MIN_DC) / (MOTOR_MAX_DC - MOTOR_MIN_DC);
-			throttle[3] = (throttle_dc[3] - MOTOR_MIN_DC) / (MOTOR_MAX_DC - MOTOR_MIN_DC);
-			
-			Log.console("ch1:%.2f ch2:%.2f ch3:%.2f ch4:%.2f\n", throttle[0],throttle[1],throttle[2],throttle[3]);
+			for(int i = 0 ; i < MOTOR_NUM ; i++){
+				throttle[i] = (throttle_dc[i] - MOTOR_MIN_DC) / (MOTOR_MAX_DC - MOTOR_MIN_DC);
+				Log.console("%.2f ", throttle[i]);
+			}
+			Log.console("\n");
 		}
 		else if(strcmp(argv[1], "switch") == 0 && argc == 3){
 			if(strcmp(argv[2], "on") == 0){
 				int on_off = 1;
 				_hw_motor.ops->pwm_configure((rt_device_t)&_hw_motor, PWM_CMD_SWITCH, (void*)&on_off);
+				Log.console("motor switch on success\n");
 			}else if(strcmp(argv[2], "off") == 0){
 				int on_off = 0;
 				_hw_motor.ops->pwm_configure((rt_device_t)&_hw_motor, PWM_CMD_SWITCH, (void*)&on_off);
+				Log.console("motor switch off success\n");
 			}
 		}else{
 			Log.console("incorrect cmd, using help!\n");
+			return 1;
 		}
 	}
 	

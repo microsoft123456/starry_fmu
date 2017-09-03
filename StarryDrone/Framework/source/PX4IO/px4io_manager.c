@@ -48,15 +48,8 @@ static rt_err_t send(uint8_t* buff, uint32_t size)
 
 //this function will be callback on rt_hw_serial_isr()
 static rt_err_t px4io_serial_rx_ind(rt_device_t dev, rt_size_t size)
-{
-	rt_size_t bytes;
-	uint8_t ch;
-	
-	bytes = rt_device_read(serial_dev , 0 , &ch , 1);
-	if(bytes){
-		if( wait_complete_pack(ch) )
-			rt_sem_release(&px4io_rx_pack_sem);
-	}
+{	
+	rt_sem_release(&px4io_rx_pack_sem);
 
     return RT_EOK;
 }
@@ -165,7 +158,11 @@ void px4io_loop(void *parameter)
 #endif
 	
 		if (rt_sem_take(&px4io_rx_pack_sem, 20) == RT_EOK){
-			process_recv_pack();
+			uint8_t ch;
+			while(rt_device_read(serial_dev , 0 , &ch , 1)){
+				if(wait_complete_pack(ch))
+					process_recv_pack();
+			}
 		}
 	}
 }

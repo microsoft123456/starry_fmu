@@ -7,12 +7,13 @@
  * 2017-08-29     zoujiachi   	the first version
  */
 
+#include <string.h>
 #include "global.h"
 #include "log.h"
 #include "motor.h"
 #include "rc.h"
+#include "delay.h"
 #include "control.h"
-#include <string.h>
 
 /* If more than RC_LOST_SIGNAL_TIME ms we don't receive ppm signal, then we think rc is disconnected */
 #define RC_LOST_SIGNAL_TIME		300
@@ -143,7 +144,17 @@ void rc_handle_ppm_signal(float* chan_val)
 			Log.e(TAG, "rc unknown status:%d\n", _rc_status);
 		}break;
 	}
+
+//	static uint32_t time_stamp = 0;
+//	float euler[3];
+//	quaternion_toEuler(qt, euler);
+//	euler[0] *= 180.0/PI;
+//	euler[1] *= 180.0/PI;
+//	euler[2] *= 180.0/PI;
+//	Log.eachtime(&time_stamp, 200, "roll:%.3f	pitch:%.3f	yaw:%.3f\n", euler[0], euler[1], euler[2]);
+//	mavlink_send_msg_attitude_quaternion(MAV_STATE_STANDBY, qt);
 	
+	// for test
 	float throttle[4] = {chan_val[CHAN_THROTTLE],chan_val[CHAN_THROTTLE],chan_val[CHAN_THROTTLE],chan_val[CHAN_THROTTLE]};
-	set_throttle_base(throttle, 4);
+	ctrl_set_throttle(throttle, 4);
 }

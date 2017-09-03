@@ -16,6 +16,7 @@
 #include "filter.h"
 #include "delay.h"
 #include "log.h"
+#include "attitude.h"
 
 #define EVENT_GYR_UPDATE		(1<<0)
 #define EVENT_ACC_UPDATE		(1<<1)

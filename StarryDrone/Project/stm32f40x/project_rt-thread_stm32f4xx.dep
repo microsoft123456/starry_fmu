@@ -1,5 +1,5 @@
 Dependencies for Project 'project', Target 'rt-thread_stm32f4xx': (DO NOT MODIFY !)
-F (..\..\Application\application.c)(0x59AAF8BD)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\application.o --omf_browse .\build\application.crf --depend .\build\application.d)
+F (..\..\Application\application.c)(0x59ABA8F3)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\application.o --omf_browse .\build\application.crf --depend .\build\application.d)
 I (..\..\Driver\include\board.h)(0x58FA2A37)
 I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
 I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
@@ -33,465 +33,12 @@ I (..\..\HAL\include\i2c_dev.h)(0x57569769)
 I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
 I (..\..\HAL\include\pin.h)(0x57562B14)
 I (D:\work\MDK4\ARM\ARMCC\include\stdio.h)(0x51C7B744)
-I (..\..\Framework\include\attitude.h)(0x59AAF67D)
+I (..\..\Framework\include\attitude.h)(0x59AC3EA8)
 I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
-I (..\..\Framework\include\global.h)(0x59AAD75C)
-I (..\..\Framework\include\px4io_manager.h)(0x58AED301)
-I (..\..\Framework\include\control.h)(0x59AAD2A6)
-I (..\..\Framework\include\mavlink_protocol.h)(0x58ACD7C2)
-I (..\..\Framework\include\position.h)(0x599992D4)
-I (..\..\Framework\include\led.h)(0x57648A04)
-I (..\..\Framework\include\param.h)(0x599EE269)
-I (..\..\Framework\include\sensor.h)(0x59AAF8B4)
-I (..\..\Driver\include\ms5611.h)(0x57BB00BD)
-F (..\..\Application\startup.c)(0x58B19EF2)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\startup.o --omf_browse .\build\startup.crf --depend .\build\startup.d)
-I (..\..\RTOS\include\rthw.h)(0x599EDA22)
-I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
-I (..\stm32f40x\rtconfig.h)(0x59273A85)
-I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
-I (..\..\RTOS\include\rtdef.h)(0x576808FD)
-I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
-I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
-I (..\..\RTOS\include\rtm.h)(0x5750BC30)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
-I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
-I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-I (..\..\Driver\include\board.h)(0x58FA2A37)
-F (..\..\Framework\source\Control\control.c)(0x59AAF9CA)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\control.o --omf_browse .\build\control.crf --depend .\build\control.d)
-I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
-I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
-I (..\stm32f40x\rtconfig.h)(0x59273A85)
-I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
-I (..\..\RTOS\include\rtdef.h)(0x576808FD)
-I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
-I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
-I (..\..\RTOS\include\rtm.h)(0x5750BC30)
-I (..\..\HAL\include\spi.h)(0x5750BC2C)
-I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
-I (..\..\HAL\include\serial.h)(0x59A3C7D1)
-I (..\..\HAL\include\i2c.h)(0x5750BC2C)
-I (..\..\HAL\include\i2c_dev.h)(0x57569769)
-I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
-I (..\..\HAL\include\pin.h)(0x57562B14)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
-I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
-I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-I (D:\work\MDK4\ARM\ARMCC\include\math.h)(0x51C7B744)
-I (..\..\Framework\include\rc.h)(0x59AACD1D)
-I (..\..\Driver\include\pwm.h)(0x59A5284F)
-I (..\..\Framework\include\control.h)(0x59AAD2A6)
-I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
-I (..\..\Framework\include\attitude.h)(0x59AAF67D)
-I (..\..\HAL\include\motor.h)(0x59A534D4)
-I (..\..\Framework\include\global.h)(0x59AAD75C)
-I (..\..\Framework\include\log.h)(0x59A32C8A)
-I (..\..\Framework\include\filter.h)(0x577620BF)
-I (..\..\Framework\include\pid.h)(0x59A9C1C0)
-F (..\..\Framework\source\Control\pid.c)(0x59A9C1D5)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\pid.o --omf_browse .\build\pid.crf --depend .\build\pid.d)
-I (..\..\RTOS\include\rthw.h)(0x599EDA22)
-I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
-I (..\stm32f40x\rtconfig.h)(0x59273A85)
-I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
-I (..\..\RTOS\include\rtdef.h)(0x576808FD)
-I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
-I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
-I (..\..\RTOS\include\rtm.h)(0x5750BC30)
-I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
-I (..\..\HAL\include\spi.h)(0x5750BC2C)
-I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
-I (..\..\HAL\include\serial.h)(0x59A3C7D1)
-I (..\..\HAL\include\i2c.h)(0x5750BC2C)
-I (..\..\HAL\include\i2c_dev.h)(0x57569769)
-I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
-I (..\..\HAL\include\pin.h)(0x57562B14)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
-I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
-I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-I (..\..\Framework\include\param.h)(0x599EE269)
-I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
-F (..\..\Framework\source\EKF\ekf.c)(0x59A726B9)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\ekf.o --omf_browse .\build\ekf.crf --depend .\build\ekf.d)
-I (D:\work\MDK4\ARM\ARMCC\include\math.h)(0x51C7B744)
-I (..\..\Framework\include\global.h)(0x59AAD75C)
-I (..\..\Framework\include\ekf.h)(0x59A6E01D)
-I (..\..\Framework\include\light_matrix.h)(0x5999E2C5)
-I (..\..\Framework\include\position.h)(0x599992D4)
-I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
-I (..\stm32f40x\rtconfig.h)(0x59273A85)
-I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
-I (..\..\RTOS\include\rtdef.h)(0x576808FD)
-I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
-I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
-I (..\..\RTOS\include\rtm.h)(0x5750BC30)
-I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
-I (..\..\HAL\include\spi.h)(0x5750BC2C)
-I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
-I (..\..\HAL\include\serial.h)(0x59A3C7D1)
-I (..\..\HAL\include\i2c.h)(0x5750BC2C)
-I (..\..\HAL\include\i2c_dev.h)(0x57569769)
-I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
-I (..\..\HAL\include\pin.h)(0x57562B14)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
-I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
-I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-F (..\..\Framework\source\Filter\filter.c)(0x57887C33)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\filter.o --omf_browse .\build\filter.crf --depend .\build\filter.d)
-I (..\..\RTOS\include\rthw.h)(0x599EDA22)
-I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
-I (..\stm32f40x\rtconfig.h)(0x59273A85)
-I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
-I (..\..\RTOS\include\rtdef.h)(0x576808FD)
-I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
-I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
-I (..\..\RTOS\include\rtm.h)(0x5750BC30)
-I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
-I (..\..\HAL\include\spi.h)(0x5750BC2C)
-I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
-I (..\..\HAL\include\serial.h)(0x59A3C7D1)
-I (..\..\HAL\include\i2c.h)(0x5750BC2C)
-I (..\..\HAL\include\i2c_dev.h)(0x57569769)
-I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
-I (..\..\HAL\include\pin.h)(0x57562B14)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
-I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
-I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-F (..\..\Framework\source\Filter\FIR.c)(0x59A1A8AD)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\fir.o --omf_browse .\build\fir.crf --depend .\build\fir.d)
-I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
-I (..\..\Framework\include\FIR.h)(0x59982609)
-F (..\..\Framework\source\INS\attitude.c)(0x59AB05E5)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\attitude.o --omf_browse .\build\attitude.crf --depend .\build\attitude.d)
-I (..\..\RTOS\include\rthw.h)(0x599EDA22)
-I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
-I (..\stm32f40x\rtconfig.h)(0x59273A85)
-I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
-I (..\..\RTOS\include\rtdef.h)(0x576808FD)
-I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
-I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
-I (..\..\RTOS\include\rtm.h)(0x5750BC30)
-I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
-I (..\..\HAL\include\spi.h)(0x5750BC2C)
-I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
-I (..\..\HAL\include\serial.h)(0x59A3C7D1)
-I (..\..\HAL\include\i2c.h)(0x5750BC2C)
-I (..\..\HAL\include\i2c_dev.h)(0x57569769)
-I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
-I (..\..\HAL\include\pin.h)(0x57562B14)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
-I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
-I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-I (D:\work\MDK4\ARM\ARMCC\include\math.h)(0x51C7B744)
-I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
-I (..\..\Framework\include\sensor.h)(0x59AAF8B4)
-I (..\..\Driver\include\ms5611.h)(0x57BB00BD)
-I (..\..\Framework\include\mix.h)(0x59A7C99E)
-I (..\..\Framework\include\ap_math.h)(0x58645398)
-I (..\..\Framework\include\filter.h)(0x577620BF)
-I (..\..\Framework\include\delay.h)(0x58336DB8)
-I (..\..\Framework\include\log.h)(0x59A32C8A)
-F (..\..\Framework\source\INS\kalman.c)(0x59AB08C7)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\kalman.o --omf_browse .\build\kalman.crf --depend .\build\kalman.d)
-I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
-I (..\..\RTOS\include\rthw.h)(0x599EDA22)
-I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
-I (..\stm32f40x\rtconfig.h)(0x59273A85)
-I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
-I (..\..\RTOS\include\rtdef.h)(0x576808FD)
-I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
-I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
-I (..\..\RTOS\include\rtm.h)(0x5750BC30)
-I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
-I (..\..\HAL\include\spi.h)(0x5750BC2C)
-I (..\..\HAL\include\serial.h)(0x59A3C7D1)
-I (..\..\HAL\include\i2c.h)(0x5750BC2C)
-I (..\..\HAL\include\i2c_dev.h)(0x57569769)
-I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
-I (..\..\HAL\include\pin.h)(0x57562B14)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
-I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
-I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-I (..\..\Framework\include\sensor.h)(0x59AAF8B4)
-I (..\..\Driver\include\ms5611.h)(0x57BB00BD)
-I (..\..\Framework\include\kalman.h)(0x5971F46C)
-I (D:\work\MDK4\ARM\ARMCC\include\math.h)(0x51C7B744)
-I (..\..\Framework\include\global.h)(0x59AAD75C)
-F (..\..\Framework\source\INS\mix.c)(0x59A924DE)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\mix.o --omf_browse .\build\mix.crf --depend .\build\mix.d)
-I (D:\work\MDK4\ARM\ARMCC\include\math.h)(0x51C7B744)
-I (..\..\Framework\include\mix.h)(0x59A7C99E)
-I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
-I (..\..\Framework\include\ap_math.h)(0x58645398)
-I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
-I (..\stm32f40x\rtconfig.h)(0x59273A85)
-I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
-I (..\..\RTOS\include\rtdef.h)(0x576808FD)
-I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
-I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
-I (..\..\RTOS\include\rtm.h)(0x5750BC30)
-I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
-I (..\..\HAL\include\spi.h)(0x5750BC2C)
-I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
-I (..\..\HAL\include\serial.h)(0x59A3C7D1)
-I (..\..\HAL\include\i2c.h)(0x5750BC2C)
-I (..\..\HAL\include\i2c_dev.h)(0x57569769)
-I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
-I (..\..\HAL\include\pin.h)(0x57562B14)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
-I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
-I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-F (..\..\Framework\source\INS\position.c)(0x59AB08C6)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\position.o --omf_browse .\build\position.crf --depend .\build\position.d)
-I (..\..\RTOS\include\rthw.h)(0x599EDA22)
-I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
-I (..\stm32f40x\rtconfig.h)(0x59273A85)
-I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
-I (..\..\RTOS\include\rtdef.h)(0x576808FD)
-I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
-I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
-I (..\..\RTOS\include\rtm.h)(0x5750BC30)
-I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
-I (..\..\HAL\include\spi.h)(0x5750BC2C)
-I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
-I (..\..\HAL\include\serial.h)(0x59A3C7D1)
-I (..\..\HAL\include\i2c.h)(0x5750BC2C)
-I (..\..\HAL\include\i2c_dev.h)(0x57569769)
-I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
-I (..\..\HAL\include\pin.h)(0x57562B14)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
-I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
-I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-I (D:\work\MDK4\ARM\ARMCC\include\math.h)(0x51C7B744)
-I (..\..\Framework\include\FIR.h)(0x59982609)
-I (..\..\Driver\include\ms5611.h)(0x57BB00BD)
-I (..\..\Framework\include\position.h)(0x599992D4)
-I (..\..\Framework\include\kalman.h)(0x5971F46C)
-I (..\..\Framework\include\ekf.h)(0x59A6E01D)
-I (..\..\Framework\include\light_matrix.h)(0x5999E2C5)
-I (..\..\Framework\include\sensor.h)(0x59AAF8B4)
-I (..\..\Framework\include\log.h)(0x59A32C8A)
-I (..\..\Driver\include\gps.h)(0x5851E0CC)
-I (..\..\Driver\include\gps_ubx.h)(0x5851DB86)
-I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
-I (..\..\Framework\include\attitude.h)(0x59AAF67D)
-I (..\..\Framework\include\global.h)(0x59AAD75C)
-F (..\..\Framework\source\LED\led.c)(0x59AB0AB7)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\led.o --omf_browse .\build\led.crf --depend .\build\led.d)
-I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
-I (..\stm32f40x\rtconfig.h)(0x59273A85)
-I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
-I (..\..\RTOS\include\rtdef.h)(0x576808FD)
-I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
-I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
-I (..\..\RTOS\include\rtm.h)(0x5750BC30)
-I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
-I (..\..\HAL\include\spi.h)(0x5750BC2C)
-I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
-I (..\..\HAL\include\serial.h)(0x59A3C7D1)
-I (..\..\HAL\include\i2c.h)(0x5750BC2C)
-I (..\..\HAL\include\i2c_dev.h)(0x57569769)
-I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
-I (..\..\HAL\include\pin.h)(0x57562B14)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
-I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
-I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-I (..\..\Driver\include\i2c_soft.h)(0x57566B11)
-I (..\..\Framework\include\led.h)(0x57648A04)
-I (..\..\Framework\include\log.h)(0x59A32C8A)
-F (..\..\Framework\source\Log\log.c)(0x59AB09EA)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\log.o --omf_browse .\build\log.crf --depend .\build\log.d)
-I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
-I (..\stm32f40x\rtconfig.h)(0x59273A85)
-I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
-I (..\..\RTOS\include\rtdef.h)(0x576808FD)
-I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
-I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
-I (..\..\RTOS\include\rtm.h)(0x5750BC30)
-I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
-I (..\..\HAL\include\spi.h)(0x5750BC2C)
-I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
-I (..\..\HAL\include\serial.h)(0x59A3C7D1)
-I (..\..\HAL\include\i2c.h)(0x5750BC2C)
-I (..\..\HAL\include\i2c_dev.h)(0x57569769)
-I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
-I (..\..\HAL\include\pin.h)(0x57562B14)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
-I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
-I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-I (D:\work\MDK4\ARM\ARMCC\include\stdio.h)(0x51C7B744)
-I (..\..\Framework\include\log.h)(0x59A32C8A)
-I (..\..\Framework\include\delay.h)(0x58336DB8)
-F (..\..\Framework\source\Mavlink\mavlink_protocol.c)(0x59AB0AA0)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\mavlink_protocol.o --omf_browse .\build\mavlink_protocol.crf --depend .\build\mavlink_protocol.d)
-I (..\..\RTOS\include\rthw.h)(0x599EDA22)
-I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
-I (..\stm32f40x\rtconfig.h)(0x59273A85)
-I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
-I (..\..\RTOS\include\rtdef.h)(0x576808FD)
-I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
-I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
-I (..\..\RTOS\include\rtm.h)(0x5750BC30)
-I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
-I (..\..\HAL\include\spi.h)(0x5750BC2C)
-I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
-I (..\..\HAL\include\serial.h)(0x59A3C7D1)
-I (..\..\HAL\include\i2c.h)(0x5750BC2C)
-I (..\..\HAL\include\i2c_dev.h)(0x57569769)
-I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
-I (..\..\HAL\include\pin.h)(0x57562B14)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
-I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
-I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
-I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
-I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-I (..\..\Framework\include\log.h)(0x59A32C8A)
-I (..\..\Framework\include\delay.h)(0x58336DB8)
-I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
-I (..\..\Framework\include\position.h)(0x599992D4)
-I (..\..\Framework\include\attitude.h)(0x59AAF67D)
+I (..\..\Framework\include\global.h)(0x59AC4F1A)
+I (..\..\Framework\include\px4io_manager.h)(0x59ABB24E)
+I (..\..\Framework\include\control.h)(0x59ABCBF0)
+I (..\..\Framework\include\mavlink_protocol.h)(0x59ABB627)
 I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/mavlink.h)(0x57885FE2)
 I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/version.h)(0x57885FE2)
 I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/common.h)(0x57885FE2)
@@ -634,7 +181,13 @@ I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_named_valu
 I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_named_value_int.h)(0x57885FE2)
 I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_statustext.h)(0x57885FE2)
 I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_debug.h)(0x57885FE2)
-F (..\..\Framework\source\Param\param.c)(0x59AB09BC)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\param.o --omf_browse .\build\param.crf --depend .\build\param.d)
+I (..\..\Framework\include\position.h)(0x599992D4)
+I (..\..\Framework\include\led.h)(0x57648A04)
+I (..\..\Framework\include\param.h)(0x599EE269)
+I (..\..\Framework\include\sensor.h)(0x59AAF8B4)
+I (..\..\Driver\include\ms5611.h)(0x57BB00BD)
+F (..\..\Application\startup.c)(0x58B19EF2)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\startup.o --omf_browse .\build\startup.crf --depend .\build\startup.d)
+I (..\..\RTOS\include\rthw.h)(0x599EDA22)
 I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
 I (..\stm32f40x\rtconfig.h)(0x59273A85)
 I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
@@ -642,8 +195,6 @@ I (..\..\RTOS\include\rtdef.h)(0x576808FD)
 I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
 I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
 I (..\..\RTOS\include\rtm.h)(0x5750BC30)
-I (..\..\Framework\include\global.h)(0x59AAD75C)
-I (..\..\Framework\include\param.h)(0x599EE269)
 I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
 I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
 I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
@@ -660,8 +211,52 @@ I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EEC
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
+I (..\..\Driver\include\board.h)(0x58FA2A37)
+F (..\..\Framework\source\Control\control.c)(0x59AC5E6D)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\control.o --omf_browse .\build\control.crf --depend .\build\control.d)
+I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
+I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
+I (..\stm32f40x\rtconfig.h)(0x59273A85)
+I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
+I (..\..\RTOS\include\rtdef.h)(0x576808FD)
+I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
+I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
+I (..\..\RTOS\include\rtm.h)(0x5750BC30)
+I (..\..\HAL\include\spi.h)(0x5750BC2C)
+I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (..\..\HAL\include\serial.h)(0x59A3C7D1)
+I (..\..\HAL\include\i2c.h)(0x5750BC2C)
+I (..\..\HAL\include\i2c_dev.h)(0x57569769)
+I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
+I (..\..\HAL\include\pin.h)(0x57562B14)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
+I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
+I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
+I (D:\work\MDK4\ARM\ARMCC\include\math.h)(0x51C7B744)
+I (..\..\Framework\include\rc.h)(0x59AACD1D)
+I (..\..\Driver\include\pwm.h)(0x59A5284F)
+I (..\..\Framework\include\control.h)(0x59ABCBF0)
 I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
-F (..\..\Framework\source\PX4IO\px4io_manager.c)(0x59AB0951)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\px4io_manager.o --omf_browse .\build\px4io_manager.crf --depend .\build\px4io_manager.d)
+I (..\..\Framework\include\attitude.h)(0x59AC3EA8)
+I (..\..\HAL\include\motor.h)(0x59A534D4)
+I (..\..\Framework\include\global.h)(0x59AC4F1A)
+I (..\..\Framework\include\log.h)(0x59A32C8A)
+I (..\..\Framework\include\filter.h)(0x577620BF)
+I (..\..\Framework\include\pid.h)(0x59A9C1C0)
+I (..\..\Framework\include\px4io_manager.h)(0x59ABB24E)
+F (..\..\Framework\source\Control\pid.c)(0x59AC1BD1)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\pid.o --omf_browse .\build\pid.crf --depend .\build\pid.d)
 I (..\..\RTOS\include\rthw.h)(0x599EDA22)
 I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
 I (..\stm32f40x\rtconfig.h)(0x59273A85)
@@ -694,10 +289,560 @@ I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EEC
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-I (..\..\Framework\include\px4io_manager.h)(0x58AED301)
+I (..\..\Framework\include\param.h)(0x599EE269)
+I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
+F (..\..\Framework\source\EKF\ekf.c)(0x59A726B9)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\ekf.o --omf_browse .\build\ekf.crf --depend .\build\ekf.d)
+I (D:\work\MDK4\ARM\ARMCC\include\math.h)(0x51C7B744)
+I (..\..\Framework\include\global.h)(0x59AC4F1A)
+I (..\..\Framework\include\ekf.h)(0x59A6E01D)
+I (..\..\Framework\include\light_matrix.h)(0x5999E2C5)
+I (..\..\Framework\include\position.h)(0x599992D4)
+I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
+I (..\stm32f40x\rtconfig.h)(0x59273A85)
+I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
+I (..\..\RTOS\include\rtdef.h)(0x576808FD)
+I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
+I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
+I (..\..\RTOS\include\rtm.h)(0x5750BC30)
+I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
+I (..\..\HAL\include\spi.h)(0x5750BC2C)
+I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (..\..\HAL\include\serial.h)(0x59A3C7D1)
+I (..\..\HAL\include\i2c.h)(0x5750BC2C)
+I (..\..\HAL\include\i2c_dev.h)(0x57569769)
+I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
+I (..\..\HAL\include\pin.h)(0x57562B14)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
+I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
+I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
+F (..\..\Framework\source\Filter\filter.c)(0x57887C33)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\filter.o --omf_browse .\build\filter.crf --depend .\build\filter.d)
+I (..\..\RTOS\include\rthw.h)(0x599EDA22)
+I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
+I (..\stm32f40x\rtconfig.h)(0x59273A85)
+I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
+I (..\..\RTOS\include\rtdef.h)(0x576808FD)
+I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
+I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
+I (..\..\RTOS\include\rtm.h)(0x5750BC30)
+I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
+I (..\..\HAL\include\spi.h)(0x5750BC2C)
+I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (..\..\HAL\include\serial.h)(0x59A3C7D1)
+I (..\..\HAL\include\i2c.h)(0x5750BC2C)
+I (..\..\HAL\include\i2c_dev.h)(0x57569769)
+I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
+I (..\..\HAL\include\pin.h)(0x57562B14)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
+I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
+I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
+F (..\..\Framework\source\Filter\FIR.c)(0x59A1A8AD)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\fir.o --omf_browse .\build\fir.crf --depend .\build\fir.d)
+I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (..\..\Framework\include\FIR.h)(0x59982609)
+F (..\..\Framework\source\INS\attitude.c)(0x59AC3E7C)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\attitude.o --omf_browse .\build\attitude.crf --depend .\build\attitude.d)
+I (..\..\RTOS\include\rthw.h)(0x599EDA22)
+I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
+I (..\stm32f40x\rtconfig.h)(0x59273A85)
+I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
+I (..\..\RTOS\include\rtdef.h)(0x576808FD)
+I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
+I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
+I (..\..\RTOS\include\rtm.h)(0x5750BC30)
+I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
+I (..\..\HAL\include\spi.h)(0x5750BC2C)
+I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (..\..\HAL\include\serial.h)(0x59A3C7D1)
+I (..\..\HAL\include\i2c.h)(0x5750BC2C)
+I (..\..\HAL\include\i2c_dev.h)(0x57569769)
+I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
+I (..\..\HAL\include\pin.h)(0x57562B14)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
+I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
+I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
+I (D:\work\MDK4\ARM\ARMCC\include\math.h)(0x51C7B744)
+I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
+I (..\..\Framework\include\sensor.h)(0x59AAF8B4)
+I (..\..\Driver\include\ms5611.h)(0x57BB00BD)
+I (..\..\Framework\include\mix.h)(0x59A7C99E)
+I (..\..\Framework\include\ap_math.h)(0x58645398)
+I (..\..\Framework\include\filter.h)(0x577620BF)
+I (..\..\Framework\include\delay.h)(0x58336DB8)
+I (..\..\Framework\include\log.h)(0x59A32C8A)
+I (..\..\Framework\include\attitude.h)(0x59AC3EA8)
+F (..\..\Framework\source\INS\kalman.c)(0x59AB08C7)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\kalman.o --omf_browse .\build\kalman.crf --depend .\build\kalman.d)
+I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (..\..\RTOS\include\rthw.h)(0x599EDA22)
+I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
+I (..\stm32f40x\rtconfig.h)(0x59273A85)
+I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
+I (..\..\RTOS\include\rtdef.h)(0x576808FD)
+I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
+I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
+I (..\..\RTOS\include\rtm.h)(0x5750BC30)
+I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
+I (..\..\HAL\include\spi.h)(0x5750BC2C)
+I (..\..\HAL\include\serial.h)(0x59A3C7D1)
+I (..\..\HAL\include\i2c.h)(0x5750BC2C)
+I (..\..\HAL\include\i2c_dev.h)(0x57569769)
+I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
+I (..\..\HAL\include\pin.h)(0x57562B14)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
+I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
+I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
+I (..\..\Framework\include\sensor.h)(0x59AAF8B4)
+I (..\..\Driver\include\ms5611.h)(0x57BB00BD)
+I (..\..\Framework\include\kalman.h)(0x5971F46C)
+I (D:\work\MDK4\ARM\ARMCC\include\math.h)(0x51C7B744)
+I (..\..\Framework\include\global.h)(0x59AC4F1A)
+F (..\..\Framework\source\INS\mix.c)(0x59AC1ED1)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\mix.o --omf_browse .\build\mix.crf --depend .\build\mix.d)
+I (D:\work\MDK4\ARM\ARMCC\include\math.h)(0x51C7B744)
+I (..\..\Framework\include\mix.h)(0x59A7C99E)
+I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
+I (..\..\Framework\include\ap_math.h)(0x58645398)
+I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
+I (..\stm32f40x\rtconfig.h)(0x59273A85)
+I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
+I (..\..\RTOS\include\rtdef.h)(0x576808FD)
+I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
+I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
+I (..\..\RTOS\include\rtm.h)(0x5750BC30)
+I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
+I (..\..\HAL\include\spi.h)(0x5750BC2C)
+I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (..\..\HAL\include\serial.h)(0x59A3C7D1)
+I (..\..\HAL\include\i2c.h)(0x5750BC2C)
+I (..\..\HAL\include\i2c_dev.h)(0x57569769)
+I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
+I (..\..\HAL\include\pin.h)(0x57562B14)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
+I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
+I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
+F (..\..\Framework\source\INS\position.c)(0x59AB08C6)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\position.o --omf_browse .\build\position.crf --depend .\build\position.d)
+I (..\..\RTOS\include\rthw.h)(0x599EDA22)
+I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
+I (..\stm32f40x\rtconfig.h)(0x59273A85)
+I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
+I (..\..\RTOS\include\rtdef.h)(0x576808FD)
+I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
+I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
+I (..\..\RTOS\include\rtm.h)(0x5750BC30)
+I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
+I (..\..\HAL\include\spi.h)(0x5750BC2C)
+I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (..\..\HAL\include\serial.h)(0x59A3C7D1)
+I (..\..\HAL\include\i2c.h)(0x5750BC2C)
+I (..\..\HAL\include\i2c_dev.h)(0x57569769)
+I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
+I (..\..\HAL\include\pin.h)(0x57562B14)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
+I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
+I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
+I (D:\work\MDK4\ARM\ARMCC\include\math.h)(0x51C7B744)
+I (..\..\Framework\include\FIR.h)(0x59982609)
+I (..\..\Driver\include\ms5611.h)(0x57BB00BD)
+I (..\..\Framework\include\position.h)(0x599992D4)
+I (..\..\Framework\include\kalman.h)(0x5971F46C)
+I (..\..\Framework\include\ekf.h)(0x59A6E01D)
+I (..\..\Framework\include\light_matrix.h)(0x5999E2C5)
+I (..\..\Framework\include\sensor.h)(0x59AAF8B4)
+I (..\..\Framework\include\log.h)(0x59A32C8A)
+I (..\..\Driver\include\gps.h)(0x5851E0CC)
+I (..\..\Driver\include\gps_ubx.h)(0x5851DB86)
+I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
+I (..\..\Framework\include\attitude.h)(0x59AC3EA8)
+I (..\..\Framework\include\global.h)(0x59AC4F1A)
+F (..\..\Framework\source\LED\led.c)(0x59AB0AB7)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\led.o --omf_browse .\build\led.crf --depend .\build\led.d)
+I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
+I (..\stm32f40x\rtconfig.h)(0x59273A85)
+I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
+I (..\..\RTOS\include\rtdef.h)(0x576808FD)
+I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
+I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
+I (..\..\RTOS\include\rtm.h)(0x5750BC30)
+I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
+I (..\..\HAL\include\spi.h)(0x5750BC2C)
+I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (..\..\HAL\include\serial.h)(0x59A3C7D1)
+I (..\..\HAL\include\i2c.h)(0x5750BC2C)
+I (..\..\HAL\include\i2c_dev.h)(0x57569769)
+I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
+I (..\..\HAL\include\pin.h)(0x57562B14)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
+I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
+I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
+I (..\..\Driver\include\i2c_soft.h)(0x57566B11)
+I (..\..\Framework\include\led.h)(0x57648A04)
+I (..\..\Framework\include\log.h)(0x59A32C8A)
+F (..\..\Framework\source\Log\log.c)(0x59AB09EA)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\log.o --omf_browse .\build\log.crf --depend .\build\log.d)
+I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
+I (..\stm32f40x\rtconfig.h)(0x59273A85)
+I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
+I (..\..\RTOS\include\rtdef.h)(0x576808FD)
+I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
+I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
+I (..\..\RTOS\include\rtm.h)(0x5750BC30)
+I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
+I (..\..\HAL\include\spi.h)(0x5750BC2C)
+I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (..\..\HAL\include\serial.h)(0x59A3C7D1)
+I (..\..\HAL\include\i2c.h)(0x5750BC2C)
+I (..\..\HAL\include\i2c_dev.h)(0x57569769)
+I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
+I (..\..\HAL\include\pin.h)(0x57562B14)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
+I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
+I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
+I (D:\work\MDK4\ARM\ARMCC\include\stdio.h)(0x51C7B744)
+I (..\..\Framework\include\log.h)(0x59A32C8A)
+I (..\..\Framework\include\delay.h)(0x58336DB8)
+F (..\..\Framework\source\Mavlink\mavlink_protocol.c)(0x59AC1E5B)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\mavlink_protocol.o --omf_browse .\build\mavlink_protocol.crf --depend .\build\mavlink_protocol.d)
+I (..\..\RTOS\include\rthw.h)(0x599EDA22)
+I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
+I (..\stm32f40x\rtconfig.h)(0x59273A85)
+I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
+I (..\..\RTOS\include\rtdef.h)(0x576808FD)
+I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
+I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
+I (..\..\RTOS\include\rtm.h)(0x5750BC30)
+I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
+I (..\..\HAL\include\spi.h)(0x5750BC2C)
+I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (..\..\HAL\include\serial.h)(0x59A3C7D1)
+I (..\..\HAL\include\i2c.h)(0x5750BC2C)
+I (..\..\HAL\include\i2c_dev.h)(0x57569769)
+I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
+I (..\..\HAL\include\pin.h)(0x57562B14)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
+I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
+I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
+I (..\..\Framework\include\log.h)(0x59A32C8A)
+I (..\..\Framework\include\delay.h)(0x58336DB8)
+I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
+I (..\..\Framework\include\position.h)(0x599992D4)
+I (..\..\Framework\include\attitude.h)(0x59AC3EA8)
+I (..\..\Framework\include\mavlink_protocol.h)(0x59ABB627)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/mavlink.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/version.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/common.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/../protocol.h)(0x578F4EB8)
+I (D:\work\MDK4\ARM\ARMCC\include\string.h)(0x51C7B744)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/../mavlink_types.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/../mavlink_helpers.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/../checksum.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/../mavlink_conversions.h)(0x57885FE2)
+I (D:\work\MDK4\ARM\ARMCC\include\math.h)(0x51C7B744)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_heartbeat.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_sys_status.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_system_time.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_ping.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_change_operator_control.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_change_operator_control_ack.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_auth_key.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_set_mode.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_param_request_read.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_param_request_list.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_param_value.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_param_set.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_gps_raw_int.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_gps_status.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_scaled_imu.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_raw_imu.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_raw_pressure.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_scaled_pressure.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_attitude.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_attitude_quaternion.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_local_position_ned.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_global_position_int.h)(0x597254AA)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_rc_channels_scaled.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_rc_channels_raw.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_servo_output_raw.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_mission_request_partial_list.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_mission_write_partial_list.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_mission_item.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_mission_request.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_mission_set_current.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_mission_current.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_mission_request_list.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_mission_count.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_mission_clear_all.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_mission_item_reached.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_mission_ack.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_set_gps_global_origin.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_gps_global_origin.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_param_map_rc.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_mission_request_int.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_safety_set_allowed_area.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_safety_allowed_area.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_attitude_quaternion_cov.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_nav_controller_output.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_global_position_int_cov.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_local_position_ned_cov.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_rc_channels.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_request_data_stream.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_data_stream.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_manual_control.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_rc_channels_override.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_mission_item_int.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_vfr_hud.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_command_int.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_command_long.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_command_ack.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_manual_setpoint.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_set_attitude_target.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_attitude_target.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_set_position_target_local_ned.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_position_target_local_ned.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_set_position_target_global_int.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_position_target_global_int.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_local_position_ned_system_global_offset.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_hil_state.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_hil_controls.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_hil_rc_inputs_raw.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_optical_flow.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_global_vision_position_estimate.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_vision_position_estimate.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_vision_speed_estimate.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_vicon_position_estimate.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_highres_imu.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_optical_flow_rad.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_hil_sensor.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_sim_state.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_radio_status.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_file_transfer_protocol.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_timesync.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_camera_trigger.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_hil_gps.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_hil_optical_flow.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_hil_state_quaternion.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_scaled_imu2.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_log_request_list.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_log_entry.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_log_request_data.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_log_data.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_log_erase.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_log_request_end.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_gps_inject_data.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_gps2_raw.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_power_status.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_serial_control.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_gps_rtk.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_gps2_rtk.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_scaled_imu3.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_data_transmission_handshake.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_encapsulated_data.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_distance_sensor.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_terrain_request.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_terrain_data.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_terrain_check.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_terrain_report.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_scaled_pressure2.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_att_pos_mocap.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_set_actuator_control_target.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_actuator_control_target.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_altitude.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_resource_request.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_scaled_pressure3.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_follow_target.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_control_system_state.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_battery_status.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_autopilot_version.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_landing_target.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_estimator_status.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_wind_cov.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_gps_rtcm_data.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_vibration.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_home_position.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_set_home_position.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_message_interval.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_extended_sys_state.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_adsb_vehicle.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_v2_extension.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_memory_vect.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_debug_vect.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_named_value_float.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_named_value_int.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_statustext.h)(0x57885FE2)
+I (..\..\Library\mavlink\v2.0\..\..\mavlink\v1.0\common/./mavlink_msg_debug.h)(0x57885FE2)
+F (..\..\Framework\source\Param\param.c)(0x59AC5A93)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\param.o --omf_browse .\build\param.crf --depend .\build\param.d)
+I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
+I (..\stm32f40x\rtconfig.h)(0x59273A85)
+I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
+I (..\..\RTOS\include\rtdef.h)(0x576808FD)
+I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
+I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
+I (..\..\RTOS\include\rtm.h)(0x5750BC30)
+I (..\..\Framework\include\global.h)(0x59AC4F1A)
+I (..\..\Framework\include\param.h)(0x599EE269)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
+I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
+I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
+I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
+F (..\..\Framework\source\PX4IO\px4io_manager.c)(0x59AC10C1)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\px4io_manager.o --omf_browse .\build\px4io_manager.crf --depend .\build\px4io_manager.d)
+I (..\..\RTOS\include\rthw.h)(0x599EDA22)
+I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
+I (..\stm32f40x\rtconfig.h)(0x59273A85)
+I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
+I (..\..\RTOS\include\rtdef.h)(0x576808FD)
+I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
+I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
+I (..\..\RTOS\include\rtm.h)(0x5750BC30)
+I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
+I (..\..\HAL\include\spi.h)(0x5750BC2C)
+I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (..\..\HAL\include\serial.h)(0x59A3C7D1)
+I (..\..\HAL\include\i2c.h)(0x5750BC2C)
+I (..\..\HAL\include\i2c_dev.h)(0x57569769)
+I (..\..\HAL\include\i2c-bit-ops.h)(0x5750BC2C)
+I (..\..\HAL\include\pin.h)(0x57562B14)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
+I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmInstr.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cmFunc.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4_simd.h)(0x50CF5CED)
+I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x50EEAC05)
+I (..\..\Driver\include\stm32f4xx_conf.h)(0x58C99F8E)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
+I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
+I (..\..\Framework\include\px4io_manager.h)(0x59ABB24E)
 I (..\..\Framework\include\px4io_protocol.h)(0x58ADFDA5)
 I (..\..\Framework\include\log.h)(0x59A32C8A)
-F (..\..\Framework\source\PX4IO\px4io_protocol.c)(0x59AB06CB)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\px4io_protocol.o --omf_browse .\build\px4io_protocol.crf --depend .\build\px4io_protocol.d)
+F (..\..\Framework\source\PX4IO\px4io_protocol.c)(0x59ABAEC4)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\px4io_protocol.o --omf_browse .\build\px4io_protocol.crf --depend .\build\px4io_protocol.d)
 I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
 I (..\..\Framework\include\rc.h)(0x59AACD1D)
 I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
@@ -724,6 +869,7 @@ I (..\..\RTOS\include\rtdef.h)(0x576808FD)
 I (D:\work\MDK4\ARM\ARMCC\include\stdarg.h)(0x51C7B744)
 I (..\..\RTOS\include\rtservice.h)(0x5750BC30)
 I (..\..\RTOS\include\rtm.h)(0x5750BC30)
+I (..\..\Framework\include\px4io_manager.h)(0x59ABB24E)
 I (..\..\Framework\include\log.h)(0x59A32C8A)
 I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
 I (..\..\HAL\include\spi.h)(0x5750BC2C)
@@ -772,7 +918,7 @@ I (..\..\Framework\include\ringbuffer.h)(0x59AAFD57)
 I (..\..\Framework\include\log.h)(0x59A32C8A)
 I (..\..\Framework\include\px4io_uploader.h)(0x58A3610A)
 I (..\..\Framework\include\delay.h)(0x58336DB8)
-I (..\..\Framework\include\px4io_manager.h)(0x58AED301)
+I (..\..\Framework\include\px4io_manager.h)(0x59ABB24E)
 F (..\..\Framework\source\Sensor\calibration.c)(0x59AB016F)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\calibration.o --omf_browse .\build\calibration.crf --depend .\build\calibration.d)
 I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
 I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
@@ -918,8 +1064,9 @@ I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EEC
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-F (..\..\Framework\source\RC\rc.c)(0x59AADA9F)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\rc.o --omf_browse .\build\rc.crf --depend .\build\rc.d)
-I (..\..\Framework\include\global.h)(0x59AAD75C)
+F (..\..\Framework\source\RC\rc.c)(0x59AC0F76)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\rc.o --omf_browse .\build\rc.crf --depend .\build\rc.d)
+I (D:\work\MDK4\ARM\ARMCC\include\string.h)(0x51C7B744)
+I (..\..\Framework\include\global.h)(0x59AC4F1A)
 I (..\..\Framework\include\log.h)(0x59A32C8A)
 I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
 I (..\stm32f40x\rtconfig.h)(0x59273A85)
@@ -954,10 +1101,11 @@ I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50E
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
 I (..\..\HAL\include\motor.h)(0x59A534D4)
 I (..\..\Framework\include\rc.h)(0x59AACD1D)
-I (..\..\Framework\include\control.h)(0x59AAD2A6)
-I (D:\work\MDK4\ARM\ARMCC\include\string.h)(0x51C7B744)
+I (..\..\Framework\include\delay.h)(0x58336DB8)
+I (..\..\Framework\include\control.h)(0x59ABCBF0)
+I (..\..\Framework\include\quaternion.h)(0x59A7C50C)
 F (..\..\Framework\source\Global\global.c)(0x59AAD73D)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\global.o --omf_browse .\build\global.crf --depend .\build\global.d)
-I (..\..\Framework\include\global.h)(0x59AAD75C)
+I (..\..\Framework\include\global.h)(0x59AC4F1A)
 F (..\..\Framework\source\Math\ap_math.c)(0x5864538F)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\ap_math.o --omf_browse .\build\ap_math.crf --depend .\build\ap_math.d)
 I (..\..\RTOS\include\rthw.h)(0x599EDA22)
 I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
@@ -1129,7 +1277,7 @@ I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EEC
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
-F (..\..\HAL\motor\motor.c)(0x59A72716)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\motor.o --omf_browse .\build\motor.crf --depend .\build\motor.d)
+F (..\..\HAL\motor\motor.c)(0x59AC2988)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\motor.o --omf_browse .\build\motor.crf --depend .\build\motor.d)
 I (..\..\HAL\include\motor.h)(0x59A534D4)
 I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
 I (..\stm32f40x\rtconfig.h)(0x59273A85)
@@ -1164,6 +1312,7 @@ I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50E
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
 I (..\..\Driver\include\pwm.h)(0x59A5284F)
 I (..\..\Framework\include\log.h)(0x59A32C8A)
+I (D:\work\MDK4\ARM\ARMCC\include\string.h)(0x51C7B744)
 F (..\..\HAL\pin\pin.c)(0x599EDAA7)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\pin.o --omf_browse .\build\pin.crf --depend .\build\pin.d)
 I (..\..\HAL\include\pin.h)(0x57562B14)
 I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
@@ -1807,7 +1956,7 @@ I (D:\work\MDK4\ARM\ARMCC\include\math.h)(0x51C7B744)
 I (..\..\Framework\include\sensor.h)(0x59AAF8B4)
 I (..\..\Driver\include\ms5611.h)(0x57BB00BD)
 I (..\..\Framework\include\delay.h)(0x58336DB8)
-F (..\..\Driver\pwm\pwm.c)(0x59AAFA80)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\pwm.o --omf_browse .\build\pwm.crf --depend .\build\pwm.d)
+F (..\..\Driver\pwm\pwm.c)(0x59AC2B66)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\pwm.o --omf_browse .\build\pwm.crf --depend .\build\pwm.d)
 I (..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x50EFFB34)
 I (..\..\Library\STM_Lib\CMSIS\Include\core_cm4.h)(0x50CF5CED)
 I (D:\work\MDK4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
@@ -2368,7 +2517,7 @@ I (D:\work\MDK4\ARM\ARMCC\include\ctype.h)(0x51C7B744)
 I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
 I (D:\work\MDK4\ARM\ARMCC\include\string.h)(0x51C7B744)
 I (..\..\RTOS\components\finsh\shell.h)(0x59273AB4)
-F (..\..\RTOS\components\finsh\msh_cmd.c)(0x59AAD699)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\msh_cmd.o --omf_browse .\build\msh_cmd.crf --depend .\build\msh_cmd.d)
+F (..\..\RTOS\components\finsh\msh_cmd.c)(0x59ABADA1)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\msh_cmd.o --omf_browse .\build\msh_cmd.crf --depend .\build\msh_cmd.d)
 I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)
 I (..\stm32f40x\rtconfig.h)(0x59273A85)
 I (..\..\RTOS\include\rtdebug.h)(0x5750BC30)
@@ -2381,6 +2530,7 @@ I (D:\work\MDK4\ARM\ARMCC\include\ctype.h)(0x51C7B744)
 I (D:\work\MDK4\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
 I (D:\work\MDK4\ARM\ARMCC\include\string.h)(0x51C7B744)
 I (..\..\RTOS\components\finsh\shell.h)(0x59273AB4)
+I (..\..\Framework\include\calibration.h)(0x5933C0C0)
 I (..\..\HAL\include\rtdevice.h)(0x59AAF58B)
 I (..\..\HAL\include\spi.h)(0x5750BC2C)
 I (..\..\HAL\include\serial.h)(0x59A3C7D1)
@@ -2404,6 +2554,8 @@ I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50EEC
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50EECFC3)
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50EECFC3)
 I (..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50EECFC3)
+I (..\..\Framework\include\px4io_uploader.h)(0x58A3610A)
+I (..\..\Framework\include\position.h)(0x599992D4)
 I (..\..\RTOS\components\finsh\msh.h)(0x5750BC2E)
 F (..\..\RTOS\components\finsh\msh_file.c)(0x5750BC2E)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\..\Library\STM_Lib\STM32F4xx_StdPeriph_Driver\inc -I..\..\Library\STM_Lib\CMSIS\Include -I..\..\Library\STM_Lib\CMSIS\Device\ST\STM32F4xx\Include -I..\..\Library\mavlink\v2.0 -I..\..\Library\mavlink\v2.0\common -I..\..\Driver\usb\inc -I..\..\Driver\include -I..\..\RTOS\components\finsh -I..\..\RTOS\libcpu\arm\common -I..\..\RTOS\libcpu\arm\cortex-m4 -I..\..\RTOS\include -I..\..\HAL\include -I..\..\Framework\include -I..\stm32f40x --c99 --gnu-I D:\work\MDK4\ARM\RV31\INC-I D:\work\MDK4\ARM\CMSIS\Include-I D:\work\MDK4\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F427X -DSTM32F427X-o .\build\msh_file.o --omf_browse .\build\msh_file.crf --depend .\build\msh_file.d)
 I (..\..\RTOS\include\rtthread.h)(0x599ED8A1)

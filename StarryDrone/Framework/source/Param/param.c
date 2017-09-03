@@ -50,25 +50,43 @@ rt_err_t load_default_param(PARAM_Def* param_t)
     param_t->initial_attitude.z = 0;
 	
     //内环
+//    param_t->ctl_pid[0].inner_P = 0.1;
+//    param_t->ctl_pid[0].inner_I = 0;
+//    param_t->ctl_pid[0].inner_D = 0.08;
+//    param_t->ctl_pid[1].inner_P = 0.1;    //0.12
+//    param_t->ctl_pid[1].inner_I = 0;  //0.0001;
+//    param_t->ctl_pid[1].inner_D = 0.08;    //0.25
+//    param_t->ctl_pid[2].inner_P = 0.05;
+//    param_t->ctl_pid[2].inner_I = 0;
+//    param_t->ctl_pid[2].inner_D = 0.04;
     param_t->ctl_pid[0].inner_P = 0.1;
     param_t->ctl_pid[0].inner_I = 0;
-    param_t->ctl_pid[0].inner_D = 0.08;
+    param_t->ctl_pid[0].inner_D = 0;
     param_t->ctl_pid[1].inner_P = 0.1;    //0.12
     param_t->ctl_pid[1].inner_I = 0;  //0.0001;
-    param_t->ctl_pid[1].inner_D = 0.08;    //0.25
-    param_t->ctl_pid[2].inner_P = 0.05;
+    param_t->ctl_pid[1].inner_D = 0;    //0.25
+    param_t->ctl_pid[2].inner_P = 0.1;
     param_t->ctl_pid[2].inner_I = 0;
-    param_t->ctl_pid[2].inner_D = 0.04;
+    param_t->ctl_pid[2].inner_D = 0;
     //外环   ctl_pid
-    param_t->ctl_pid[0].outer_P = 0.06;
-    param_t->ctl_pid[0].outer_I = 0.003;
+//    param_t->ctl_pid[0].outer_P = 0.06;
+//    param_t->ctl_pid[0].outer_I = 0.003;
+//    param_t->ctl_pid[0].outer_D = 0;
+//    param_t->ctl_pid[1].outer_P = 0.06;//0.04 0.06
+//    param_t->ctl_pid[1].outer_I = 0.003;//0.00002
+//    param_t->ctl_pid[1].outer_D = 0;
+//    param_t->ctl_pid[2].outer_P = 0.03;
+//    param_t->ctl_pid[2].outer_I = 0;
+//    param_t->ctl_pid[2].outer_D = 0.0015;
+    param_t->ctl_pid[0].outer_P = 0.2;
+    param_t->ctl_pid[0].outer_I = 0;
     param_t->ctl_pid[0].outer_D = 0;
-    param_t->ctl_pid[1].outer_P = 0.06;//0.04 0.06
-    param_t->ctl_pid[1].outer_I = 0.003;//0.00002
+    param_t->ctl_pid[1].outer_P = 0.2;//0.04 0.06
+    param_t->ctl_pid[1].outer_I = 0;//0.00002
     param_t->ctl_pid[1].outer_D = 0;
-    param_t->ctl_pid[2].outer_P = 0.03;
+    param_t->ctl_pid[2].outer_P = 0.1;
     param_t->ctl_pid[2].outer_I = 0;
-    param_t->ctl_pid[2].outer_P = 0.0015;
+    param_t->ctl_pid[2].outer_D = 0;
 	
 	param_t->halt_vol = 0;
 	param_t->halt_incline_cos = 0.5;	//默认60°停机

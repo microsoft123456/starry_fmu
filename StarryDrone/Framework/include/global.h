@@ -16,6 +16,9 @@
 #define CONTROL_THREAD_PRIORITY		8
 #define MAVLINK_THREAD_PRIORITY		9
 
+#define Rad2Deg(x)			(x*180.0f/PI)
+#define Deg2Rad(x)			(x*PI/180.0f)
+
 extern const float PI;
 
 typedef enum

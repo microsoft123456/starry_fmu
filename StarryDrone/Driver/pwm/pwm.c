@@ -109,19 +109,19 @@ void stm32_pwm_configure(rt_device_t dev, rt_uint8_t cmd, void *args)
 void stm32_pwm_write(struct rt_device *device, uint8_t chanel, float* duty_cyc)
 {
 	if(chanel & MOTOR_CH1){
-		TIM_SetCompare1(TIM1, PWM_ARR(pwm_freq)*duty_cyc[0]);
+		TIM_SetCompare4(TIM1, PWM_ARR(pwm_freq)*duty_cyc[0]);
 		TIM_duty_cycle[0] = duty_cyc[0];
 	}
 	if(chanel & MOTOR_CH2){
-		TIM_SetCompare2(TIM1, PWM_ARR(pwm_freq)*duty_cyc[1]);
+		TIM_SetCompare3(TIM1, PWM_ARR(pwm_freq)*duty_cyc[1]);
 		TIM_duty_cycle[1] = duty_cyc[1];
 	}
 	if(chanel & MOTOR_CH3){
-		TIM_SetCompare3(TIM1, PWM_ARR(pwm_freq)*duty_cyc[2]);
+		TIM_SetCompare2(TIM1, PWM_ARR(pwm_freq)*duty_cyc[2]);
 		TIM_duty_cycle[2] = duty_cyc[2];
 	}
 	if(chanel & MOTOR_CH4){
-		TIM_SetCompare4(TIM1, PWM_ARR(pwm_freq)*duty_cyc[3]);
+		TIM_SetCompare1(TIM1, PWM_ARR(pwm_freq)*duty_cyc[3]);
 		TIM_duty_cycle[3] = duty_cyc[3];
 	}
 }

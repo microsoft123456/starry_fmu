@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include "rc.h"
 #include "px4io_protocol.h"
+#include "px4io_manager.h"
 #include "log.h"
 
 static uint8_t pack_buff[MAX_PACKAGE_SIZE];

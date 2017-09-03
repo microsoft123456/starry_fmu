@@ -37,6 +37,7 @@ uint8_t pid_calculate(const float input[3],float output[3], float gyr[3])
 //        {
 //           pid_accumulate[i] = 0; 
 //        }
+		pid_accumulate[i] += input[i]*p->ctl_pid[i].outer_I;
         if(pid_accumulate[i] < -0.05f)  /*限定积分输出分量在-0.1~0.1之间*/
             pid_accumulate[i] = -0.05f;
         if(pid_accumulate[i] > 0.05f)
@@ -52,7 +53,6 @@ uint8_t pid_calculate(const float input[3],float output[3], float gyr[3])
     float err_xyz[3] = {0};
     for(int i = 0 ; i<3 ; i++)
     {
-		//TODO: need to modify
         err_xyz[i] = outer_output[i] - gyr[i];
     }
     for(int i=0;i<3;i++)
@@ -67,6 +67,7 @@ uint8_t pid_calculate(const float input[3],float output[3], float gyr[3])
 //        {
 //           inner_pid_accumulate[i] = 0; 
 //        }
+		inner_pid_accumulate[i] += err_xyz[i]*p->ctl_pid[i].inner_I;
         if(inner_pid_accumulate[i] < -0.05f)  /*限定积分输出分量在-0.1~0.1之间*/
             inner_pid_accumulate[i] = -0.05f;
         if(inner_pid_accumulate[i] > 0.05f)
@@ -79,6 +80,9 @@ uint8_t pid_calculate(const float input[3],float output[3], float gyr[3])
         output[i] = p_o + i_o + d_o;    /*分量合成，这里只是作简单的相加*/
         if(output[i]>0.5){  //输出限幅
             output[i] = 0.5;
+        }
+		if(output[i]<-0.5){  //输出限幅
+            output[i] = -0.5;
         }
         pid_pre[i] = err_xyz[i];  /*存储前一次的输入数据，用于微分输出量计算*/
     } 

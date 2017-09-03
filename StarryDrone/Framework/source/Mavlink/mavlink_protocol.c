@@ -15,9 +15,7 @@
 #include "quaternion.h"
 #include "position.h"
 #include "attitude.h"
-
-#pragma anon_unions
-#include <..\..\mavlink\v1.0\common/mavlink.h>
+#include "mavlink_protocol.h"
 
 #define EVENT_MAV_1HZ_UPDATE		(1<<0)
 #define EVENT_MAV_3HZ_UPDATE		(1<<1)
@@ -28,7 +26,7 @@ mavlink_system_t mavlink_system;
 /* disable mavlink sending */
 uint8_t mav_disenable = 0;
 
-static char *TAG = "MAV";
+static char *TAG = "Mavlink";
 
 static struct rt_timer timer_1HZ;
 static struct rt_timer timer_3HZ;
@@ -77,16 +75,13 @@ uint8_t mavlink_send_msg_heartbeat(uint8_t system_status)
 	return 1;
 }
 
-uint8_t mavlink_send_msg_attitude_quaternion(uint8_t system_status)
+uint8_t mavlink_send_msg_attitude_quaternion(uint8_t system_status, quaternion attitude)
 {
 	mavlink_message_t msg;
 	uint16_t len;
-	quaternion attitude;
 	
 	if(mav_disenable)
 		return 0;
-	
-	attitude = attitude_getAttitude();
 	
 	mavlink_msg_attitude_quaternion_pack(mavlink_system.sysid, mavlink_system.compid, &msg,
 						       0, attitude.w, attitude.x, attitude.y, attitude.z,0,0,0);
@@ -194,7 +189,7 @@ void mavlink_loop(void *parameter)
 			
 			if(recv_set & EVENT_MAV_3HZ_UPDATE)
 			{
-				mavlink_send_msg_attitude_quaternion(MAV_STATE_STANDBY);
+				mavlink_send_msg_attitude_quaternion(MAV_STATE_STANDBY, attitude_getAttitude());
 			}
 		}
 		else

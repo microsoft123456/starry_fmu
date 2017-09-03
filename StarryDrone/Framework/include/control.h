@@ -12,12 +12,14 @@
 //#include <rtthread.h>
 //#include <rtdevice.h>
 #include <stdint.h>
+#include "quaternion.h"
 
 #define MAX_THROTTLE_NUM	4
 
 void control_loop(void *parameter);
-void set_throttle_base(float* throttle, uint8_t throttle_num);
+void ctrl_set_throttle(float* throttle, uint8_t throttle_num);
 void ctrl_unlock_vehicle(void);
 void ctrl_lock_vehicle(void);
+quaternion calc_target_att(int ctrl_mode, float dT);
 
 #endif

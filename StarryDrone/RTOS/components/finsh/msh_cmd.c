@@ -32,8 +32,11 @@
 #include <finsh.h>
 #include <shell.h>
 //#include "framework/calibration.h"
-#include <rtdevice.h>
+//#include <rtdevice.h>
 #include <string.h>
+#include "calibration.h"
+#include "px4io_uploader.h"
+#include "position.h"
 
 #include "msh.h"
 
@@ -565,7 +568,7 @@ int cmd_sethome(int argc, char** argv)
 			lon = atoi(argv[1]);
 			lat = atoi(argv[2]);
 			alt = atof(argv[3]);
-			printf("set home: %d %d %.2f\n", lon, lat, alt);
+			rt_kprintf("set home: %d %d %.2f\n", lon, lat, alt);
 			set_home(lon, lat, alt);
 		}
 		
