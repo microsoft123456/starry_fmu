@@ -32,7 +32,7 @@
 #define BARO_UPDATE_INTERVAL    10
 
 #define TO_DEGREE(a)	((float)a*1e-7)
-#define Deg2Rad(a)		(a*PI/180.0f)
+//#define Deg2Rad(a)		(a*PI/180.0f)
 
 const float EARTH_RADIUS = 6371393;	/* average earth radius, meter */
 //const float PI = 3.1415926536;

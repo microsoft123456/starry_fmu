@@ -599,3 +599,17 @@ int cmd_rc(int argc, char** argv)
 	return handle_rc_shell_cmd(argc, argv);
 }
 FINSH_FUNCTION_EXPORT_ALIAS(cmd_rc, __cmd_rc, rc operation);
+
+int handle_param_shell_cmd(int argc, char** argv);
+int cmd_param(int argc, char** argv)
+{
+	return handle_param_shell_cmd(argc, argv);
+}
+FINSH_FUNCTION_EXPORT_ALIAS(cmd_param, __cmd_param, configure parameter);
+
+int handle_test_shell_cmd(int argc, char** argv);
+int cmd_test(int argc, char** argv)
+{
+	return handle_test_shell_cmd(argc, argv);
+}
+FINSH_FUNCTION_EXPORT_ALIAS(cmd_test, __cmd_test, test function);

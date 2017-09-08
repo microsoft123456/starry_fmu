@@ -13,6 +13,13 @@
 //#include <rtthread.h>
 //#include <rtdevice.h>
 
+typedef struct
+{
+	float roll;
+	float pitch;
+	float yaw;
+}Euler;
+
 typedef  struct
 {
     float w;
@@ -29,8 +36,8 @@ void quaternion_rotateVector(const quaternion rotation,const float from[3],float
 void quaternion_inv_rotateVector(const quaternion rotation,const float from[3],float to[3]);
 void quaternion_fromTwoQuaternionRotation(quaternion * q,const quaternion q1, const quaternion q2);
 void quaternion_fromTwoVectorRotation(quaternion * result,const float from[3],const float to[3]);
-void quaternion_toEuler(const quaternion q, float euler[3]);
-void quaternion_fromEuler(const float euler[3], quaternion* q);
+void quaternion_toEuler(const quaternion q, Euler *e);
+void quaternion_fromEuler(const Euler e, quaternion* q);
 float quaternion_getEuler(const quaternion q, int index);
 void quaternion_conjugate(quaternion q, quaternion* res);
 

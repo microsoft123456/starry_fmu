@@ -18,6 +18,7 @@ typedef struct
 	float outer_P , outer_I , outer_D;
 }PID_Param;
 
+uint8_t pid_init(void);
 uint8_t pid_calculate(const float input[3],float output[3], float gyr[3]);
 
 #endif

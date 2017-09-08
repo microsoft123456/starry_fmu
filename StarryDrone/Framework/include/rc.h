@@ -29,8 +29,17 @@ typedef enum
 	CHAN_6
 }RC_CHANEL;
 
+typedef enum
+{
+	RC_LOCK_STATUS = 0,
+	RC_LOCK_READY_STATUS,
+	RC_UNLOCK_STATUS,
+	RC_UNLOCK_READY_STATUS,
+}RC_STATUS;
+
 inline float rc_raw2chanval(uint32_t raw);
 float rc_get_chanval(RC_CHANEL rc_chan);
+void rc_enter_status(RC_STATUS status);
 void rc_handle_ppm_signal(float* chan_val);
 
 #endif

@@ -16,7 +16,7 @@
 //static const float PI = 3.141592658;
 const float R0 = 6371393.0f;
 
-#define Deg2Rad(a)		(a*PI/180.0f)
+//#define Deg2Rad(a)		(a*PI/180.0f)
 
 Mat temp_mat1, temp_mat2, temp_mat3;
 Mat temp_mat4;

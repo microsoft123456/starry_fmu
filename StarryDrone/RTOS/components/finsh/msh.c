@@ -36,7 +36,7 @@
 #include <dfs_posix.h>
 #endif
 
-#define RT_FINSH_ARG_MAX    10
+#define RT_FINSH_ARG_MAX    30
 typedef int (*cmd_function_t)(int argc, char **argv);
 
 #ifdef FINSH_USING_MSH

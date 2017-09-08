@@ -13,13 +13,6 @@
 #include <rtthread.h>
 #include "quaternion.h"
 
-typedef struct
-{
-	float roll;
-	float pitch;
-	float yaw;
-}Euler;
-
 rt_err_t attitude_init(void);
 quaternion attitude_getAttitude(void);
 void attitude_inputAcc(const float acc[3]);

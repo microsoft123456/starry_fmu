@@ -10,10 +10,19 @@
 #ifndef __GLOBAL_H__
 #define __GLOBAL_H__
 
-#define PX4IO_THREAD_PRIORITY		5
-#define ATTITUDE_THREAD_PRIORITY	6
-#define POS_THREAD_PRIORITY			7
-#define CONTROL_THREAD_PRIORITY		8
+#include <stdio.h>
+#include <stdlib.h>
+
+//#define PX4IO_THREAD_PRIORITY		5
+//#define ATTITUDE_THREAD_PRIORITY	6
+//#define POS_THREAD_PRIORITY			7
+//#define CONTROL_THREAD_PRIORITY		8
+//#define MAVLINK_THREAD_PRIORITY		9
+
+#define PX4IO_THREAD_PRIORITY		8
+#define ATTITUDE_THREAD_PRIORITY	5
+#define POS_THREAD_PRIORITY			6
+#define CONTROL_THREAD_PRIORITY		7
 #define MAVLINK_THREAD_PRIORITY		9
 
 #define Rad2Deg(x)			(x*180.0f/PI)

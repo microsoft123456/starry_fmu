@@ -121,36 +121,36 @@ void quaternion_fromTwoVectorRotation(quaternion * result,const float from[3],co
 }
 
 //euler[3]: roll pitch yaw	unit:rad
-void quaternion_toEuler(const quaternion q, float euler[3])
+void quaternion_toEuler(const quaternion q, Euler *e)
 {
 	double ysqr = q.y * q.y;
 
 	// roll (x-axis rotation)
 	double t0 = +2.0f * (q.w * q.x + q.y * q.z);
 	double t1 = +1.0f - 2.0f * (q.x * q.x + ysqr);
-	euler[0] = atan2(t0, t1);
+	e->roll = atan2(t0, t1);
 
 	// pitch (y-axis rotation)
 	double t2 = +2.0f * (q.w * q.y - q.z * q.x);
 	t2 = t2 > 1.0f ? 1.0f : t2;
 	t2 = t2 < -1.0f ? -1.0f : t2;
-	euler[1] = asin(t2);
+	e->pitch = asin(t2);
 
 	// yaw (z-axis rotation)
 	double t3 = +2.0f * (q.w * q.z + q.x *q.y);
 	double t4 = +1.0f - 2.0f * (ysqr + q.z * q.z);  
-	euler[2] = atan2(t3, t4);
+	e->yaw = atan2(t3, t4);
 }
 
 //euler[3]: roll pitch yaw	 unit:rad
-void quaternion_fromEuler(const float euler[3], quaternion* q)
+void quaternion_fromEuler(const Euler e, quaternion* q)
 {
-	double cr = cos(euler[0] * 0.5);
-	double sr = sin(euler[0] * 0.5);	
-	double cp = cos(euler[1] * 0.5);
-	double sp = sin(euler[1] * 0.5);
-	double cy = cos(euler[2] * 0.5);
-	double sy = sin(euler[2] * 0.5);
+	double cr = cos(e.roll * 0.5);
+	double sr = sin(e.roll * 0.5);	
+	double cp = cos(e.pitch * 0.5);
+	double sp = sin(e.pitch * 0.5);
+	double cy = cos(e.yaw * 0.5);
+	double sy = sin(e.yaw * 0.5);
 	
 	q->w = cy * cr * cp + sy * sr * sp;
 	q->x = cy * sr * cp - sy * cr * sp;

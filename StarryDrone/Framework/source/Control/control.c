@@ -25,9 +25,9 @@
 
 #define ATT_CTRL_INTERVAL		10
 /* the control angle for rc(degree) */
-#define ANGLE_CONTROL_SCALE		(30.0f)
-/* the maximal yaw rotation speed is 30 deg/s */
-#define YAW_CONTROL_SPEED		(30.0f)
+#define ANGLE_CONTROL_SCALE		(20.0f)
+/* the maximal yaw rotation speed 20 deg/s */
+#define YAW_CONTROL_SPEED		(20.0f)
 
 static rt_device_t motor_device_t;
 static struct rt_timer timer_att;
@@ -74,10 +74,10 @@ quaternion calc_target_quaternion(int ctrl_mode, float dT)
 
 	if(ctrl_mode == 1){	/* attitude control */
 		float toRad = PI/180.0f;
-		float euler[3];
+		Euler e;
 		
-		euler[0] = (rc_get_chanval(CHAN_ROLL)-0.5f)*2.0f*toRad*ANGLE_CONTROL_SCALE;
-        euler[1] = -(rc_get_chanval(CHAN_PITCH)-0.5f)*2.0f*toRad*ANGLE_CONTROL_SCALE;
+		e.roll = (rc_get_chanval(CHAN_ROLL)-0.5f)*2.0f*toRad*ANGLE_CONTROL_SCALE;
+        e.pitch = -(rc_get_chanval(CHAN_PITCH)-0.5f)*2.0f*toRad*ANGLE_CONTROL_SCALE;
 		if(rc_get_chanval(CHAN_YAW)>0.55 || rc_get_chanval(CHAN_YAW)<0.45){
 			yaw_target += (rc_get_chanval(CHAN_YAW)-0.5f)*2.0f*dT*toRad*YAW_CONTROL_SPEED;
 			if(yaw_target >= PI){
@@ -87,9 +87,9 @@ quaternion calc_target_quaternion(int ctrl_mode, float dT)
 				yaw_target += 2*PI;
 			}
 		}
-		euler[2] = yaw_target;
+		e.yaw = yaw_target;
 		
-		quaternion_fromEuler(euler, &qt);
+		quaternion_fromEuler(e, &qt);
 	}
 	
 	return qt;
@@ -128,6 +128,8 @@ void ctrl_unlock_vehicle(void)
 	
 	rt_device_control(motor_device_t, PWM_CMD_SWITCH, (void*)&on_off);
 	_vehicle_status = 1;
+	
+	pid_init();
 }
 
 void ctrl_lock_vehicle(void)
@@ -194,15 +196,19 @@ void control_loop(void *parameter)
 
 						quaternion qc = attitude_getAttitude();
 						
+						Euler ec;
+						quaternion_toEuler(qc, &ec);
 						
-						float ec[3];
-						quaternion_toEuler(qc, ec);
+						/* tilt protection */
+						if(abs(Rad2Deg(ec.roll))>45 || abs(Rad2Deg(ec.pitch))>45){
+							rc_enter_status(RC_LOCK_STATUS);
+						}
 						
 						Euler et = calc_target_euler(1, 1.0f/(float)ppm_send_freq);
 
-						att_err[0] = Rad2Deg((et.roll - ec[0]));
-						att_err[1] = Rad2Deg((et.pitch - ec[1]));
-						att_err[2] = Rad2Deg((et.yaw - ec[2]));
+						att_err[0] = Rad2Deg((et.roll - ec.roll));
+						att_err[1] = Rad2Deg((et.pitch - ec.pitch));
+						att_err[2] = Rad2Deg((et.yaw - ec.yaw));
 						if(att_err[2] > 180.0f){
 							att_err[2] -= 360.0f;
 						}

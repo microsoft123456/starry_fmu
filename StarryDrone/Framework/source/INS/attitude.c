@@ -12,7 +12,7 @@
 #include <math.h>
 #include "quaternion.h"
 #include "sensor.h"
-#include "mix.h"
+#include "AHRS.h"
 #include "filter.h"
 #include "delay.h"
 #include "log.h"
@@ -26,9 +26,13 @@
 //#define ACC_UPDATE_INTERVAL		3
 //#define MAG_UPDATE_INTERVAL		10
 
-#define GYR_UPDATE_INTERVAL		10
-#define ACC_UPDATE_INTERVAL		10
-#define MAG_UPDATE_INTERVAL		30
+//#define GYR_UPDATE_INTERVAL		10
+//#define ACC_UPDATE_INTERVAL		10
+//#define MAG_UPDATE_INTERVAL		30
+
+#define GYR_UPDATE_INTERVAL		1
+#define ACC_UPDATE_INTERVAL		1
+#define MAG_UPDATE_INTERVAL		4
 
 //for debug, change to 50 ms
 //#define GYR_UPDATE_INTERVAL		100
@@ -47,13 +51,11 @@ struct rt_event event_sensor;
 
 rt_err_t attitude_init(void)
 {
-	//initialize attitude
-	//quaternion_load_init_attitude(&drone_attitude);
-	
+	/* initialize attitude accordind to the acc and mag value */
 	float acc[3], mag[3];
 	sensor_acc_get_calibrated_data(acc);
 	sensor_mag_get_calibrated_data(mag);
-	mix_accMag_crossMethod(&drone_attitude, acc, mag);
+	AHRS_reset(&drone_attitude, acc, mag);
 
 	return RT_EOK;
 }
@@ -94,10 +96,8 @@ void attitude_mixGyrAccMag(void)
     if(time_interval_us > 1000*1000) // 超过1秒就判为异常，丢弃。
         return;
     float time_interval_s = time_interval_us * (1.0f/1e6f); /*将积分间隔单位转换为s*/
-    //
-    mix_gyrAccMag_crossMethod(&drone_attitude,gyrfilter_current(),accfilter_getCurrent(),magfilter_getCurrent(),time_interval_s);
-	//mix_gyrAcc_crossMethod(&drone_attitude,gyrfilter_current(),accfilter_getCurrent(),time_interval_s);
-	//mix_accMag_crossMethod(&drone_attitude, accfilter_getCurrent(),magfilter_getCurrent());
+    
+	AHRS_update(&drone_attitude,gyrfilter_current(),accfilter_getCurrent(),magfilter_getCurrent(),time_interval_s);
 }
 
 int32_t acc_gyr_dataIsReady(void)
@@ -176,13 +176,18 @@ void attitude_loop(void *parameter)
 				if(sensor_acc_get_calibrated_data(acc) == RT_EOK)
 					attitude_inputAcc(acc);
 				
-				attitude_mixGyrAccMag();
+				//attitude_mixGyrAccMag();
 			}
 			
 			if(recv_set & EVENT_MAG_UPDATE)
 			{
 				if(sensor_mag_get_calibrated_data(mag) == RT_EOK)
 					attitude_inputMag(mag);
+				
+				attitude_mixGyrAccMag();
+//				const float *filter_gyr = gyrfilter_current();
+//				Log.console("%.3f %.3f %.3f,%.3f %.3f %.3f\n", gyr[0],gyr[1],gyr[2],filter_gyr[0],
+//							filter_gyr[1],filter_gyr[2]);
 			}
 		}
 		else

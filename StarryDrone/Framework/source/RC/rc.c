@@ -20,14 +20,6 @@
 
 typedef enum
 {
-	RC_LOCK_STATUS = 0,
-	RC_LOCK_WAIT_STATUS,
-	RC_UNLOCK_STATUS,
-	RC_UNLOCK_WAIT_STATUS,
-}RC_STATUS;
-
-typedef enum
-{
 	RC_LOCK_SIGNAL = 0,
 	RC_UNLOCK_SIGNAL,
 	RC_RETURN_CENTRAL_SIGNAL,
@@ -98,6 +90,25 @@ int handle_rc_shell_cmd(int argc, char** argv)
 	}
 }
 
+void rc_enter_status(RC_STATUS status)
+{
+	if(status == RC_LOCK_STATUS){
+		ctrl_lock_vehicle();
+		_rc_status = status;
+		Log.console("enter RC_LOCK_STATUS\n");
+	}else if(status == RC_LOCK_READY_STATUS){
+		_rc_status = RC_LOCK_READY_STATUS;
+		Log.console("enter RC_LOCK_READY_STATUS\n");
+	}else if(status == RC_UNLOCK_STATUS){
+		ctrl_unlock_vehicle();
+		_rc_status = status;
+		Log.console("enter RC_UNLOCK_STATUS\n");
+	}else if(status == RC_UNLOCK_READY_STATUS){
+		_rc_status = RC_UNLOCK_READY_STATUS;
+		Log.console("enter RC_UNLOCK_READY_STATUS\n");
+	}
+}
+
 // chan_val: 0~1.0
 void rc_handle_ppm_signal(float* chan_val)
 {
@@ -112,31 +123,25 @@ void rc_handle_ppm_signal(float* chan_val)
 		case RC_LOCK_STATUS:
 		{
 			if(rc_get_ppm_signal() == RC_UNLOCK_SIGNAL){
-				_rc_status = RC_UNLOCK_WAIT_STATUS;
-				Log.console("enter RC_UNLOCK_WAIT_STATUS\n");
+				rc_enter_status(RC_UNLOCK_READY_STATUS);
 			}
 		}break;
-		case RC_LOCK_WAIT_STATUS:
+		case RC_LOCK_READY_STATUS:
 		{
 			if(rc_get_ppm_signal() == RC_RETURN_CENTRAL_SIGNAL){
-				_rc_status = RC_LOCK_STATUS;
-				ctrl_lock_vehicle();
-				Log.console("enter RC_LOCK_STATUS\n");
+				rc_enter_status(RC_LOCK_STATUS);
 			}
 		}break;
 		case RC_UNLOCK_STATUS:
 		{
 			if(rc_get_ppm_signal() == RC_LOCK_SIGNAL){
-				_rc_status = RC_LOCK_WAIT_STATUS;
-				Log.console("enter RC_LOCK_WAIT_STATUS\n");
+				rc_enter_status(RC_LOCK_READY_STATUS);
 			}
 		}break;
-		case RC_UNLOCK_WAIT_STATUS:
+		case RC_UNLOCK_READY_STATUS:
 		{
 			if(rc_get_ppm_signal() == RC_RETURN_CENTRAL_SIGNAL){
-				_rc_status = RC_UNLOCK_STATUS;
-				ctrl_unlock_vehicle();
-				Log.console("enter RC_UNLOCK_STATUS\n");
+				rc_enter_status(RC_UNLOCK_STATUS);
 			}
 		}break;
 		default:
@@ -144,17 +149,4 @@ void rc_handle_ppm_signal(float* chan_val)
 			Log.e(TAG, "rc unknown status:%d\n", _rc_status);
 		}break;
 	}
-
-//	static uint32_t time_stamp = 0;
-//	float euler[3];
-//	quaternion_toEuler(qt, euler);
-//	euler[0] *= 180.0/PI;
-//	euler[1] *= 180.0/PI;
-//	euler[2] *= 180.0/PI;
-//	Log.eachtime(&time_stamp, 200, "roll:%.3f	pitch:%.3f	yaw:%.3f\n", euler[0], euler[1], euler[2]);
-//	mavlink_send_msg_attitude_quaternion(MAV_STATE_STANDBY, qt);
-	
-	// for test
-	float throttle[4] = {chan_val[CHAN_THROTTLE],chan_val[CHAN_THROTTLE],chan_val[CHAN_THROTTLE],chan_val[CHAN_THROTTLE]};
-	ctrl_set_throttle(throttle, 4);
 }

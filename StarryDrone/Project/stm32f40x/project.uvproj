@@ -449,11 +449,6 @@
               <FilePath>..\..\Framework\source\INS\kalman.c</FilePath>
             </File>
             <File>
-              <FileName>mix.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Framework\source\INS\mix.c</FilePath>
-            </File>
-            <File>
               <FileName>position.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Framework\source\INS\position.c</FilePath>
@@ -522,6 +517,16 @@
               <FileName>global.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Framework\source\Global\global.c</FilePath>
+            </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Framework\source\Test\test.c</FilePath>
+            </File>
+            <File>
+              <FileName>AHRS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Framework\source\INS\AHRS.c</FilePath>
             </File>
           </Files>
         </Group>
