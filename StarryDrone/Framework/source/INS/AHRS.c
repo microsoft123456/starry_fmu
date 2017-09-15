@@ -28,8 +28,9 @@ void AHRS_reset(quaternion * q, const float acc[3],const float mag[3])
 {
 	quaternion q1,q2;
 	Euler e;
-	float to[3] = {0, 0, -1};	/* x axis vector */
+	float to[3];
 	float from[3];
+	
 	to[0] = to[1] = 0.0f;
 	to[2] = -1.0f;
 	quaternion_fromTwoVectorRotation(&q1, acc, to);
@@ -39,6 +40,7 @@ void AHRS_reset(quaternion * q, const float acc[3],const float mag[3])
 	to[0] = 1;
 	to[1] = to[2] = 0;
 	quaternion_fromTwoVectorRotation(&q2, from, to);
+	
 	quaternion_mult(q, q2, q1);
 	quaternion_normalize(q);
 }

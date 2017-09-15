@@ -47,10 +47,10 @@ float butter_filter(Butter2 *butter, float sample)
 
     // do the filtering
     float delay_element_0 = sample - butter->_delay_element_1 * butter->_a1 - butter->_delay_element_2 * butter->_a2;
-    if (!isfinite(delay_element_0)) {
-        // don't allow bad values to propagate via the filter
-        delay_element_0 = sample;
-    }
+//    if (!isfinite(delay_element_0)) {
+//        // don't allow bad values to propagate via the filter
+//        delay_element_0 = sample;
+//    }
     float output = delay_element_0 * butter->_b0 + butter->_delay_element_1 * butter->_b1 + 
 					butter->_delay_element_2 * butter->_b2;
     

@@ -322,8 +322,6 @@ void position_loop(void *parameter)
 	rt_uint32_t wait_set2 = EVENT_SET_HOME;
 	float gps[3] , acc[3] , baro[3];
 	float accE[3];
-	
-	printf("position_loop\r\n");
 
 	float pos_vel_x[2];
 	float pos_vel_y[2];
@@ -363,7 +361,7 @@ void position_loop(void *parameter)
 	ekf.x.element[1][0] = 0.0f;
 	init_flag = 1;
 	
-	FIR_Init();
+	//FIR_Init();
 	
 	float pre_alt = (float)home_pos.alt;
 	float calc_v = 0.0f;
@@ -389,7 +387,8 @@ void position_loop(void *parameter)
 				accE[2] += 9.8f;
 				accE[2] += 0.25;	//调整偏移
 				
-				float filter_acc = FIR_Filter(accE[2]);
+				float filter_acc;
+				//loat filter_acc = FIR_Filter(accE[2]);
 				
 				//Log.w(TAG, "%.4f %.4f %.4f %d %d %.4f %.4f %.4f %.4f\n",accE[0],accE[1],accE[2],gps_position.lat,gps_position.lon,
 				//		baro_report.altitude,gps_position.vel_n_m_s,gps_position.vel_e_m_s,gps_position.vel_d_m_s);

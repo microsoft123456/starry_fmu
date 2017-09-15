@@ -19,6 +19,6 @@ typedef struct
 }PID_Param;
 
 uint8_t pid_init(void);
-uint8_t pid_calculate(const float input[3],float output[3], float gyr[3]);
+uint8_t pid_calculate(const float input[3],float output[3], float gyr[3], float dt);
 
 #endif

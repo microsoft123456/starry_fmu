@@ -51,44 +51,21 @@ rt_err_t load_default_param(PARAM_Def* param_t)
     param_t->initial_attitude.y = 0;
     param_t->initial_attitude.z = 0;
 	
-    //内环
-    param_t->ctl_pid[0].inner_P = 0;
-    param_t->ctl_pid[0].inner_I = 0;
-    param_t->ctl_pid[0].inner_D = 0;
-    param_t->ctl_pid[1].inner_P = 0.12;    //0.12
-    param_t->ctl_pid[1].inner_I = 0;  //0.0001;
-    param_t->ctl_pid[1].inner_D = 0.2;    //0.25
-    param_t->ctl_pid[2].inner_P = 0;
-    param_t->ctl_pid[2].inner_I = 0;
-    param_t->ctl_pid[2].inner_D = 0;
-//    param_t->ctl_pid[0].inner_P = 0.1;
-//    param_t->ctl_pid[0].inner_I = 0;
-//    param_t->ctl_pid[0].inner_D = 0.08;
-//    param_t->ctl_pid[1].inner_P = 0.1;    //0.12
-//    param_t->ctl_pid[1].inner_I = 0;  //0.0001;
-//    param_t->ctl_pid[1].inner_D = 0.08;    //0.25
-//    param_t->ctl_pid[2].inner_P = 0.05;
-//    param_t->ctl_pid[2].inner_I = 0;
-//    param_t->ctl_pid[2].inner_D = 0.04;
-    //外环   ctl_pid
-    param_t->ctl_pid[0].outer_P = 0;
-    param_t->ctl_pid[0].outer_I = 0;
-    param_t->ctl_pid[0].outer_D = 0;
-    param_t->ctl_pid[1].outer_P = 0.04;//0.04 0.06
-    param_t->ctl_pid[1].outer_I = 0;//0.00002
-    param_t->ctl_pid[1].outer_D = 0;
-    param_t->ctl_pid[2].outer_P = 0;
-    param_t->ctl_pid[2].outer_I = 0;
-    param_t->ctl_pid[2].outer_D = 0;
-//    param_t->ctl_pid[0].outer_P = 0.06;
-//    param_t->ctl_pid[0].outer_I = 0.003;
-//    param_t->ctl_pid[0].outer_D = 0;
-//    param_t->ctl_pid[1].outer_P = 0.06;//0.04 0.06
-//    param_t->ctl_pid[1].outer_I = 0.003;//0.00002
-//    param_t->ctl_pid[1].outer_D = 0;
-//    param_t->ctl_pid[2].outer_P = 0.03;
-//    param_t->ctl_pid[2].outer_I = 0;
-//    param_t->ctl_pid[2].outer_D = 0.0015;
+	/* attitude angle control parameter */
+	param_t->att_angle_p[0] = 0;
+	param_t->att_angle_p[1] = 0.035f;
+	param_t->att_angle_p[2] = 0;
+	
+    /* attitude rates control parameter */
+    param_t->att_rate_p[0] = 0;
+    param_t->att_rate_i[0] = 0;
+    param_t->att_rate_d[0] = 0;
+    param_t->att_rate_p[1] = 0.1;
+    param_t->att_rate_i[1] = 0;
+    param_t->att_rate_d[1] = 0.0015;
+    param_t->att_rate_p[2] = 0;
+    param_t->att_rate_i[2] = 0;
+    param_t->att_rate_d[2] = 0;
 	
 	param_t->halt_vol = 0;
 	param_t->halt_incline_cos = 0.5;	//默认60°停机
@@ -105,40 +82,43 @@ int handle_param_shell_cmd(int argc, char** argv)
 {
 	if(argc > 1){
 		if(strcmp(argv[1], "get") == 0 && argc == 3){
-			if(strcmp(argv[2], "pid") == 0){
-				Log.console("outer: [0]P:%f I:%f D:%f [1]P:%f I:%f D:%f [2]P:%f I:%f D:%f\n",
-					global_param_t->ctl_pid[0].outer_P,global_param_t->ctl_pid[0].outer_I,global_param_t->ctl_pid[0].outer_D,
-					global_param_t->ctl_pid[1].outer_P,global_param_t->ctl_pid[1].outer_I,global_param_t->ctl_pid[1].outer_D,
-					global_param_t->ctl_pid[2].outer_P,global_param_t->ctl_pid[2].outer_I,global_param_t->ctl_pid[2].outer_D);
-				Log.console("iner: [0]P:%f I:%f D:%f [1]P:%f I:%f D:%f [2]P:%f I:%f D:%f\n",
-					global_param_t->ctl_pid[0].inner_P,global_param_t->ctl_pid[0].inner_I,global_param_t->ctl_pid[0].inner_D,
-					global_param_t->ctl_pid[1].inner_P,global_param_t->ctl_pid[1].inner_I,global_param_t->ctl_pid[1].inner_D,
-					global_param_t->ctl_pid[2].inner_P,global_param_t->ctl_pid[2].inner_I,global_param_t->ctl_pid[2].inner_D);
+			if(strcmp(argv[2], "att_pid") == 0){
+				Log.console("roll_p:%.3f pitch_p:%.3f yaw_p:%.3f\n",
+					global_param_t->att_angle_p[0], global_param_t->att_angle_p[1], global_param_t->att_angle_p[2]);
+				Log.console("roll_rate_p:%.3f roll_rate_i:%.3f roll_rate_d:%.3f\n",
+					global_param_t->att_rate_p[0], global_param_t->att_rate_i[0], global_param_t->att_rate_d[0]);
+				Log.console("pitch_rate_p:%.3f pitch_rate_i:%.3f pitch_rate_d:%.3f\n",
+					global_param_t->att_rate_p[1], global_param_t->att_rate_i[1], global_param_t->att_rate_d[1]);
+				Log.console("yaw_rate_p:%.3f yaw_rate_i:%.3f yaw_rate_d:%.3f\n",
+					global_param_t->att_rate_p[2], global_param_t->att_rate_i[2], global_param_t->att_rate_d[2]);
 			}
 		}
 		if(strcmp(argv[1], "set") == 0 && argc >= 3){
-			if(strcmp(argv[2], "pid") == 0 && argc == 21){
-				global_param_t->ctl_pid[0].outer_P = atof(argv[3]);
-				global_param_t->ctl_pid[0].outer_I = atof(argv[4]);
-				global_param_t->ctl_pid[0].outer_D = atof(argv[5]);
-				global_param_t->ctl_pid[1].outer_P = atof(argv[6]);
-				global_param_t->ctl_pid[1].outer_I = atof(argv[7]);
-				global_param_t->ctl_pid[1].outer_D = atof(argv[8]);
-				global_param_t->ctl_pid[2].outer_P = atof(argv[9]);
-				global_param_t->ctl_pid[2].outer_I = atof(argv[10]);
-				global_param_t->ctl_pid[2].outer_D = atof(argv[11]);
+			if(strcmp(argv[2], "att_pid") == 0 && argc == 15){
+				global_param_t->att_angle_p[0] = atof(argv[3]);
+				global_param_t->att_angle_p[1] = atof(argv[4]);
+				global_param_t->att_angle_p[2] = atof(argv[5]);
 				
-				global_param_t->ctl_pid[0].inner_P = atof(argv[12]);
-				global_param_t->ctl_pid[0].inner_I = atof(argv[13]);
-				global_param_t->ctl_pid[0].inner_D = atof(argv[14]);
-				global_param_t->ctl_pid[1].inner_P = atof(argv[15]);
-				global_param_t->ctl_pid[1].inner_I = atof(argv[16]);
-				global_param_t->ctl_pid[1].inner_D = atof(argv[17]);
-				global_param_t->ctl_pid[2].inner_P = atof(argv[18]);
-				global_param_t->ctl_pid[2].inner_I = atof(argv[19]);
-				global_param_t->ctl_pid[2].inner_D = atof(argv[20]);
+				global_param_t->att_rate_p[0] = atof(argv[6]);
+				global_param_t->att_rate_i[0] = atof(argv[7]);
+				global_param_t->att_rate_d[0] = atof(argv[8]);
+				
+				global_param_t->att_rate_p[1] = atof(argv[9]);
+				global_param_t->att_rate_i[1] = atof(argv[10]);
+				global_param_t->att_rate_d[1] = atof(argv[11]);
+				
+				global_param_t->att_rate_p[2] = atof(argv[12]);
+				global_param_t->att_rate_i[2] = atof(argv[13]);
+				global_param_t->att_rate_d[2] = atof(argv[14]);
 	
-				Log.console("pid has been successfully configured\n");
+				Log.console("roll_p:%.3f pitch_p:%.3f yaw_p:%.3f\n",
+					global_param_t->att_angle_p[0], global_param_t->att_angle_p[1], global_param_t->att_angle_p[2]);
+				Log.console("roll_rate_p:%.3f roll_rate_i:%.3f roll_rate_d:%.3f\n",
+					global_param_t->att_rate_p[0], global_param_t->att_rate_i[0], global_param_t->att_rate_d[0]);
+				Log.console("pitch_rate_p:%.3f pitch_rate_i:%.3f pitch_rate_d:%.3f\n",
+					global_param_t->att_rate_p[1], global_param_t->att_rate_i[1], global_param_t->att_rate_d[1]);
+				Log.console("yaw_rate_p:%.3f yaw_rate_i:%.3f yaw_rate_d:%.3f\n",
+					global_param_t->att_rate_p[2], global_param_t->att_rate_i[2], global_param_t->att_rate_d[2]);
 			}
 		}
 	}
@@ -146,7 +126,7 @@ int handle_param_shell_cmd(int argc, char** argv)
 	return 0;
 }
 
-rt_err_t param_init(void)
+uint8_t param_init(void)
 {
 	if(0)
 	{
@@ -158,5 +138,5 @@ rt_err_t param_init(void)
 		load_default_param(global_param_t);
 	}
 	
-	return RT_EOK;
+	return 0;
 }

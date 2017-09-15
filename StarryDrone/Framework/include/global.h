@@ -25,8 +25,10 @@
 #define CONTROL_THREAD_PRIORITY		7
 #define MAVLINK_THREAD_PRIORITY		9
 
-#define Rad2Deg(x)			(x*180.0f/PI)
-#define Deg2Rad(x)			(x*PI/180.0f)
+//#define Rad2Deg(x)			(x*57.2957795f)
+//#define Deg2Rad(x)			(x*0.0174533f)
+#define Rad2Deg(x)			((x)*180.0f/PI)
+#define Deg2Rad(x)			((x)*PI/180.0f)
 
 extern const float PI;
 

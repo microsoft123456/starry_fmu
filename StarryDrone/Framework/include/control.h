@@ -16,6 +16,8 @@
 
 #define MAX_THROTTLE_NUM	4
 
+void control_init(void);
+void control_attitude(void);
 void control_loop(void *parameter);
 void ctrl_set_throttle(float* throttle, uint8_t throttle_num);
 void ctrl_unlock_vehicle(void);

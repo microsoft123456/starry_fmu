@@ -147,8 +147,7 @@ void mavlink_loop(void *parameter)
 	rt_err_t res;
 	rt_uint32_t recv_set = 0;
 	rt_uint32_t wait_set = EVENT_MAV_1HZ_UPDATE | EVENT_MAV_3HZ_UPDATE;
-	
-	Log.w(TAG, "mavlink_loop\r\n");
+
 	/* create event */
 	res = rt_event_init(&event_mavlink, "mavlink_event", RT_IPC_FLAG_FIFO);
 	

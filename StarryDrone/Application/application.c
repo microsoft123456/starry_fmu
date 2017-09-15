@@ -111,14 +111,14 @@ void rt_init_thread_entry(void* parameter)
 	if (res == RT_EOK)
 		rt_thread_startup(&thread_px4io_handle);
 	
-	res = rt_thread_init(&thread_control_handle,
-						   "control",
-						   control_loop,
-						   RT_NULL,
-						   &thread_control_stack[0],
-						   sizeof(thread_control_stack),CONTROL_THREAD_PRIORITY,1);
-	if (res == RT_EOK)
-		rt_thread_startup(&thread_control_handle);
+//	res = rt_thread_init(&thread_control_handle,
+//						   "control",
+//						   control_loop,
+//						   RT_NULL,
+//						   &thread_control_stack[0],
+//						   sizeof(thread_control_stack),CONTROL_THREAD_PRIORITY,1);
+//	if (res == RT_EOK)
+//		rt_thread_startup(&thread_control_handle);
 	
 	res = rt_thread_init(&thread_mavlink_handle,
 						   "mavlink",
@@ -143,7 +143,6 @@ void rt_init_thread_entry(void* parameter)
 	
 //	while(1)
 //	{
-//		printf("main thread\n");
 //		TCA62724_set_color(LED_GREEN);
 //		led_on();
 //		rt_thread_delay(1000);
@@ -151,7 +150,6 @@ void rt_init_thread_entry(void* parameter)
 //		TCA62724_set_color(LED_RED);
 //		rt_thread_delay(1000);
 //	}
-
 }
 
 int rt_application_init()

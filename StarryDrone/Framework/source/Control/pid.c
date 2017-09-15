@@ -6,79 +6,58 @@
  * 2017-03-01     zoujiachi    first version.
  */
  
-#include <rthw.h>
-#include <rtdevice.h>
 #include "param.h"
+#include "ap_math.h"
 
-static float pid_pre[3] = {0,0,0};
-static float pid_accumulate[3] = {0,0,0};
-static float inner_pid_accumulate[3] = {0,0,0};
+static float i_accum[3] = {0,0,0};
+static float pre_gyr[3];
 
 uint8_t pid_init(void)
 {
 	for(int i = 0 ; i < 3 ; i++){
-		pid_pre[i] = 0;
-		pid_accumulate[i] = 0;
-		inner_pid_accumulate[i] = 0;
+		i_accum[i] = 0;
+		pre_gyr[i] = 0;
 	}
     return RT_EOK;
 }
 
-uint8_t pid_calculate(const float input[3],float output[3], float gyr[3])
+uint8_t pid_calculate(const float input[3],float output[3], float gyr[3], float dt)
 {
     const PARAM_Def *p = get_param();
  
-    //计算外环
-    float outer_output[3] = {0};
+    /* outter ring controls angle */
+    float rates_sp[3] = {0};
     for(int i=0;i<3;i++)
     {
-        float p_o = input[i] * p->ctl_pid[i].outer_P; /*比例调节输出分量*/
-
-		if(p->ctl_pid[i].outer_I > 0){
-			pid_accumulate[i] += input[i]*p->ctl_pid[i].outer_I;
-	//        if(pid_accumulate[i] < -0.05f)  /*限定积分输出分量在-0.1~0.1之间*/
-	//            pid_accumulate[i] = -0.05f;
-	//        if(pid_accumulate[i] > 0.05f)
-	//            pid_accumulate[i] = 0.05f;
-		}
-            
-        float i_o = pid_accumulate[i];  /*积分调节输出分量*/
-            
-        //外环不需要d
-        outer_output[i] = p_o + i_o;    /*分量合成，这里只是作简单的相加*/
+		/* outter ring only contains P controller */
+        rates_sp[i] = input[i] * p->att_angle_p[i];
     }
     
-    //计算内环
-    float err_xyz[3] = {0};
+    /* innter ring controls rates */
+    float err_rates[3] = {0};
     for(int i = 0 ; i<3 ; i++)
     {
-        err_xyz[i] = outer_output[i] - gyr[i];
+        err_rates[i] = rates_sp[i] - gyr[i];
+		output[i] = 0.0f;
     }
     for(int i=0;i<3;i++)
     {
-        float p_o = err_xyz[i] * p->ctl_pid[i].inner_P; /*比例调节输出分量*/
+        output[i] += err_rates[i] * p->att_rate_p[i];
 
-		if(p->ctl_pid[i].inner_I > 0){
-			inner_pid_accumulate[i] += err_xyz[i]*p->ctl_pid[i].inner_I;
-	//        if(inner_pid_accumulate[i] < -0.05f)  /*限定积分输出分量在-0.1~0.1之间*/
-	//            inner_pid_accumulate[i] = -0.05f;
-	//        if(inner_pid_accumulate[i] > 0.05f)
-	//            inner_pid_accumulate[i] = 0.05f;
+		if(p->att_rate_i[i] > 0.0f){
+			i_accum[i] += err_rates[i] * p->att_rate_i[i] * dt;
+			
+			/* constrain i value between -0.1~0.1 */
+			constrain(&i_accum[i], -0.1, 0.1);
+			
+			output[i] += i_accum[i];
 		}
-            
-        //float i_o = inner_pid_accumulate[i];  /*积分调节输出分量*/
-            
-        float d_o = (err_xyz[i]-pid_pre[i]) * p->ctl_pid[i].inner_D;
-        //
-        //output[i] = p_o + i_o + d_o;    /*分量合成，这里只是作简单的相加*/
-		output[i] = p_o + d_o; 
-        if(output[i]>0.5){  //输出限幅
-            output[i] = 0.5;
-        }
-		if(output[i]<-0.5){  //输出限幅
-            output[i] = -0.5;
-        }
-        pid_pre[i] = err_xyz[i];  /*存储前一次的输入数据，用于微分输出量计算*/
+    
+        output[i] += (pre_gyr[i] - gyr[i]) * p->att_rate_d[i] / dt;
+		/* constrain output */
+		constrain(&output[i], -0.5, 0.5);
+		/* store last time rates */
+		pre_gyr[i] = gyr[i];
     } 
 	
 	return 0;

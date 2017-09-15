@@ -10,7 +10,6 @@
 #ifndef __PARAM_H__
 #define __PARAM_H__
 
-//#include <rtdevice.h>
 #include <stm32f4xx.h>
 #include "quaternion.h"
 
@@ -29,12 +28,11 @@ typedef struct
 	
 	quaternion initial_attitude;
 	
-	/* control pid param */
-	struct
-	{
-		float inner_P , inner_I , inner_D;
-		float outer_P , outer_I , outer_D;
-	}ctl_pid[3];
+	/* attitude control pid param */
+	float att_angle_p[3];
+	float att_rate_p[3];
+	float att_rate_i[3];
+	float att_rate_d[3];
 	
 	/* halt voltage */
 	float halt_vol;
@@ -43,7 +41,7 @@ typedef struct
 	float halt_incline_cos;
 }PARAM_Def;
 
-rt_err_t param_init(void);
+uint8_t param_init(void);
 const PARAM_Def * get_param(void);
 
 #endif

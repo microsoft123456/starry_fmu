@@ -29,4 +29,6 @@ float Vector3_Length(const float vector[3]);
 void Vector2_Normalize(float result[2], float vector[2]);
 float Vector2_DotProduct(const float vector1[2], const float vector2[2]);
 
+uint8_t constrain(float *val, float min_val, float max_val);
+
 #endif

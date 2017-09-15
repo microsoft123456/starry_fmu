@@ -172,3 +172,17 @@ float Vector2_DotProduct(const float vector1[2], const float vector2[2])
 {
 	return vector1[0]*vector2[0] + vector1[1]*vector2[1];
 }
+
+uint8_t constrain(float *val, float min_val, float max_val)
+{
+	if(*val > max_val){
+		*val = max_val;
+		return 1;
+	}
+	if(*val < min_val){
+		*val = min_val;
+		return 2;
+	}
+	
+	return 0;
+}

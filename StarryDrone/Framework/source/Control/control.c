@@ -144,112 +144,87 @@ void ctrl_lock_vehicle(void)
 	_vehicle_status = 0;
 }
 
-void control_loop(void *parameter)
+void control_init(void)
 {
-	rt_err_t res;
-	rt_uint32_t recv_set = 0;
-	rt_uint32_t wait_set = EVENT_ATT_CTRL;
 	motor_device_t = rt_device_find("motor");
-	
-	if(motor_device_t == RT_NULL)
-	{
-		Log.e(TAG, "err, can not find motor device\n");
-		return ;
+	if(motor_device_t == RT_NULL){
+		Log.e(TAG, "can't find motor device\n");
+		return;
 	}
-	
 	rt_device_open(motor_device_t , RT_DEVICE_OFLAG_RDWR);
-	
-	/* create event */
-	res = rt_event_init(&event_ctrl, "att_event", RT_IPC_FLAG_FIFO);
-	
-	/* register timer event */
-	rt_timer_init(&timer_att, "timer_att",
-					timer_att_update,
-					RT_NULL,
-					ATT_CTRL_INTERVAL,
-					RT_TIMER_FLAG_PERIODIC | RT_TIMER_FLAG_SOFT_TIMER);
-	rt_timer_start(&timer_att);
-	
-	while(1)
-	{
-		/* wait event occur */
-		res = rt_event_recv(&event_ctrl, wait_set, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, 
-								RT_WAITING_FOREVER, &recv_set);
+}
+
+void control_attitude(void)
+{
+	float att_err[3];
+	float out[3];
+	static float gyr[3] = {0, 0, 0};
+	const float *gyr_t = gyrfilter_current();
+	float alpha = 0.4;
+
+	/* unlock status */
+	if(_vehicle_status){
+		/* get throttle value */
+		_baseThrottle = rc_get_chanval(CHAN_THROTTLE);
 		
-		if(res == RT_EOK)
-		{
-			if(recv_set & EVENT_ATT_CTRL)
-			{
-				float att_err[3];
-				float out[3];
-				float gyr[3];
-				const float *gyr_t = gyrfilter_current();
-				
-				/* unlock status */
-				if(_vehicle_status){
-					_baseThrottle = rc_get_chanval(CHAN_THROTTLE);
-					
-					if(_baseThrottle > 0.05){	
-						gyr[0] = gyr_t[0];
-						gyr[1] = gyr_t[1];
-						gyr[2] = gyr_t[2];
+		/* only control attitude when throttle is bigger then a specific threshold */
+		if(_baseThrottle > 0.05){	
+			gyr[0] = gyr_t[0];
+			gyr[1] = gyr_t[1];
+			gyr[2] = gyr_t[2];
 
-						quaternion qc = attitude_getAttitude();
-						
-						Euler ec;
-						quaternion_toEuler(qc, &ec);
-						
-						/* tilt protection */
-						if(abs(Rad2Deg(ec.roll))>45 || abs(Rad2Deg(ec.pitch))>45){
-							rc_enter_status(RC_LOCK_STATUS);
-						}
-						
-						Euler et = calc_target_euler(1, 1.0f/(float)ppm_send_freq);
-
-						att_err[0] = Rad2Deg((et.roll - ec.roll));
-						att_err[1] = Rad2Deg((et.pitch - ec.pitch));
-						att_err[2] = Rad2Deg((et.yaw - ec.yaw));
-						if(att_err[2] > 180.0f){
-							att_err[2] -= 360.0f;
-						}
-						if(att_err[2] < -180.0f){
-							att_err[2] += 360.0f;
-						}
-						
-						pid_calculate(att_err, out, gyr);
-						
-//						static uint32_t time;
-//						Log.eachtime(&time, 300, "target:%.2f %.2f %.2f curent:%.2f %.2f %.2f\n", Rad2Deg(et.roll),Rad2Deg(et.pitch),
-//								Rad2Deg(et.yaw),Rad2Deg(ec[0]),Rad2Deg(ec[1]),Rad2Deg(ec[2]));
-//						Log.eachtime(&time, 300, "out:%.2f %.2f %.2f err:%.2f %.2f %.2f\n", out[0],out[1],out[2],att_err[0],att_err[1],att_err[2]);
-
-						/* motor output matrix */
-						/* -1	 1	-1 */
-						/* -1	-1	 1 */
-						/*  1	-1	-1 */
-						/*  1	 1	 1 */
-						_throttle_out[0] = _baseThrottle - out[0] + out[1] - out[2];
-						_throttle_out[1] = _baseThrottle - out[0] - out[1] + out[2];
-						_throttle_out[2] = _baseThrottle + out[0] - out[1] - out[2];
-						_throttle_out[3] = _baseThrottle + out[0] + out[1] + out[2];
-					}else{
-						_throttle_out[0] = _baseThrottle;
-						_throttle_out[1] = _baseThrottle;
-						_throttle_out[2] = _baseThrottle;
-						_throttle_out[3] = _baseThrottle;
-					}
-					
-					ctrl_constrain_throttle(_throttle_out, MOTOR_NUM);
-					ctrl_set_throttle(_throttle_out, MOTOR_NUM);
-					
-					
-					//Log.eachtime(&time, 300, "out:%.2f %.2f %.2f err:%.2f %.2f %.2f\n", out[0],out[1],out[2],att_err[0],att_err[1],att_err[2]);
-				}
+			quaternion qc = attitude_getAttitude();
+			
+			/* current attitude */
+			Euler ec;
+			quaternion_toEuler(qc, &ec);
+			
+			/* tilt protection */
+			if(abs(Rad2Deg(ec.roll))>45 || abs(Rad2Deg(ec.pitch))>45){
+				rc_enter_status(RC_LOCK_STATUS);
+				return ;
 			}
-		}else
-		{
-			//some err occur
-			Log.e(TAG, "control loop, err:%d\r\n" , res);
+			
+			/* calculate target attitude according to rc value */
+			Euler et = calc_target_euler(1, 1.0f/(float)ppm_send_freq);
+
+			att_err[0] = Rad2Deg((et.roll - ec.roll));
+			att_err[1] = Rad2Deg((et.pitch - ec.pitch));
+			att_err[2] = Rad2Deg((et.yaw - ec.yaw));
+			/* transfer yaw range to 0~360 deg */
+			if(att_err[2] > 180.0f){
+				att_err[2] -= 360.0f;
+			}
+			if(att_err[2] < -180.0f){
+				att_err[2] += 360.0f;
+			}
+			
+			/* pid controller */
+			pid_calculate(att_err, out, gyr, (float)ATT_CTRL_INTERVAL/1000.0f);
+
+			/* motor output matrix, mix pid output with base throttle */
+			/* -1	 1	-1 */
+			/* -1	-1	 1 */
+			/*  1	-1	-1 */
+			/*  1	 1	 1 */
+			_throttle_out[0] = _baseThrottle - out[0] + out[1] - out[2];
+			_throttle_out[1] = _baseThrottle - out[0] - out[1] + out[2];
+			_throttle_out[2] = _baseThrottle + out[0] - out[1] - out[2];
+			_throttle_out[3] = _baseThrottle + out[0] + out[1] + out[2];
+			
+//			static uint32_t time = 0;
+//			Log.eachtime(&time, 10, "%.2f %.2f %.2f\n", Rad2Deg(ec.pitch),Rad2Deg(et.pitch), gyr[1]);
+		}else{
+			_throttle_out[0] = _baseThrottle;
+			_throttle_out[1] = _baseThrottle;
+			_throttle_out[2] = _baseThrottle;
+			_throttle_out[3] = _baseThrottle;
 		}
+		
+		ctrl_constrain_throttle(_throttle_out, MOTOR_NUM);
+		ctrl_set_throttle(_throttle_out, MOTOR_NUM);
+		
+		
+		//Log.eachtime(&time, 300, "out:%.2f %.2f %.2f err:%.2f %.2f %.2f\n", out[0],out[1],out[2],att_err[0],att_err[1],att_err[2]);
 	}
 }
